@@ -1,0 +1,11 @@
+/* reset.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  background-color: #ffffff; /* White background like the classic Apple site */
+  color: #000;
+}
