@@ -1,70 +1,52 @@
 /* App Container */
 .app-container {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: row;
   height: 100vh;
 }
 
 /* Main Content Styling */
 .main-content {
   flex-grow: 1;
-  width: calc(100vw - 250px); /* Full viewport width minus the sidebar */
-  max-width: 1000px; /* Set the maximum width here */
-  margin-left: 250px; /* Account for sidebar width */
-  padding: 0; /* Add some padding for readability */
-  box-sizing: border-box; /* Include padding in the width calculation */
+  width: calc(100vw - 250px);
+  max-width: 1000px;
+  margin-left: 250px;
+  padding: 0;
+  box-sizing: border-box;
   overflow-y: auto;
   background-color: #f4f4f4;
-  color: #000000;
-  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
 }
 
 /* Top Header Section with Flexbox Layout */
 .top-header {
-  height: auto; /* Allow height to adjust based on content */
+  height: auto;
   background-color: #ffffff;
   position: relative;
   overflow: hidden;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 40px 4%;
-  gap: 20px;
+  padding: 40px 3.5% 20px;
+  gap: clamp(8px, 2vw, 24px);
 }
 
 /* Profile Image Styling */
 .header-image-left {
-  width: clamp(60px, 10vw, 90px);  /* Minimum 60px, scales with viewport, max 120px */
-  height: auto;                    /* Maintain aspect ratio */
+  width: clamp(50px, 8vw, 85px);
+  height: auto;
   object-fit: cover;
   background-color: #ffffff;
   border-radius: 5px;
   flex-shrink: 0;
 }
 
-/* Background Year Styling */
-.year-background {
-  position: absolute;
-  top: 50%;
-  right: 5%;
-  transform: translateY(-50%);
-  font-size: clamp(5rem, 10vw, 8.5rem); /* Adjust font size based on viewport width */
-  font-weight: bold;
-  color: rgba(0, 0, 0, 0.05);
-  pointer-events: none;
-  z-index: 0;
-}
-
 /* Header Title Styling */
 .top-header h1 {
-  font-size: clamp(2rem, 4vw, 3.5rem); /* Adjust font size based on viewport width */
+  font-size: clamp(2.0rem, 3.5vw, 2.5rem);
   color: #000000;
   text-shadow: 2px 2px 0 #000000;
   margin: 0;
-  position: relative;
-  z-index: 1;
-  max-width: 60%;
+  max-width: 50%;
   word-wrap: break-word;
   text-align: left;
 }
@@ -72,20 +54,124 @@
 /* Retro Date Banner Styling */
 .date-banner {
   position: absolute;
-  top: 10px;
-  right: 30px;
+  top: 5px;
+  right: 2.5%;
   font-size: 1.15rem;
   font-weight: bold;
   color: #ffffff;
   background: linear-gradient(to right, #ffffff, #8b0000, #000000);
   padding: 8px 25px;
-  width: 300px;
+  width: 350px;
   border-radius: 0 10px 10px 0;
   text-shadow: 1px 1px 0 #4d0000;
+  text-align: right;
   letter-spacing: 1px;
   text-transform: uppercase;
-  z-index: 2;
-  text-align: right;
+}
+
+/* Background Year Styling */
+.year-background {
+  position: absolute;
+  top: 40px; /* Match this with the top padding of .top-header */
+  right: 0;
+  transform: translateY(-25%); /* Adjust the offset to fine-tune alignment */
+  font-size: clamp(5rem, 10vw, 8.5rem);
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Content Layout with Centered Top Blue Bar */
+.content-layout {
+  display: flex;
+  gap: 0;
+  margin-top: 0;
+  padding: 0;
+  position: relative;
+  border-bottom: 3px solid #8b0000; /* Bottom blue border */
+  box-shadow: 0 3px 3px #4d0000; /* Centered shadow with a blur effect */
+}
+
+/* Left Content Section with Pseudo-Element for the Right Border */
+.left-content {
+  position: relative;
+  flex: 2.5;
+  background-color: #ffffff;
+  padding: 20px;
+}
+
+/* Adding a Vertical Border with Adjustable Height and Centering */
+.left-content::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  height: 88%; /* Adjust the height as needed */
+  width: 2px; /* Thickness of the border */
+  background-color: #000000; /* Color of the border */
+  top: 50%; /* Center it vertically */
+  transform: translateY(-50%); /* Offset to center the border */
+}
+
+/* Blue Line Styling */
+.blue-line {
+  width: 100%;
+  height: 4px;
+  background-color: #4e8197;
+  margin: 0 auto; /* Center the line within the container */
+  max-width: 1000px;
+  box-shadow: 0 3px 3px #000000; /* Centered shadow effect */
+}
+
+/* Specific Styling for Top and Bottom Lines */
+.blue-line.top {
+  margin-bottom: 20px; /* Adjust spacing above if needed */
+}
+
+.blue-line.bottom {
+  margin-top: 20px; /* Add spacing before the bottom line if needed */
+}
+
+.project-card {
+  padding: 15px 0;
+  margin-bottom: 15px; /* Add spacing below each card */
+}
+
+.project-card:last-child {
+  border-bottom: none; /* Remove border on the last card */
+}
+
+/* Right Sidebar */
+.right-sidebar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  padding: 0; /* Remove padding here to allow full-width lines */
+}
+
+.right-sidebar-image {
+  width: clamp(150px, 12vw, 250px);
+  height: auto;
+  object-fit: contain; /* Changed from 'cover' to 'contain' */
+  background-color: #ffffff;
+  border-radius: 5px;
+  flex-shrink: 0;
+  display: block; /* Ensure image stays block-level */
+}
+
+/* Individual feature box */
+.feature-box {
+  padding: 20px;
+  background-color: #ffffff;
+  margin-bottom: 10px;
+}
+
+/* Adjustments for Padding between Sections */
+.left-content p {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #4d0000; /* Thin black line below paragraphs */
+  padding-bottom: 10px;
 }
 
 /* Sidebar Styling */
@@ -111,7 +197,6 @@
   font-size: 1.15rem;
 }
 
-/* Profile Image Styling */
 .profile-image {
   width: 160px;
   height: 160px;
@@ -126,12 +211,7 @@
 .sidebar h2.name {
   margin-top: 0;
   margin-bottom: 25px;
-  font-size: 1.7rem;
-}
-
-/* Retro Button */
-.retro-button {
-  margin-bottom: 0px;
+  font-size: 1.8rem;
 }
 
 /* Navigation Links */
@@ -153,7 +233,7 @@
 /* Divider Styling */
 .divider {
   width: 100%;
-  height: 2.5px;
+  height: 2.0px;
   background-color: #f4f4f4;
   margin: 15px auto;
   box-shadow: 3px 3px 0 #4d0000;
@@ -185,8 +265,51 @@
   outline: none;
 }
 
-.retro-button-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
+/* Media Query for Phone Screens */
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    border-right: none;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .top-header {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    gap: 10px;
+  }
+
+  .year-background {
+    font-size: clamp(3rem, 8vw, 6rem);
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    margin-top: 10px;
+  }
+
+  .date-banner {
+    width: auto;
+    text-align: center;
+    padding: 8px 15px;
+  }
 }

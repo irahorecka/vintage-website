@@ -22,7 +22,6 @@
   text-shadow: 2px 2px 0 #4d0000; /* 45-degree shadow effect */
 }
 
-
 .retro-button:focus {
   outline: none;
 }
@@ -30,4 +29,10 @@
 .retro-button:active {
   box-shadow: none; /* Remove shadow on press */
   transform: translate(1px, 1px); /* Slight "pressed" effect */
+}
+
+.retro-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
 }
