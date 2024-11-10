@@ -27,7 +27,7 @@ const Sidebar = () => {
 
       {/* Name and CV Button */}
       <h2 className="name">Ira Horecka</h2>
-      <RetroButton text="CV" />
+      <RetroButton text="C.V." />
 
       {/* Divider */}
       <div className="divider"></div>
@@ -41,7 +41,7 @@ const Sidebar = () => {
       <div className="divider"></div>
 
       {/* Scrollable Window for Links */}
-      <h2>Explore My World</h2>
+      <h2>Find Me Elsewhere</h2>
       <div className="vintage-window">
         <select 
           className="vintage-dropdown"

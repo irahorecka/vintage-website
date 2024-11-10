@@ -9,10 +9,10 @@
   padding: 2px 10px;
   font-family: 'Georgia', 'Times New Roman', serif;
   font-weight: bold;
-  text-transform: uppercase;
+  text-transform: none;
   cursor: pointer;
   display: inline-block;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   box-shadow: 1px 1px 0 #4d0000;
   outline: none;
   width: 75px;
