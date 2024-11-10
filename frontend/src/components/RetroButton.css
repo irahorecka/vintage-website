@@ -1,5 +1,5 @@
 .retro-button {
-  background-color: #b22222; /* Firebrick red background */
+  background-color: #990c00; /* Firebrick red background */
   color: #ffffff; /* White text */
   border: 2px solid #8b0000;
   border-left-color: #f4f4f4;
@@ -12,7 +12,7 @@
   text-transform: none;
   cursor: pointer;
   display: inline-block;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   box-shadow: 1px 1px 0 #4d0000;
   outline: none;
   width: 75px;
@@ -31,8 +31,11 @@
   transform: translate(1px, 1px); /* Slight "pressed" effect */
 }
 
+.vintage-window .retro-button:last-of-type {
+  margin-bottom: 0;
+}
+
 .retro-button-container {
   display: flex;
   justify-content: center;
-  margin-top: 10px;
 }

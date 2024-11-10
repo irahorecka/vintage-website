@@ -20,8 +20,10 @@ function Content() {
       <main className="main-content">
         {/* Top Header */}
         <section className="top-header">
-          <img src={profileIcon} alt="Profile Icon" className="header-image-left" />
-          <h1>Good to see you!</h1>
+          <div className="quote-container">
+            <h1>A point in every direction is the same as having no point at all!</h1>
+            <h1>—Harry Nilsson</h1>
+          </div>
           <div className="year-background">2024</div>
           <div className="date-banner">{getCurrentDate()}</div>
         </section>
@@ -30,7 +32,7 @@ function Content() {
         <div className="content-layout">
           <section className="left-content">
             <div className="blue-line top"></div>
-            <h2>Introducing My Projects</h2>
+            <h2>Who am I?</h2>
             <p>Explore my projects that bring retro vibes to modern development.</p>
             <div className="project-card">
               <h3>Project 1: Retro Revival</h3>
