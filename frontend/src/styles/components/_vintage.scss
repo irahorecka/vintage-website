@@ -1,3 +1,5 @@
+@use '../abstracts/index' as abstracts;
+
 .vintage-window {
   width: 100%;
   padding: 10px;
@@ -8,7 +10,7 @@
   width: 90%;
   height: 75%;
   background-color: #ffffff;
-  color: #000000;
+  color: abstracts.$dark-text-color;
   padding: 5px;
   border: 2px solid #8b0000;
   margin-bottom: 10px;
@@ -25,7 +27,7 @@
 
   option {
     background-color: #ffffff;
-    color: #000000;
+    color: abstracts.$dark-text-color;
 
     &:checked,
     &:hover {

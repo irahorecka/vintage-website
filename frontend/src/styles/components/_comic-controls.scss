@@ -1,17 +1,60 @@
+@use '../abstracts/index' as abstracts;
+
 .comic-control-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  margin-top: 10px;
 
   .comic-search-input,
   .comic-date-picker {
-    padding: 10px;
+    width: 90%;
+    height: 75%;
+    align-items: center;
+    background-color: #ffffff;
+    color: abstracts.$dark-text-color;
+    padding: 5px;
+    border: 2px solid #b3afaf;
+    font-family: 'Georgia', 'Times New Roman', serif;
     font-size: 1rem;
-    border: 2px solid #8b0000;
-    border-radius: 5px;
-    box-shadow: 2px 2px 0 #4d0000;
+    appearance: none;
+    outline: none;
+    box-shadow: none;
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+
+    option {
+      background-color: #ffffff;
+      color: abstracts.$dark-text-color;
+
+      &:checked,
+      &:hover {
+        background-color: #8b0000 !important; // Red background
+        color: #ffffff !important; // White text
+      }
+    }
+
+    &::placeholder {
+      color: abstracts.$dark-text-color; // Placeholder text color
+      opacity: 1; // Full opacity
+    }
+
+    // Vendor prefixes for better compatibility
+    &::-webkit-input-placeholder {
+      color: abstracts.$dark-text-color;
+    }
+    &::-moz-placeholder {
+      color: abstracts.$dark-text-color;
+    }
+    &:-ms-input-placeholder {
+      color: abstracts.$dark-text-color;
+    }
+    &:-moz-placeholder {
+      color: abstracts.$dark-text-color;
+    }
   }
 
   .comic-search-input {
@@ -21,11 +64,29 @@
   .comic-date-picker {
     flex: 1;
   }
+
+  @media (max-width: 768px) {
+    flex-direction: column; // Stack elements vertically
+    justify-content: center;
+    align-items: stretch;
+
+    .comic-search-input,
+    .comic-date-picker,
+    .comic-button {
+      width: 100%;
+      margin-bottom: 10px; // Add spacing between elements
+    }
+
+    .comic-button:last-of-type {
+      margin-bottom: 0; // Remove bottom margin for the last button
+    }
+  }
 }
 
 .comic-button {
   flex: 1;
   margin-bottom: 0;
+  padding: 6px 10px;
 
   &:hover {
     background-color: #b22222;

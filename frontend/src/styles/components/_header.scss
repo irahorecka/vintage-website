@@ -1,3 +1,5 @@
+@use '../abstracts/index' as abstracts;
+
 .header-image-left {
   width: clamp(50px, 8vw, 85px);
   height: auto;
@@ -9,8 +11,8 @@
 
 .top-header h1 {
   font-size: clamp(1rem, 2.5vw, 1.8rem);
-  color: #000000;
-  text-shadow: 1px 1px 0 #000000;
+  color: abstracts.$dark-text-color;
+  text-shadow: 1px 1px 0 abstracts.$dark-text-color;
   margin: 0;
   max-width: 75%;
   word-wrap: break-word;
