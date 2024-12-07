@@ -1,5 +1,4 @@
 import React from 'react';
-import '../styles/vintage.css';
 
 const ComicFinder = () => {
   return (

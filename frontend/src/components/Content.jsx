@@ -4,7 +4,6 @@ import ComicFinder from './ComicFinder'; // Import the new component
 import ProfileSection from './ProfileSection';
 import MetabolicNetwork from './MetabolicNetwork';
 import ContentRow from './ContentRow';
-import '../styles/vintage.css';
 
 // Function to get the current date in the format "MONTH DAY"
 function getCurrentDate() {

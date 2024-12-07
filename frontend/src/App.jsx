@@ -1,7 +1,8 @@
 import React from 'react';
-import './styles/reset.css';
-import './styles/vintage.css';
+
 import Content from './components/Content';
+
+import './styles/main.scss';
 
 function App() {
   return (

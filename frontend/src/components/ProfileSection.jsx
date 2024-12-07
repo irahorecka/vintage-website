@@ -1,6 +1,6 @@
 import React from 'react';
 import profileIcon from '../assets/profile-icon.png';
-import '../styles/vintage.css';
+// import '../styles/vintage.css';
 
 const ProfileSection = () => {
   return (

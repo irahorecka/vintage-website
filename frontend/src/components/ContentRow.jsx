@@ -1,5 +1,4 @@
 import React from 'react';
-import '../styles/vintage.css';
 
 const ContentRow = ({ leftContent, rightContent, singleColumn = false, topBorder = false, bottomBorder = false }) => {
   return (
