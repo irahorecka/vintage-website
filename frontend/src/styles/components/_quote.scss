@@ -1,0 +1,6 @@
+.quote-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 2; // Ensure text is above the banner
+}

@@ -1,0 +1,38 @@
+.comic-control-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+
+  .comic-search-input,
+  .comic-date-picker {
+    padding: 10px;
+    font-size: 1rem;
+    border: 2px solid #8b0000;
+    border-radius: 5px;
+    box-shadow: 2px 2px 0 #4d0000;
+  }
+
+  .comic-search-input {
+    flex: 2;
+  }
+
+  .comic-date-picker {
+    flex: 1;
+  }
+}
+
+.comic-button {
+  flex: 1;
+  margin-bottom: 0;
+
+  &:hover {
+    background-color: #b22222;
+  }
+
+  &:active {
+    transform: translate(1px, 1px);
+    box-shadow: none;
+  }
+}

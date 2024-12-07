@@ -1,0 +1,22 @@
+@use '../abstracts/index' as abstracts;
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+
+  &:hover {
+    filter: drop-shadow(0 0 2em abstracts.$primary-color);
+  }
+
+  &.react:hover {
+    filter: drop-shadow(0 0 2em abstracts.$react-color);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}

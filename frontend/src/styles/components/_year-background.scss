@@ -1,0 +1,11 @@
+.year-background {
+  position: absolute;
+  top: 40px; // Match this with the top padding of .top-header
+  right: 0;
+  transform: translateY(-25%); // Adjust the offset to fine-tune alignment
+  font-size: clamp(5rem, 10vw, 8.5rem);
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  z-index: 0;
+}

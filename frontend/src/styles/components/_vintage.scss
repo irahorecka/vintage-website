@@ -1,0 +1,42 @@
+.vintage-window {
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+}
+
+.vintage-dropdown {
+  width: 90%;
+  height: 75%;
+  background-color: #ffffff;
+  color: #000000;
+  padding: 5px;
+  border: 2px solid #8b0000;
+  margin-bottom: 10px;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 1rem;
+  appearance: none; // Remove default browser styling
+  outline: none; // Remove blue outline on focus
+  box-shadow: none; // Remove shadow highlight
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  option {
+    background-color: #ffffff;
+    color: #000000;
+
+    &:checked,
+    &:hover {
+      background-color: #8b0000 !important; // Red background
+      color: #ffffff !important; // White text
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .vintage-dropdown {
+    font-size: 1rem;
+  }
+}

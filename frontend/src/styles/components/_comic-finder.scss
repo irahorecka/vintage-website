@@ -1,0 +1,18 @@
+.comic-finder-container {
+  margin: auto;
+  max-width: 1000px;
+  background-color: #ffffff;
+}
+
+.comic-image-container {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+
+  .comic-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+}

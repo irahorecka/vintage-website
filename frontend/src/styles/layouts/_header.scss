@@ -1,0 +1,11 @@
+.top-header {
+  height: auto;
+  background-color: #ffffff;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 40px 3.5% 20px;
+  gap: clamp(8px, 2vw, 24px);
+}

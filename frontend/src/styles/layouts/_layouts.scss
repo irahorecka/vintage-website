@@ -1,0 +1,40 @@
+.app-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+.main-content {
+  flex-grow: 1;
+  width: calc(100vw - 250px);
+  max-width: 1000px;
+  margin-left: 250px;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-y: auto;
+  background-color: #f4f4f4;
+}
+
+.content-layout {
+  display: flex;
+  gap: 0;
+  margin-top: 0;
+  padding: 0;
+  position: relative;
+  border-bottom: 3px solid #8b0000; // Bottom blue border
+  box-shadow: 0 3px 3px #4d0000; // Centered shadow with a blur effect
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; // Ensure full-width alignment
+  }
+
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    overflow-y: visible; // Remove separate scroll behavior
+  }
+}

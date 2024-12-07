@@ -1,0 +1,24 @@
+@use '../abstracts/index' as abstracts;
+
+:root {
+  font-family: abstracts.$font-family-base;
+  line-height: abstracts.$line-height-base;
+  font-weight: abstracts.$font-weight-base;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  color: abstracts.$dark-text-color;
+  background-color: abstracts.$light-bg-color;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: inherit; // Use root background color
+  color: inherit; // Use root text color
+}

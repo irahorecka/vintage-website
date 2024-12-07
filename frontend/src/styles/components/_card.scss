@@ -1,0 +1,5 @@
+@use '../abstracts/index' as abstracts;
+
+.card {
+  padding: abstracts.$spacing;
+}
