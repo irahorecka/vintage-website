@@ -1,6 +1,5 @@
 import React from 'react';
 import metabolicNetwork from '../assets/metabolic-network.gif';
-// import '../styles/vintage.css';
 
 const MetabolicNetwork = () => {
   return (

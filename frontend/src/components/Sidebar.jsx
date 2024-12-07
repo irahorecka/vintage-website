@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import RetroButton from './RetroButton';
-import '../styles/vintage.css';
+
 import profilePic from '../assets/profile.png';
 import CV from '../assets/ira-horecka-cv.pdf';
 
