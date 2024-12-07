@@ -4,18 +4,6 @@
   gap: 20px;
 }
 
-.profile-header {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  flex-shrink: 0;
-
-  h2 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-  }
-}
-
 .profile-image {
   width: 160px;
   height: 160px;

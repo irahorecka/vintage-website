@@ -18,12 +18,6 @@
   }
 }
 
-.feature-box {
-  padding: 20px;
-  background-color: #ffffff;
-  margin-bottom: 10px;
-}
-
 .left-content p {
   margin-bottom: 15px;
   padding-bottom: 10px;
@@ -32,6 +26,44 @@
     margin-bottom: 0;
     padding-bottom: 0;
   }
+}
+
+.feature-box {
+  padding: 20px;
+  background-color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.whats-hot-container {
+  padding-bottom: 10px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.whats-hot-box {
+  background-image: linear-gradient(
+    #ffffff,
+    #fdf6b0
+  ); // Light yellow for the box
+  color: black; // Black text for contrast
+  padding: 0 10px; // Add spacing inside the box
+  font-size: 16px;
+  font-weight: bold;
+  border: 1px solid #000000; // Black border
+}
+
+.red-line {
+  width: 100%;
+  height: 4px; // Thickness of the red line
+  background-color: #8b0000; // Deep red color
+  margin: 0 auto; // Center alignment
+  max-width: 1000px; // Restrict width to match the container
+  box-shadow: 0 3px 3px #000000; // Shadow for depth
 }
 
 .content-row {

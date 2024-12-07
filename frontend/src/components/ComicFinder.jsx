@@ -1,12 +1,23 @@
 import React from 'react';
+import defaultComic from '../assets/calvin-and-hobbes.png';
 
 const ComicFinder = () => {
   return (
     <div className="comic-finder-container">
+      <div className="section-header">
+        <h2>Comics Portal</h2>
+      </div>
+      <div className="comic-finder-text">
+        <p>
+        I built this comics portal as a side project to make it easy to explore classic comic strips. You can search by date to
+        find a specific strip or browse randomly for something unexpected. It's powered by an API I wrote to handle the queries
+        and keep everything running smoothly. Simple, functional, and fun to use.
+        </p>
+      </div>
       {/* Top Image Container */}
       <div className="comic-image-container">
         <img
-          src="https://via.placeholder.com/1000x400" // Replace with dynamic comic image
+          src={defaultComic} // Replace with dynamic comic image
           alt="Comic Display"
           className="comic-image"
         />

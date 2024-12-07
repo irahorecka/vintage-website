@@ -4,7 +4,7 @@ import profileIcon from '../assets/profile-icon.png';
 const ProfileSection = () => {
   return (
     <div className="profile-container">
-      <div className="profile-header">
+      <div className="section-header">
         <h2>Who am I?</h2>
         <img src={profileIcon} alt="Profile Icon" className="profile-image-icon" />
       </div>

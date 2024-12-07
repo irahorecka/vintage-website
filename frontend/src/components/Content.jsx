@@ -36,6 +36,11 @@ function Content() {
           topBorder={true}
           bottomBorder={true}
         />
+        
+        <div className="whats-hot-container left-content">
+          <div className="whats-hot-box">What's Hot</div>
+          <div className="red-line"></div>
+        </div>
 
         {/* Single Content Row (Duplicate Height but Single Content) */}
         <ContentRow

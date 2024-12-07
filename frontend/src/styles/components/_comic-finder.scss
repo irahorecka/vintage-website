@@ -1,13 +1,18 @@
 .comic-finder-container {
-  margin: auto;
   max-width: 1000px;
   background-color: #ffffff;
+}
+
+.comic-finder-text {
+  align-items: center;
+  font-size: 1.15rem;
+  line-height: 1.4;
 }
 
 .comic-image-container {
   width: 100%;
   text-align: center;
-  margin-bottom: 20px;
+  margin: 20px auto;
 
   .comic-image {
     width: 100%;
