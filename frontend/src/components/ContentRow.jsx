@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/vintage.css';
 
-const ContentRow = ({ leftContent, rightContent, singleColumn = false, topBorder = true, bottomBorder = true }) => {
+const ContentRow = ({ leftContent, rightContent, singleColumn = false, topBorder = false, bottomBorder = false }) => {
   return (
     <div className={`content-row ${singleColumn ? 'single-column' : ''}`}>
       <section className="left-content">

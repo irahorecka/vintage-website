@@ -34,12 +34,13 @@ function Content() {
         <ContentRow
           leftContent={<ProfileSection />}
           rightContent={<MetabolicNetwork />}
+          topBorder={true}
+          bottomBorder={true}
         />
 
         {/* Single Content Row (Duplicate Height but Single Content) */}
         <ContentRow
           leftContent={<ComicFinder />}
-          topBorder={false}
           singleColumn={true}
         />
         
