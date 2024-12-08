@@ -1,17 +1,26 @@
 import React, { useState } from 'react';
 import RetroButton from './RetroButton';
 
-import profilePic from '../assets/profile.png';
+import profilePic from '../assets/profile-landscape.png';
 import CV from '../assets/ira-horecka-cv.pdf';
 
 const Sidebar = () => {
   const links = [
-    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/ira-horecka-3a8877128/' },
+    {
+      name: 'LinkedIn',
+      url: 'https://www.linkedin.com/in/ira-horecka-3a8877128/',
+    },
     { name: 'GitHub', url: 'https://github.com/irahorecka' },
-    { name: 'Google Scholar', url: 'https://scholar.google.ca/citations?user=RYufrIkAAAAJ&hl=en' },
-    { name: 'Stack Overflow', url: 'https://stackoverflow.com/users/10500424/irahorecka' },
-    { name: 'Mail', url: 'mailto:ira.horecka@yahoo.com' }
-  ];  
+    {
+      name: 'Google Scholar',
+      url: 'https://scholar.google.ca/citations?user=RYufrIkAAAAJ&hl=en',
+    },
+    {
+      name: 'Stack Overflow',
+      url: 'https://stackoverflow.com/users/10500424/irahorecka',
+    },
+    { name: 'Mail', url: 'mailto:ira.horecka@yahoo.com' },
+  ];
 
   // Automatically set the first link as the default selected option
   const [selectedLink, setSelectedLink] = useState(links[0].url);
@@ -39,9 +48,9 @@ const Sidebar = () => {
       <RetroButton text="C.V." onClick={handleCVClick} />
 
       <div className="divider"></div>
-      <a href="#about">About Me</a>
+      <a href="#home">Home</a>
+      <a href="#comics">Comics</a>
       <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
 
       <div className="divider"></div>
       <h2>Find Me Elsewhere</h2>

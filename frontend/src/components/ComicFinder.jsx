@@ -9,9 +9,11 @@ const ComicFinder = () => {
       </div>
       <div className="comic-finder-text">
         <p>
-        I built this comics portal as a side project to make it easy to explore classic comic strips. You can search by date to
-        find a specific strip or browse randomly for something unexpected. It's powered by an API I wrote to handle the queries
-        and keep everything running smoothly. Simple, functional, and fun to use.
+          I built this comics portal as a side project to make it easy to
+          explore classic comic strips. You can search by date to find a
+          specific strip or browse randomly for something unexpected. It's
+          powered by an API I wrote to handle the queries and keep everything
+          running smoothly. Simple, functional, and fun to use.
         </p>
       </div>
       {/* Top Image Container */}
