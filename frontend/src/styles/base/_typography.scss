@@ -6,6 +6,12 @@ h1 {
   color: inherit; // Ensure headers use the root color
 }
 
+h3 {
+  font-size: 1.4em;
+  line-height: 1.1;
+  color: inherit; // Ensure headers use the root color
+}
+
 a {
   font-weight: abstracts.$font-weight-bold;
   color: abstracts.$link-color;
@@ -13,5 +19,15 @@ a {
 
   &:hover {
     color: abstracts.$link-hover-color;
+  }
+}
+
+p {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+
+  &:last-of-type {
+    margin-bottom: 0;
+    padding-bottom: 0;
   }
 }

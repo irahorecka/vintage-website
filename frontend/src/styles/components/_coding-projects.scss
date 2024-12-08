@@ -1,0 +1,82 @@
+@use '../abstracts/index' as abstracts;
+
+.coding-projects-container {
+  max-width: 1000px;
+  background-color: #ffffff;
+  margin: 0 auto;
+
+  .section-header {
+    text-align: center;
+
+    h2 {
+      font-size: 2rem;
+      font-weight: bold;
+      color: abstracts.$dark-text-color; // Slightly softer black for the title
+    }
+  }
+
+  .coding-projects-text {
+    align-items: center;
+    font-size: 1.15rem;
+    line-height: 1.4;
+  }
+
+  .project-grid {
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); // Two columns
+    gap: 20px; // Spacing between rows and columns
+  }
+
+  .project-card {
+    background-color: #fef6e4; // Soft tan/beige base
+    background-image: url('https://www.transparenttextures.com/patterns/soft-paper.png'); // Subtle paper texture
+    background-repeat: repeat;
+    background-size: 300px 300px; // Adjust size for subtle effect
+    border: 1px solid #000000; // Black border for contrast
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); // Subtle shadow for depth
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .project-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: abstracts.$dark-text-color; // Softer black for titles
+    }
+
+    .project-description {
+      font-size: 1rem;
+      line-height: 1.4;
+      color: abstracts.$text-muted; // Muted gray for descriptions
+      margin-bottom: 15px;
+    }
+
+    .project-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px; // Space between the stats
+
+      .stat {
+        display: flex;
+        align-items: stretch;
+        font-size: 0.9rem;
+        color: abstracts.$dark-text-color; // Same black for consistency
+
+        .stat-icon {
+          width: 16px;
+          height: 16px;
+          margin-right: 5px; // Space between icon and number
+        }
+      }
+
+      .languages {
+        font-size: 0.9rem;
+        color: abstracts.$primary-color;
+      }
+    }
+  }
+}

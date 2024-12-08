@@ -7,6 +7,7 @@
 }
 
 .right-sidebar-image {
+  margin-bottom: 10px;
   width: clamp(150px, 12vw, 250px);
   height: auto;
   object-fit: contain; // Ensures the image scales proportionally
