@@ -1,10 +1,11 @@
 .left-content {
   position: relative;
   flex: 2.5;
+  display: flex;
+  flex-direction: column; /* Allows elements to stack vertically */
+  justify-content: space-between; /* Pushes the blue bars to the top and bottom */
   background-color: #ffffff;
   padding: 10px 20px;
-  display: flex;
-  flex-direction: column;
 
   &::after {
     content: '';
@@ -15,6 +16,16 @@
     background-color: #ffffff;
     top: 50%;
     transform: translateY(-50%);
+  }
+
+  .top-content {
+    flex-shrink: 0; /* Prevent shrinking */
+  }
+
+  .bottom-container {
+    position: relative; /* Ensure stacking within this container */
+    margin-top: auto; /* Push this to the bottom */
+    z-index: 1; /* Higher stacking order to stay above purple content */
   }
 }
 
@@ -76,6 +87,7 @@
   padding: 0;
   position: relative;
   min-height: 300px; // Ensures consistent height
+  align-items: stretch; /* Stretch both sections to fill the parent container */
 
   &.single-column {
     justify-content: center; // Center the content

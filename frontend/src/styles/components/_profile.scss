@@ -1,3 +1,5 @@
+@use '../abstracts/index' as abstracts;
+
 .main-container {
   display: flex;
   flex-direction: column; /* Stack child elements vertically */
@@ -70,16 +72,70 @@
 }
 
 .lab-drawing-container {
-  width: 80%;
-  max-width: 800px;
-  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  height: 100%; /* Full height of parent */
+  width: 100%; /* Full width of parent */
+  gap: 0; /* Remove gaps between the sections */
 }
 
-.lab-drawing {
-  margin-top: 10px;
-  margin-bottom: 20px;
+.description-container,
+.viewer-container {
+  flex: 1; /* Equal space horizontally */
+  display: flex;
+  flex-direction: column; /* Stack content inside */
+  justify-content: center; /* Center content vertically */
+  height: 100%; /* Ensure full height within parent */
+  padding: 0; /* No extra padding */
+}
+
+.description-container h3 {
+  padding-bottom: 20px;
+  font-size: 1.5rem;
+  color: abstracts.$dark-text-color; // Slightly softer black for the title
+}
+
+.description-container p {
+  padding: 0;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: black;
+  line-height: 1.5; /* Line height for consistent spacing */
+  overflow: hidden; /* Hide overflowing text */
+  white-space: normal; /* Allow multi-line wrapping */
+  text-overflow: ellipsis; /* Add ellipses for truncated text */
+  display: -webkit-box; /* Flexbox for text wrapping */
+  -webkit-box-orient: vertical; /* Vertical orientation for clamping */
+}
+
+.description-container p.one-line {
+  -webkit-line-clamp: 1; /* Limit to 2 lines */
+  max-height: calc(1.5em); /* Ensure max height fits 2 lines */
+}
+
+.description-container p.two-lines {
+  -webkit-line-clamp: 2; /* Limit to 2 lines */
+  max-height: calc(1.5em * 2); /* Ensure max height fits 2 lines */
+}
+
+.description-container p.three-lines {
+  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  max-height: calc(1.5em * 3); /* Ensure max height fits 3 lines */
+}
+
+#pymol-viewer {
+  position: relative;
+  width: 100%; /* Fill the viewer-container horizontally */
+  height: 100%; /* Fill the viewer-container vertically */
+  overflow: hidden;
+}
+
+#pymol-viewer canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: auto;
-  object-fit: cover;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  height: 100%;
 }
