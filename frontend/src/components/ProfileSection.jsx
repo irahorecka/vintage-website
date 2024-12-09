@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
+import ProteinViewer from './ProteinViewer';
+
 import profileIcon from '../assets/profile-icon.png';
-import labDrawing from '../assets/roest-lab.png';
 
 const ProfileSection = () => {
   return (
@@ -16,12 +18,10 @@ const ProfileSection = () => {
         </div>
         <div className="profile-text">
           <p>
-            {' '}
             Welcome to my page! Take a look around - this site is powered by
             React, Vite, Sass, and a FastAPI backend.
           </p>
           <p>
-            {' '}
             I’m a molecular biologist, protein chemist, and bioinformatician.
             I’m currently pursuing a Ph.D. in computational biology at the
             University of Toronto with Dr. Hannes Röst. When I’m not working,
@@ -30,13 +30,7 @@ const ProfileSection = () => {
         </div>
       </div>
       <div className="profile-black-line"></div>
-      <div className="lab-drawing-container">
-        <img src={labDrawing} alt="Röst Lab Drawing" className="lab-drawing" />
-        <h3>
-          <i>Röst Lab</i>
-        </h3>
-        <p>Drawn in the style of Peanuts by Charles Schulz</p>
-      </div>
+      <ProteinViewer pdbId="1BF9" />
     </div>
   );
 };

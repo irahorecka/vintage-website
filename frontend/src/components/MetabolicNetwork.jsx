@@ -18,10 +18,9 @@ const MetabolicNetwork = () => {
         yeast (~3,000 of 6,000), making us surprisingly alike.
       </p>
       <p>
-        Exploring metabolism in yeast through gene deletions reveals how systems
-        adapt when broken. This helps us understand complex backup mechanisms
-        within cells and highlights vulnerabilities that could serve as
-        potential therapeutic targets.
+        Exploring metabolism in yeast reveals how systems adapt under stress.
+        This helps us understand complex backup mechanisms within cells and
+        greatly aids drug discovery.
       </p>
     </div>
   );
