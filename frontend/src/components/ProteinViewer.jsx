@@ -115,10 +115,18 @@ const ProteinViewer = ({ pdbId }) => {
   };
 
   return (
-    <div className="lab-drawing-container">
+    <div className="protein-explorer-container">
       {/* Left Panel: Description */}
       <div className="description-container">
         <h3>Protein Database Explorer</h3>
+        <div className="query-control-bar">
+          <input
+            type="text"
+            className="query-search-input"
+            placeholder="Type your query..."
+          />
+          <button className="query-button retro-button">Search</button>
+        </div>
         <p className="two-lines">
           <b>Protein Name:</b> {capitalize(summary.proteinName, 'first')}
         </p>

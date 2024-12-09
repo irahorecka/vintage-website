@@ -30,7 +30,7 @@ const ProfileSection = () => {
         </div>
       </div>
       <div className="profile-black-line"></div>
-      <ProteinViewer pdbId="1BF9" />
+      <ProteinViewer pdbId="4EGO" />
     </div>
   );
 };
