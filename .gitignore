@@ -18,4 +18,4 @@ backend/.env
 __pycache__/
 notes/
 
-comic_storage/
+comics_storage/
