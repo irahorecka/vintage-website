@@ -1,56 +1,63 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const CodingProjects = () => {
-  const projects = [
-    {
-      title: 'Comics Portal',
-      description: 'Explore classic comics with ease.',
-      stars: 42,
-      forks: 10,
-      languages: ['Python', 'JavaScript', 'HTML'],
-      link: 'https://github.com/user/comics-portal',
-    },
-    {
-      title: 'Network Visualizer',
-      description: 'Interactive graphs for data exploration.',
-      stars: 35,
-      forks: 15,
-      languages: ['JavaScript', 'HTML', 'CSS'],
-      link: 'https://github.com/user/network-visualizer',
-    },
-    {
-      title: 'RISK Tool',
-      description: 'Network annotation and enrichment.',
-      stars: 50,
-      forks: 20,
-      languages: ['Python', 'R', 'Bash'],
-      link: 'https://github.com/user/risk-tool',
-    },
-    {
-      title: 'Recipe Organizer',
-      description: 'Streamline and categorize your favorite recipes.',
-      stars: 25,
-      forks: 8,
-      languages: ['Python', 'CSS', 'SQL'],
-      link: 'https://github.com/user/recipe-organizer',
-    },
-    {
-      title: 'Vintage UI Toolkit',
-      description: 'Reusable components with retro aesthetics.',
-      stars: 30,
-      forks: 12,
-      languages: ['JavaScript', 'CSS', 'TypeScript'],
-      link: 'https://github.com/user/vintage-ui-toolkit',
-    },
-    {
-      title: 'P10k Optimizer',
-      description: 'Enhance computation workflows effortlessly.',
-      stars: 60,
-      forks: 25,
-      languages: ['Python', 'Shell', 'Perl'],
-      link: 'https://github.com/user/p10k-optimizer',
-    },
-  ];
+  const [projects, setProjects] = useState([]);
+  useEffect(() => {
+    const fetchPinnedRepos = async () => {
+      try {
+        const query = `
+          {
+            user(login: "${import.meta.env.VITE_GITHUB_USERNAME}") {
+              pinnedItems(first: 6, types: REPOSITORY) {
+                nodes {
+                  ... on Repository {
+                    name
+                    description
+                    stargazers {
+                      totalCount
+                    }
+                    forkCount
+                    url
+                    languages(first: 5) {
+                      nodes {
+                        name
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        `;
+
+        const response = await fetch('https://api.github.com/graphql', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
+          },
+          body: JSON.stringify({ query }),
+        });
+
+        const { data } = await response.json();
+
+        const formattedProjects = data.user.pinnedItems.nodes.map((repo) => ({
+          title: repo.name,
+          description: repo.description || 'No description provided.',
+          stars: repo.stargazers.totalCount,
+          forks: repo.forkCount,
+          languages: repo.languages.nodes.map((lang) => lang.name),
+          link: repo.url,
+        }));
+
+        setProjects(formattedProjects);
+      } catch (error) {
+        console.error('Error fetching pinned repos:', error);
+      }
+    };
+
+    fetchPinnedRepos();
+  }, []);
 
   return (
     <div className="coding-projects-container">

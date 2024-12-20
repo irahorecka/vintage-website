@@ -1,155 +1,244 @@
 import React, { useEffect, useState } from 'react';
 
-const ProteinViewer = ({ pdbId }) => {
+import _ from 'lodash';
+
+const capitalize = (text = '', mode = 'title', exceptions = []) => {
+  const isAllUpper = (word) => word === word.toUpperCase(); // Detect fully uppercase words
+
+  switch (mode) {
+    case 'title':
+      return text
+        .split(' ')
+        .map((word) => {
+          const upperWord = word.toUpperCase();
+
+          if (exceptions.includes(upperWord)) {
+            return upperWord; // Keep exceptions fully uppercase
+          }
+
+          if (isAllUpper(word)) {
+            // Convert fully uppercase words to title case
+            return _.capitalize(word.toLowerCase());
+          }
+
+          return _.capitalize(word); // General case: capitalize first letter
+        })
+        .join(' ');
+    case 'first':
+      return _.capitalize(text.toLowerCase());
+    default:
+      return text;
+  }
+};
+
+const fetchRcsbMetadata = async (pdbId) => {
+  const response = await fetch(
+    `https://data.rcsb.org/rest/v1/core/entry/${pdbId}`
+  );
+  if (!response.ok) throw new Error('Failed to fetch RCSB metadata');
+  return response.json();
+};
+
+const fetchPdbStructure = async (pdbId) => {
+  const response = await fetch(`https://files.rcsb.org/download/${pdbId}.pdb`);
+  if (!response.ok) throw new Error('Failed to fetch PDB structure');
+  return response.text();
+};
+
+const initializeViewer = (containerId, pdbData) => {
+  const viewerContainer = document.getElementById(containerId);
+  if (!viewerContainer) throw new Error('3Dmol.js viewer container not found');
+
+  const viewer = $3Dmol.createViewer(viewerContainer, {
+    backgroundColor: 'white',
+  });
+  viewer.addModel(pdbData, 'pdb');
+  viewer.setStyle({}, { cartoon: { color: 'spectrum' } });
+  viewer.zoomTo();
+  viewer.render();
+};
+
+const ProteinViewer = () => {
+  const [pdbId, setPdbId] = useState('6MP4');
+  const [query, setQuery] = useState('');
   const [pdbInfo, setPdbInfo] = useState(null);
-  const [uniProtInfo, setUniProtInfo] = useState(null);
-  const [pdbeInfo, setPdbeInfo] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [viewerLoading, setViewerLoading] = useState(true);
 
   useEffect(() => {
-    const fetchMetadataAndViewer = async () => {
+    if (!pdbId) return;
+
+    const fetchAndDisplayProtein = async () => {
       try {
-        // Fetch metadata from RCSB
-        const metadataUrl = `https://data.rcsb.org/rest/v1/core/entry/${pdbId}`;
-        const rcsbResponse = await fetch(metadataUrl);
-        if (!rcsbResponse.ok) throw new Error('Failed to fetch RCSB metadata');
-        const rcsbData = await rcsbResponse.json();
-        setPdbInfo(rcsbData);
+        if (!pdbInfo) setViewerLoading(true); // Start viewer loading
 
-        // Fetch UniProt metadata
-        const uniProtUrl = `https://rest.uniprot.org/uniprotkb/search?query=${pdbId}&format=json`;
-        const uniProtResponse = await fetch(uniProtUrl);
-        if (uniProtResponse.ok) {
-          const uniProtData = await uniProtResponse.json();
-          setUniProtInfo(uniProtData.results?.[0]);
+        const response = await fetch(
+          `http://127.0.0.1:8000/api/protein?keyword=${pdbId}`
+        );
+        const data = await response.json();
+
+        if (!data || !data.metadata) {
+          throw new Error('Failed to fetch metadata from the backend.');
         }
 
-        // Fetch PDBe metadata
-        const pdbeUrl = `https://www.ebi.ac.uk/pdbe/api/pdb/entry/summary/${pdbId}`;
-        const pdbeResponse = await fetch(pdbeUrl);
-        if (pdbeResponse.ok) {
-          const pdbeData = await pdbeResponse.json();
-          setPdbeInfo(pdbeData[pdbId]?.[0]);
-        }
+        const metadata = data.metadata;
+        const pdbIdFromBackend = metadata.pdb_id;
+        const pdbFileUrl = `https://files.rcsb.org/download/${pdbIdFromBackend}.pdb`;
 
-        // Initialize 3Dmol.js Viewer
-        if (typeof $3Dmol === 'undefined') {
-          throw new Error('3Dmol.js is not loaded!');
-        }
-
-        const viewer = $3Dmol.createViewer('pymol-viewer', {
-          backgroundColor: 'white',
+        const pdbData = await fetch(pdbFileUrl).then((res) => {
+          if (!res.ok) throw new Error('Failed to fetch PDB structure file.');
+          return res.text();
         });
-        const pdbUrl = `https://files.rcsb.org/download/${pdbId}.pdb`;
 
-        const pdbResponse = await fetch(pdbUrl);
-        if (!pdbResponse.ok) throw new Error('Failed to fetch PDB structure');
-        const pdbData = await pdbResponse.text();
-
-        viewer.addModel(pdbData, 'pdb'); // Load the structure
-        viewer.setStyle({}, { cartoon: { color: 'spectrum' } }); // Apply style
-        viewer.zoomTo(); // Center the molecule
-        viewer.render(); // Render the scene
+        setPdbInfo(metadata);
+        initializeViewer('pymol-viewer', pdbData);
+        setErrorMessage('');
       } catch (error) {
-        console.error(error);
-        setErrorMessage('Failed to fetch data or load structure.');
+        console.error('Error fetching or displaying protein data:', error);
+        setErrorMessage('Failed to load PDB structure or metadata.');
+      } finally {
+        setViewerLoading(false); // Stop viewer loading
       }
     };
 
-    fetchMetadataAndViewer();
+    fetchAndDisplayProtein();
   }, [pdbId]);
 
-  const getDelineatedSummary = (pdbInfo, uniProtInfo, pdbeInfo) => {
-    if (!pdbInfo) return null;
+  const handleSearch = async () => {
+    setIsLoading(true);
+    try {
+      // Call the Flask backend to get the first PDB ID for the query
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/protein?keyword=${query}`
+      );
+      const data = await response.json();
 
-    const title = pdbInfo.struct?.title?.toLowerCase() || 'no title available';
-    const method =
-      pdbInfo.exptl?.[0]?.method?.toLowerCase() ||
-      'unknown experimental method';
-    const year = pdbInfo.rcsb_primary_citation?.year || 'N/A';
-    const functionDescription =
-      uniProtInfo?.proteinDescription?.recommendedName?.fullName?.value?.toLowerCase() ||
-      'unknown function';
-    const organism =
-      pdbInfo.rcsb_entity_source_organism?.[0]?.scientific_name?.toLowerCase() ||
-      'organism unknown';
-    const pdbeSummary = pdbeInfo?.title?.toLowerCase() || '';
+      if (!data || !data.pdb_id) {
+        throw new Error('No PDB ID found for the given keyword.');
+      }
 
-    return {
-      proteinName: functionDescription,
-      organism,
-      title,
-      experimentalMethod: method,
-      year,
-      details: pdbeSummary,
-    };
+      // Set the PDB ID returned from the backend
+      setPdbId(data.pdb_id.toUpperCase());
+      setErrorMessage('');
+    } catch (error) {
+      console.error('Error fetching PDB ID from backend:', error);
+      setErrorMessage('Failed to fetch PDB ID or metadata from the backend.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  if (errorMessage) {
-    return <p style={{ color: 'red' }}>{errorMessage}</p>;
-  }
+  const renderSummary = () => {
+    const getSafeValue = (obj, path, defaultValue = 'N/A') =>
+      path.reduce(
+        (acc, key) => (acc && acc[key] !== undefined ? acc[key] : defaultValue),
+        obj
+      );
 
-  if (!pdbInfo) {
-    return <p>loading...</p>;
-  }
+    const summary = pdbInfo
+      ? {
+          pdbId: getSafeValue(pdbInfo, ['pdb_id'], 'N/A'),
+          proteinName: getSafeValue(
+            pdbInfo,
+            ['protein_name'],
+            'No protein name available'
+          ),
+          experimentalMethod: getSafeValue(
+            pdbInfo,
+            ['experimental_method'],
+            'Unknown experimental method'
+          ),
+          resolution:
+            getSafeValue(pdbInfo, ['resolution'], 'Not available') + ' Å',
+          year: getSafeValue(pdbInfo, ['year'], 'N/A'),
+          authors: getSafeValue(pdbInfo, ['authors'], []),
+          keywords: getSafeValue(
+            pdbInfo,
+            ['keywords'],
+            'No keywords available'
+          ),
+        }
+      : {
+          pdbId: 'Loading...',
+          proteinName: 'Loading...',
+          experimentalMethod: 'Loading...',
+          resolution: 'Loading...',
+          year: 'Loading...',
+          authors: [], // Always an array, even during loading
+          keywords: 'Loading...',
+        };
 
-  const summary = getDelineatedSummary(pdbInfo, uniProtInfo, pdbeInfo);
-
-  const capitalize = (text, mode = 'title') => {
-    if (!text) return ''; // Handle empty or undefined input
-
-    if (mode === 'title') {
-      // Title Case: Capitalize the first letter of each word
-      return text
-        .toLowerCase()
-        .split(' ')
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-    } else if (mode === 'first') {
-      // First Letter Uppercase: Capitalize only the first letter
-      return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
-    }
-
-    // Default: Return the original text
-    return text;
+    return (
+      <div className="card-container">
+        <div className="card-body">
+          <p className="one-line">
+            <b>PDB ID: </b> {summary.pdbId}
+          </p>
+          <p className="three-lines">
+            <b>Protein Name: </b> {summary.proteinName}
+          </p>
+          <p className="two-lines">
+            <b>Class: </b> {capitalize(summary.keywords, 'title')}
+          </p>
+          <p className="two-lines">
+            <b>Experimental Method: </b>{' '}
+            {capitalize(summary.experimentalMethod, 'title')}
+          </p>
+          <p className="one-line">
+            <b>Resolution: </b>{' '}
+            {summary.resolution ? summary.resolution : 'Not available'}
+          </p>
+          <p className="one-line">
+            <b>Year: </b> {summary.year}
+          </p>
+          <p className="two-lines">
+            <b>Authors: </b>{' '}
+            {summary.authors.length > 0
+              ? summary.authors.join(', ')
+              : 'No authors available'}
+          </p>
+        </div>
+      </div>
+    );
   };
 
   return (
     <div className="protein-explorer-container">
-      {/* Left Panel: Description */}
       <div className="description-container">
-        <h3>Protein Database Explorer</h3>
+        <h3>Explore Millions of Proteins</h3>
         <div className="query-control-bar">
           <input
             type="text"
             className="query-search-input"
-            placeholder="Type your query..."
+            placeholder="Enter keyword (e.g., lactase)"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSearch();
+              }
+            }}
+            aria-label="Enter keyword"
           />
-          <button className="query-button retro-button">Search</button>
+          <button
+            className="query-button retro-button"
+            onClick={handleSearch}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Loading...' : 'Search'}
+          </button>
         </div>
-        <p className="two-lines">
-          <b>Protein Name:</b> {capitalize(summary.proteinName, 'first')}
-        </p>
-        <p className="one-line">
-          <b>Organism:</b> {capitalize(summary.organism, 'title')}
-        </p>
-        <p className="two-lines">
-          <b>Study Title:</b> {capitalize(summary.title, 'first')}
-        </p>
-        <p className="two-lines">
-          <b>Experimental Method:</b>{' '}
-          {capitalize(summary.experimentalMethod, 'title')}
-        </p>
-        <p className="one-line">
-          <b>Year:</b> {summary.year}
-        </p>
-        <p className="two-lines">
-          <b>Additional Details:</b> {capitalize(summary.details, 'first')}
-        </p>
+        {renderSummary()}
+        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
       </div>
-      {/* Right Panel: 3D Viewer */}
+
       <div className="viewer-container">
-        <div id="pymol-viewer"></div>
+        <div id="pymol-viewer">
+          {viewerLoading && (
+            <div className="loading-text">Loading viewer...</div>
+          )}
+        </div>
       </div>
     </div>
   );
