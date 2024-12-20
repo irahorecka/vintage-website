@@ -80,3 +80,9 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .project-grid {
+    gap: 10px !important; // Reduce spacing for smaller screens
+  }
+}

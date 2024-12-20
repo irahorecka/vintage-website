@@ -2,22 +2,32 @@
 
 .protein-explorer-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: row; /* Default: side-by-side layout */
   justify-content: space-between;
   align-items: stretch;
   height: 100%; /* Full height of parent */
   width: 100%; /* Full width of parent */
-  gap: 0; /* Remove gaps between the sections */
+  gap: 0; /* Remove gaps */
 }
 
-.description-container,
 .viewer-container {
+  flex: 1; /* Allow the viewer to take up available space */
+  display: flex; /* Ensure viewer stretches */
+  justify-content: center; /* Center content */
+  align-items: center;
+  min-height: 300px; /* Ensure a minimum height for the viewer */
+  background-color: #ffffff; /* Optional: Background to see container */
+}
+
+.description-container {
+  width: 100%; /* Fill the parent container */
   flex: 1; /* Equal space horizontally */
   display: flex;
   flex-direction: column; /* Stack content inside */
   justify-content: center; /* Center content vertically */
   height: 100%; /* Ensure full height within parent */
   padding: 0; /* No extra padding */
+  position: relative; /* Relative positioning for absolute children */
 }
 
 .description-container {
@@ -29,8 +39,8 @@
     gap: 10px;
 
     .query-search-input {
-      width: 90%; /* Matches the comic style */
-      height: 75%; /* Matches the comic style */
+      width: 100%;
+      height: 75%;
       align-items: center;
       background-color: #ffffff;
       color: abstracts.$dark-text-color;
@@ -49,26 +59,27 @@
       }
 
       &::placeholder {
-        color: abstracts.$dark-text-color; /* Placeholder text color */
+        color: abstracts.$text-muted;
         opacity: 1; /* Full opacity */
       }
 
       // Vendor-specific placeholder styling for compatibility
       &::-webkit-input-placeholder {
-        color: abstracts.$dark-text-color;
+        color: abstracts.$text-muted;
       }
       &::-moz-placeholder {
-        color: abstracts.$dark-text-color;
+        color: abstracts.$text-muted;
       }
       &:-ms-input-placeholder {
-        color: abstracts.$dark-text-color;
+        color: abstracts.$text-muted;
       }
       &:-moz-placeholder {
-        color: abstracts.$dark-text-color;
+        color: abstracts.$text-muted;
       }
     }
 
     .query-button {
+      height: 75%; /* Matches the comic style */
       width: 100px;
       margin-bottom: 0;
       padding: 2px 10px;
@@ -134,11 +145,16 @@
   max-height: calc(1.5em * 3); /* Ensure max height fits 3 lines */
 }
 
+.description-container p:last-child {
+  margin-bottom: 0;
+}
+
 #pymol-viewer {
   position: relative;
   width: 100%; /* Fill the viewer-container horizontally */
   height: 100%; /* Fill the viewer-container vertically */
   overflow: hidden;
+  background-color: #ffffff;
 }
 
 #pymol-viewer canvas {
@@ -147,4 +163,27 @@
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+#pymol-viewer .loading-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  color: abstracts.$text-muted;
+  text-align: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .protein-explorer-container {
+    flex-direction: column; /* Switch to column layout */
+  }
+
+  .viewer-container {
+    min-height: 300px; /* Prevent collapsing */
+    width: 100%; /* Ensure it takes full width */
+  }
 }

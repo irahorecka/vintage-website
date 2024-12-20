@@ -8,7 +8,7 @@
 
   .comic-search-input,
   .comic-date-picker {
-    width: 90%;
+    width: 100%;
     height: 75%;
     align-items: center;
     background-color: #ffffff;
@@ -23,6 +23,7 @@
 
     &:focus {
       outline: none;
+      border-color: #8b0000; /* Add a red border on focus */
       box-shadow: none;
     }
 
@@ -32,14 +33,14 @@
 
       &:checked,
       &:hover {
-        background-color: #8b0000 !important; // Red background
-        color: #ffffff !important; // White text
+        background-color: #8b0000 !important; /* Red background */
+        color: #ffffff !important; /* White text */
       }
     }
 
     &::placeholder {
-      color: abstracts.$dark-text-color; // Placeholder text color
-      opacity: 1; // Full opacity
+      color: abstracts.$dark-text-color; /* Placeholder text color */
+      opacity: 1; /* Full opacity */
     }
 
     // Vendor prefixes for better compatibility
@@ -65,8 +66,63 @@
     flex: 1;
   }
 
+  .comic-search-input::placeholder {
+    color: abstracts.$text-muted; /* Text color */
+  }
+
+  position: relative; /* Ensures the dropdown is positioned relative to this container */
+
+  .suggestions-dropdown {
+    position: absolute;
+    top: 100%; /* Align to the bottom of the input */
+    left: 0; /* Align to the left edge of the input */
+    width: 100%; /* Match the input width */
+    margin-top: 2px; /* Add small spacing below input */
+    z-index: 10;
+    background-color: #ffffff;
+    border: 1px solid #8b0000; /* Vintage red border for a classic look */
+    border-radius: 0; /* No rounded corners */
+    list-style: none; /* Remove default bullet points */
+    padding: 0;
+    max-height: 150px; /* Limit dropdown height and make it thinner */
+    overflow-y: auto;
+
+    &.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    &.clearing {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+
+      li {
+        padding: 0 5px; /* Compact padding for a thinner dropdown */
+        font-family: 'Georgia', 'Times New Roman', serif;
+        font-size: 1rem; /* Smaller font size for a vintage appearance */
+        color: abstracts.$dark-text-color;
+        cursor: pointer;
+        border-bottom: 1px solid #ddd; /* Subtle separator */
+
+        &:hover {
+          background-color: #8b0000; /* Red hover background */
+          color: #ffffff; /* White text on hover */
+        }
+
+        &:last-child {
+          border-bottom: none; /* Remove the bottom border for the last item */
+        }
+      }
+    }
+  }
+
   @media (max-width: 768px) {
-    flex-direction: column; // Stack elements vertically
+    flex-direction: column; /* Stack elements vertically */
     justify-content: center;
     align-items: stretch;
 
@@ -74,11 +130,15 @@
     .comic-date-picker,
     .comic-button {
       width: 100%;
-      margin-bottom: 10px; // Add spacing between elements
+      margin-bottom: 10px; /* Add spacing between elements */
     }
 
     .comic-button:last-of-type {
-      margin-bottom: 0; // Remove bottom margin for the last button
+      margin-bottom: 0; /* Remove bottom margin for the last button */
+    }
+
+    ul {
+      max-height: 150px; /* Adjust height for smaller screens */
     }
   }
 }

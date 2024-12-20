@@ -32,9 +32,12 @@
 }
 
 @media (max-width: 768px) {
-  .top-header {
-    padding-top: 110px;
-    padding-bottom: 5px;
+  .section-header {
+    align-items: center;
+  }
+
+  .quote-container {
+    padding-top: 100px;
   }
 
   .top-header h1 {

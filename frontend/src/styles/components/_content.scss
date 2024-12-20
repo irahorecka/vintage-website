@@ -30,7 +30,7 @@
 }
 
 .feature-box {
-  padding: 20px;
+  padding: 10px 20px;
   background-color: #ffffff;
   margin-bottom: 10px;
 
@@ -110,5 +110,15 @@
     background-color: #000000;
     top: 50%;
     transform: translateY(-50%);
+  }
+}
+
+@media (max-width: 768px) {
+  .left-content {
+    padding: 10px;
+  }
+
+  .feature-box {
+    padding: 10px;
   }
 }
