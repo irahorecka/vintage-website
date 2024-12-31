@@ -11,4 +11,16 @@ export default defineConfig({
       '@': '/src',
     },
   },
+  server: {
+    proxy: {
+      '/humans.txt': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+      },
+      '/easteregg.txt': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+      },
+    },
+  },
 });
