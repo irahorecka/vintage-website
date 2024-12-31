@@ -67,7 +67,8 @@ const CodingProjects = () => {
       <div className="coding-projects-text">
         <p>
           These are some of the projects I’ve worked on, ranging from tools for
-          exploring networks to retro-inspired UI components. Click through to
+          exploring networks to retro-inspired UI components. Check out my{' '}
+          <a href="https://github.com/irahorecka">GitHub</a> or click through to
           learn more about each.
         </p>
       </div>
@@ -76,7 +77,6 @@ const CodingProjects = () => {
         {projects.map((project, index) => (
           <a
             href={project.link}
-            target="_blank"
             rel="noopener noreferrer"
             className="project-card"
             key={index}

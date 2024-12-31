@@ -6,6 +6,7 @@ import MetabolicNetwork from './MetabolicNetwork';
 import ContentRow from './ContentRow';
 import CodingProjects from './CodingProjects';
 import WhatsHot from './WhatsHot';
+import Footer from './Footer';
 
 // Function to get the current date in the format "MONTH DAY"
 function getCurrentDate() {
@@ -57,6 +58,9 @@ function Content() {
           singleColumn={true}
           id="projects"
         />
+
+        {/* Footer */}
+        <Footer />
       </main>
     </div>
   );

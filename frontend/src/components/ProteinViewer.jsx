@@ -206,12 +206,18 @@ const ProteinViewer = () => {
   return (
     <div className="protein-explorer-container">
       <div className="description-container">
-        <h3>Explore Millions of Proteins</h3>
+        <h3>
+          Explore <i>Millions</i> of Proteins
+        </h3>
+        <p>
+          Enter keywords to explore detailed 3D protein structures from{' '}
+          <a href="https://www.rcsb.org/">RCSB Protein Data Bank</a>.
+        </p>
         <div className="query-control-bar">
           <input
             type="text"
             className="query-search-input"
-            placeholder="Enter keyword (e.g., lactase)"
+            placeholder="Enter keywords (e.g., lactase)"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => {

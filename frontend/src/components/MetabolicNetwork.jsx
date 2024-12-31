@@ -10,17 +10,20 @@ const MetabolicNetwork = () => {
         className="right-sidebar-image"
       />
       <h3>
-        <i>S. cerevisiae</i>
+        <i>Saccharomyces cerevisiae</i>
       </h3>
-      <p>The Metabolic Network in 3D!</p>
+      <p>Baker's Yeast Metabolism in 3D!</p>
       <p>
-        Believe it or not, we share about half of all genes found in baker's
-        yeast (~3,000 of 6,000), making us surprisingly alike.
+        Believe it or not, we share about half of all genes found in yeast
+        (~3,000 of 6,000), making us surprisingly alike.
       </p>
       <p>
-        Exploring metabolism in yeast reveals how systems adapt under stress.
-        This helps us understand complex backup mechanisms within cells and
-        greatly aids drug discovery.
+        Exploring metabolism in yeast reveals how systems adapt under stress,
+        uncovering intricate backup mechanisms that sustain life.
+      </p>
+      <p>
+        These discoveries not only deepen our understanding of cellular
+        resilience but also play an important role in advancing drug discovery.
       </p>
     </div>
   );

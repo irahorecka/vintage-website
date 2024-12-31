@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import defaultComic from '../assets/calvin-and-hobbes.png';
 
 const ComicFinder = () => {
-  const [comic, setComic] = useState(null);
+  const [comic, setComic] = useState('Calvin and Hobbes'); // Default comic
   const [date, setDate] = useState(() => {
     const today = new Date();
-    return today.toISOString().split('T')[0];
+    return today.toLocaleDateString('en-CA'); // 'en-CA' gives an ISO-like format: YYYY-MM-DD
   });
-  const [comicName, setComicName] = useState('');
+  const [comicName, setComicName] = useState(comic);
   const [suggestions, setSuggestions] = useState([]);
-  const [activeIndex, setActiveIndex] = useState(-1); // Track active suggestion
+  const [isLoading, setIsLoading] = useState(true);
   const [isClearing, setIsClearing] = useState(false); // State to handle animation
+  const [imageHeight, setImageHeight] = useState(null); // Track the image height
+  const imgRef = useRef(null); // Reference to the image
 
   const fetchComic = async (type) => {
     try {
+      setIsLoading(true); // Start loading
       const params = {
         comic: comicName,
         ...(type === 'search' && date ? { date } : {}),
@@ -25,10 +27,19 @@ const ComicFinder = () => {
       );
       setComic(response.data.file_path); // Update with the file path
     } catch (error) {
-      console.error('Error fetching comic:', error);
-      alert(
-        'Failed to fetch the comic. Please check your inputs or try again.'
-      );
+      console.error('Error fetching comic for date:', error);
+      // Perform a random search as a fallback
+      try {
+        const response = await axios.get(
+          'http://localhost:8000/api/comics/search',
+          { params: { comic: comicName } } // Adjust to random fetch logic if needed
+        );
+        setComic(response.data.file_path); // Update with the file path
+      } catch (randomError) {
+        console.error('Error fetching random comic as fallback:', randomError);
+      }
+    } finally {
+      setIsLoading(false); // End loading
     }
   };
 
@@ -47,22 +58,6 @@ const ComicFinder = () => {
     }
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'ArrowDown') {
-      setActiveIndex((prevIndex) =>
-        prevIndex < suggestions.length - 1 ? prevIndex + 1 : 0
-      );
-    } else if (e.key === 'ArrowUp') {
-      setActiveIndex((prevIndex) =>
-        prevIndex > 0 ? prevIndex - 1 : suggestions.length - 1
-      );
-    } else if (e.key === 'Enter' && activeIndex !== -1) {
-      setComicName(suggestions[activeIndex].name);
-      clearSuggestions();
-      e.target.blur();
-    }
-  };
-
   const clearSuggestions = () => {
     setIsClearing(true);
     setTimeout(() => {
@@ -72,12 +67,23 @@ const ComicFinder = () => {
   };
 
   useEffect(() => {
-    if (comicName.length > 0) {
+    if (comicName !== comic && comicName.length > 0) {
       fetchSuggestions(comicName);
     } else {
       clearSuggestions();
     }
-  }, [comicName]);
+  }, [comicName]); // Fetch suggestions when comicName changes
+
+  useEffect(() => {
+    fetchComic('search');
+  }, []); // Fetch today's Calvin and Hobbes comic on initial render
+
+  useEffect(() => {
+    if (imgRef.current) {
+      // Update the height dynamically when the image is rendered
+      setImageHeight(imgRef.current.offsetHeight);
+    }
+  }, [comic]); // Update whenever the comic changes
 
   return (
     <div className="comic-finder-container">
@@ -89,18 +95,37 @@ const ComicFinder = () => {
           I built this comics portal as a side project to make it easy to
           explore classic comic strips. You can search by date to find a
           specific strip or browse randomly for something unexpected. It's
-          powered by an API I wrote to handle the queries and keep everything
-          running smoothly. Simple, functional, and fun to use.
+          powered by an <a href="https://github.com/irahorecka/comics">API</a> I
+          wrote to handle the queries and keep everything running smoothly.
+          Simple, functional, and fun to use!
         </p>
       </div>
 
       {/* Top Image Container */}
-      <div className="comic-image-container">
-        <img
-          src={comic ? `http://localhost:8000/${comic}` : defaultComic}
-          alt="Comic Display"
-          className="comic-image"
-        />
+      <div className="comic-image-container" style={{ position: 'relative' }}>
+        {isLoading ? (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: imageHeight || '30vh', // Default height if not yet determined
+              fontSize: '1.2rem',
+              fontFamily: 'Georgia, "Times New Roman", serif',
+              color: '#5f5f5f',
+            }}
+          >
+            Loading comic...
+          </div>
+        ) : (
+          <img
+            ref={imgRef} // Attach ref to the image
+            src={`http://localhost:8000/${comic}`}
+            alt="Comic Display"
+            className="comic-image"
+            style={{ objectFit: 'contain' }}
+          />
+        )}
       </div>
 
       {/* Bottom Control Bar */}
@@ -114,7 +139,6 @@ const ComicFinder = () => {
             onChange={(e) => {
               setComicName(e.target.value);
               if (e.target.value.trim().length > 0) {
-                setActiveIndex(-1);
                 fetchSuggestions(e.target.value);
               } else {
                 setSuggestions([]);
@@ -129,7 +153,6 @@ const ComicFinder = () => {
                 setTimeout(() => setSuggestions([]), 150);
               }
             }}
-            onKeyDown={handleKeyDown}
           />
           {suggestions.length > 0 && (
             <div
@@ -139,7 +162,6 @@ const ComicFinder = () => {
                 {suggestions.map((suggestion, index) => (
                   <li
                     key={index}
-                    className={activeIndex === index ? 'active' : ''}
                     onClick={() => {
                       setComicName(suggestion.name);
                       clearSuggestions();
