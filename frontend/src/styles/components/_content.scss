@@ -1,3 +1,10 @@
+p {
+  a {
+    color: #0000ff;
+    text-decoration: underline;
+  }
+}
+
 .left-content {
   position: relative;
   flex: 2.5;
@@ -36,6 +43,10 @@
 
   p {
     margin: 0;
+
+    i {
+      font-size: 1.05rem;
+    }
   }
 }
 
