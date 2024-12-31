@@ -23,7 +23,8 @@ const MetabolicNetwork = () => {
       </p>
       <p>
         These discoveries not only deepen our understanding of cellular
-        resilience but also play an important role in advancing drug discovery.
+        resilience but also play an important role in advancing medical research
+        and drug discovery.
       </p>
     </div>
   );

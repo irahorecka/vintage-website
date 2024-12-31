@@ -210,7 +210,8 @@ const ProteinViewer = () => {
           Explore <i>Millions</i> of Proteins
         </h3>
         <p>
-          Enter keywords to explore detailed 3D protein structures from{' '}
+          Genes are blueprints for molecular machines called proteins. Explore
+          detailed 3D protein structures from{' '}
           <a href="https://www.rcsb.org/">RCSB Protein Data Bank</a>.
         </p>
         <div className="query-control-bar">
