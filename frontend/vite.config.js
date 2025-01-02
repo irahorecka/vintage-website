@@ -4,23 +4,34 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    alias: {
-      '@': '/src',
-    },
-  },
-  server: {
-    proxy: {
-      '/humans.txt': {
-        target: 'http://localhost:8000',
-        changeOrigin: true,
-      },
-      '/easteregg.txt': {
-        target: 'http://localhost:8000',
-        changeOrigin: true,
+export default defineConfig(({ mode }) => {
+  const isProduction = mode === 'production';
+
+  return {
+    plugins: [react()],
+    resolve: {
+      alias: {
+        '@': '/src', // Keep the alias for cleaner imports
       },
     },
-  },
+    base: isProduction ? '/' : '/', // Adjust the base path for production deployment
+    build: {
+      outDir: 'dist', // Output directory for production build
+      assetsDir: 'assets', // Directory for static assets
+      sourcemap: false, // Disable source maps for production
+      emptyOutDir: true, // Clean the output directory before building
+    },
+    server: {
+      proxy: {
+        '/humans.txt': {
+          target: 'http://localhost:8000',
+          changeOrigin: true,
+        },
+        '/easteregg.txt': {
+          target: 'http://localhost:8000',
+          changeOrigin: true,
+        },
+      },
+    },
+  };
 });
