@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => {
         '@': '/src', // Keep the alias for cleaner imports
       },
     },
-    base: '', // Use relative paths in production
+    base: isProduction ? '/' : '/', // Adjust the base path for production deployment
     build: {
       outDir: 'dist', // Output directory for production build
       assetsDir: 'assets', // Directory for static assets
