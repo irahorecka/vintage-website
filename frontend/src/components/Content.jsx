@@ -30,7 +30,7 @@ function Content() {
             </h1>
             <h1>—Harry Nilsson</h1>
           </div>
-          <div className="year-background">2024</div>
+          <div className="year-background">2025</div>
           <div className="date-banner">{getCurrentDate()}</div>
         </section>
 

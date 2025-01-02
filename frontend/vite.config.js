@@ -24,11 +24,11 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         '/humans.txt': {
-          target: 'http://localhost:8000',
+          target: 'https://irahorecka.com',
           changeOrigin: true,
         },
         '/easteregg.txt': {
-          target: 'http://localhost:8000',
+          target: 'https://irahorecka.com',
           changeOrigin: true,
         },
       },

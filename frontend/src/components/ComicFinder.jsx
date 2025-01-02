@@ -22,7 +22,7 @@ const ComicFinder = () => {
         ...(type === 'search' && date ? { date } : {}),
       };
       const response = await axios.get(
-        'http://localhost:8000/api/comics/search',
+        'https://irahorecka.com/api/comics/search',
         { params }
       );
       setComic(response.data.file_path); // Update with the file path
@@ -31,7 +31,7 @@ const ComicFinder = () => {
       // Perform a random search as a fallback
       try {
         const response = await axios.get(
-          'http://localhost:8000/api/comics/search',
+          'https://irahorecka.com/api/comics/search',
           { params: { comic: comicName } } // Adjust to random fetch logic if needed
         );
         setComic(response.data.file_path); // Update with the file path
@@ -46,7 +46,7 @@ const ComicFinder = () => {
   const fetchSuggestions = async (input) => {
     try {
       const response = await axios.get(
-        'http://localhost:8000/api/comics/fuzzy-search',
+        'https://irahorecka.com/api/comics/fuzzy-search',
         {
           params: { comic_name: input },
         }
@@ -120,7 +120,7 @@ const ComicFinder = () => {
         ) : (
           <img
             ref={imgRef} // Attach ref to the image
-            src={`http://localhost:8000/${comic}`}
+            src={`https://irahorecka.com/${comic}`}
             alt="Comic Display"
             className="comic-image"
             style={{ objectFit: 'contain' }}
