@@ -89,12 +89,11 @@ async def fetch_comic(comic: str, date: str = None):
 
         # Generate a unique filename using the resolved date
         filename = f"{comic_key}_{date}.png"
-        query_file_path = os.path.join(FULL_COMICS_DIR, filename)
-        download_file_path = os.path.join(FULL_COMICS_DIR, filename)
+        query_file_path = f"/static/images/comics_storage/{filename}"
 
         # Check if the file already exists (only for specific dates)
-        if not os.path.exists(download_file_path):
-            comic_instance.download(download_file_path)
+        if not os.path.exists(query_file_path):
+            comic_instance.download(query_file_path)
 
         return {"comic": comic, "date": date, "file_path": query_file_path}
 
