@@ -1,3 +1,7 @@
+aiohttp
+comics
 fastapi
-uvicorn
 fastapi-cors
+rapidfuzz
+rcsbsearchapi
+uvicorn
