@@ -11,6 +11,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Current file's director
 FULL_COMICS_DIR = os.path.abspath(
     os.path.join(BASE_DIR, "..", "static", "images", "comics_storage")
 )
+RELATIVE_COMICS_DIR = os.path.relpath(FULL_COMICS_DIR, BASE_DIR)
 # Ensure the directory exists
 os.makedirs(FULL_COMICS_DIR, exist_ok=True)
 
@@ -89,11 +90,12 @@ async def fetch_comic(comic: str, date: str = None):
 
         # Generate a unique filename using the resolved date
         filename = f"{comic_key}_{date}.png"
-        query_file_path = f"/static/images/comics_storage/{filename}"
+        query_file_path = os.path.join(RELATIVE_COMICS_DIR, filename)
+        download_file_path = os.path.join(FULL_COMICS_DIR, filename)
 
         # Check if the file already exists (only for specific dates)
-        if not os.path.exists(query_file_path):
-            comic_instance.download(query_file_path)
+        if not os.path.exists(download_file_path):
+            comic_instance.download(download_file_path)
 
         return {"comic": comic, "date": date, "file_path": query_file_path}
 
