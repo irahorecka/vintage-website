@@ -13,6 +13,8 @@ function getCurrentDate() {
   const options = { month: 'long', day: 'numeric' };
   return new Date().toLocaleDateString('en-US', options);
 }
+// Get the current year
+const currentYear = new Date().getFullYear();
 
 function Content() {
   return (
@@ -30,7 +32,7 @@ function Content() {
             </h1>
             <h1>—Harry Nilsson</h1>
           </div>
-          <div className="year-background">2025</div>
+          <div className="year-background">{currentYear}</div>
           <div className="date-banner">{getCurrentDate()}</div>
         </section>
 
