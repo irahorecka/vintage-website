@@ -74,7 +74,7 @@ const ProteinViewer = () => {
         if (!pdbInfo) setViewerLoading(true); // Start viewer loading
 
         const response = await fetch(
-          `http://127.0.0.1:8000/api/protein?keyword=${pdbId}`
+          `https://irahorecka.com/api/protein?keyword=${pdbId}`
         );
         const data = await response.json();
 
@@ -110,7 +110,7 @@ const ProteinViewer = () => {
     try {
       // Call the Flask backend to get the first PDB ID for the query
       const response = await fetch(
-        `http://127.0.0.1:8000/api/protein?keyword=${query}`
+        `https://irahorecka.com/api/protein?keyword=${query}`
       );
       const data = await response.json();
 
