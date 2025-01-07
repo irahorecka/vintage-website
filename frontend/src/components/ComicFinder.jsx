@@ -2,21 +2,30 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 const ComicFinder = () => {
-  const [comic, setComic] = useState('Calvin and Hobbes'); // Default comic
+  const [comic, setComic] = useState(''); // Default empty state
   const [date, setDate] = useState(() => {
     const today = new Date();
     return today.toLocaleDateString('en-CA'); // 'en-CA' gives an ISO-like format: YYYY-MM-DD
   });
-  const [comicName, setComicName] = useState(comic);
+  const [comicName, setComicName] = useState('Calvin and Hobbes'); // Default comic name
   const [suggestions, setSuggestions] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isClearing, setIsClearing] = useState(false); // State to handle animation
+  const [isLoading, setIsLoading] = useState(true); // For initial load
+  const [buttonLoading, setButtonLoading] = useState({
+    search: false,
+    random: false,
+  }); // Button-specific loading states
   const [imageHeight, setImageHeight] = useState(null); // Track the image height
   const imgRef = useRef(null); // Reference to the image
+  const hasFetchedInitial = useRef(false); // Prevent double fetch on page load
 
-  const fetchComic = async (type) => {
+  const fetchComic = async (type, isInitial = false) => {
+    if (isInitial) {
+      setIsLoading(true);
+    } else {
+      setButtonLoading((prev) => ({ ...prev, [type]: true }));
+    }
+
     try {
-      setIsLoading(true); // Start loading
       const params = {
         comic: comicName,
         ...(type === 'search' && date ? { date } : {}),
@@ -25,21 +34,25 @@ const ComicFinder = () => {
         'https://irahorecka.com/api/comics/search',
         { params }
       );
-      setComic(response.data.file_path); // Update with the file path
+      setComic(response.data.file_path);
     } catch (error) {
       console.error('Error fetching comic for date:', error);
       // Perform a random search as a fallback
       try {
         const response = await axios.get(
           'https://irahorecka.com/api/comics/search',
-          { params: { comic: comicName } } // Adjust to random fetch logic if needed
+          { params: { comic: comicName } }
         );
-        setComic(response.data.file_path); // Update with the file path
+        setComic(response.data.file_path);
       } catch (randomError) {
         console.error('Error fetching random comic as fallback:', randomError);
       }
     } finally {
-      setIsLoading(false); // End loading
+      if (isInitial) {
+        setIsLoading(false);
+      } else {
+        setButtonLoading((prev) => ({ ...prev, [type]: false }));
+      }
     }
   };
 
@@ -51,7 +64,7 @@ const ComicFinder = () => {
           params: { comic_name: input },
         }
       );
-      setSuggestions(response.data.matches.map((match) => ({ name: match }))); // Map matches
+      setSuggestions(response.data.matches.map((match) => ({ name: match })));
     } catch (error) {
       console.error('Error fetching suggestions:', error);
       setSuggestions([]);
@@ -59,23 +72,14 @@ const ComicFinder = () => {
   };
 
   const clearSuggestions = () => {
-    setIsClearing(true);
-    setTimeout(() => {
-      setSuggestions([]);
-      setIsClearing(false);
-    }, 300); // Match the CSS transition duration
+    setSuggestions([]);
   };
 
   useEffect(() => {
-    if (comicName !== comic && comicName.length > 0) {
-      fetchSuggestions(comicName);
-    } else {
-      clearSuggestions();
+    if (!hasFetchedInitial.current) {
+      fetchComic('search', true); // Explicitly mark this as an initial load
+      hasFetchedInitial.current = true;
     }
-  }, [comicName]); // Fetch suggestions when comicName changes
-
-  useEffect(() => {
-    fetchComic('search');
   }, []); // Fetch today's Calvin and Hobbes comic on initial render
 
   useEffect(() => {
@@ -84,6 +88,14 @@ const ComicFinder = () => {
       setImageHeight(imgRef.current.offsetHeight);
     }
   }, [comic]); // Update whenever the comic changes
+
+  useEffect(() => {
+    if (comicName !== 'Calvin and Hobbes' && comicName.length > 0) {
+      fetchSuggestions(comicName);
+    } else {
+      clearSuggestions();
+    }
+  }, [comicName]); // Fetch suggestions when comicName changes
 
   return (
     <div className="comic-finder-container">
@@ -148,16 +160,13 @@ const ComicFinder = () => {
               if (comicName.trim().length > 0) fetchSuggestions(comicName);
             }}
             onBlur={(e) => {
-              // Allow time for selection clicks before clearing suggestions
               if (!e.relatedTarget || e.relatedTarget.tagName !== 'LI') {
-                setTimeout(() => setSuggestions([]), 150);
+                setTimeout(() => clearSuggestions(), 150);
               }
             }}
           />
           {suggestions.length > 0 && (
-            <div
-              className={`suggestions-dropdown ${isClearing ? 'fade-out' : 'fade-in'}`}
-            >
+            <div className="suggestions-dropdown">
               <ul>
                 {suggestions.map((suggestion, index) => (
                   <li
@@ -186,13 +195,13 @@ const ComicFinder = () => {
           className="comic-button retro-button"
           onClick={() => fetchComic('search')}
         >
-          Search by Date
+          {buttonLoading.search ? 'Loading...' : 'Search by Date'}
         </button>
         <button
           className="comic-button retro-button"
           onClick={() => fetchComic('random')}
         >
-          Random Date
+          {buttonLoading.random ? 'Loading...' : 'Random Date'}
         </button>
       </div>
     </div>
