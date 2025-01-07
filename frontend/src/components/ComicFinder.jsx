@@ -1,3 +1,7 @@
+/*
+  Disclaimer: This project displays comics retrieved from an external source for personal and educational purposes only.
+  I do not claim ownership of the comics or their content. All rights belong to their respective creators and copyright holders.
+*/
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
