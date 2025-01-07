@@ -1,4 +1,4 @@
-# My Vintage-Themed Personal Website
+# Vintage-Themed Personal Website
 
 Welcome to the GitHub repository for [my website](https://irahorecka.com), a vintage-themed personal site showcasing my professional journey, projects, and interactive features. Built with modern technologies, this site combines functionality and nostalgia.
 
