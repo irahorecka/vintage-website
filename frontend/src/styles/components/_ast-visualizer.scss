@@ -1,0 +1,112 @@
+@use '../abstracts/index' as abstracts;
+
+.ast-visualizer-container {
+  max-width: 1000px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+
+  .ast-visualizer-text {
+    align-items: center;
+    font-size: 1.15rem;
+    line-height: 1.4;
+  }
+
+  .ast-image-container {
+    width: 100%;
+    text-align: center;
+    margin: 30px auto;
+    min-height: 300px;
+    background-color: #ffffff;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+
+    .ast-image {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .loading-placeholder {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: 1.2rem;
+      color: abstracts.$dark-text-color;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+  }
+
+  .ast-control-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+
+    .ast-input {
+      flex: 2;
+      height: 100%;
+      background-color: #ffffff;
+      color: abstracts.$dark-text-color;
+      border: 2px solid #b3afaf;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: 1rem;
+      padding: 5px;
+      appearance: none;
+      outline: none;
+      box-shadow: none;
+
+      &:focus {
+        outline: none;
+        border-color: #8b0000;
+        box-shadow: none;
+        color: abstracts.$dark-text-color;
+      }
+
+      &::placeholder {
+        color: abstracts.$text-muted;
+        opacity: 1;
+      }
+
+      &::-webkit-input-placeholder {
+        color: abstracts.$text-muted;
+      }
+      &::-moz-placeholder {
+        color: abstracts.$text-muted;
+      }
+      &:-ms-input-placeholder {
+        color: abstracts.$text-muted;
+      }
+      &:-moz-placeholder {
+        color: abstracts.$text-muted;
+      }
+    }
+
+    .ast-button {
+      flex: 1;
+      margin-bottom: 0;
+      padding: 6px 10px;
+
+      &:hover {
+        background-color: #b22222;
+      }
+
+      &:active {
+        transform: translate(1px, 1px);
+        box-shadow: none;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .ast-control-bar {
+      flex-direction: column;
+
+      .ast-input,
+      .ast-button {
+        width: 100%;
+      }
+    }
+  }
+}
