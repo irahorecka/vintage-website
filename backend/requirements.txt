@@ -2,6 +2,7 @@ aiohttp
 comics
 fastapi
 fastapi-cors
+pydot
 rapidfuzz
 rcsbsearchapi
 uvicorn
