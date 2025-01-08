@@ -1,5 +1,4 @@
-import resource
-import platform
+import tracemalloc
 from fastapi import APIRouter, HTTPException, Query
 import ast
 import os
@@ -12,9 +11,8 @@ from _ast import AST
 
 router = APIRouter()
 
-# Limit allowed AST Python memory usage to 10 MB
-if platform.system() != "Darwin":  # Skip on macOS
-    resource.setrlimit(resource.RLIMIT_AS, (10 * 1024 * 1024, 10 * 1024 * 1024))
+# Memory limit for AST visualization generation
+MEMORY_LIMIT_MB = int(os.getenv("MEMORY_LIMIT_MB", 10))  # Default to 10MB
 
 # Directory to save downloaded AST images
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Current file's directory
@@ -142,15 +140,38 @@ def draw(parent_name, child_name, graph, parent_hash):
     return child_hash  # Return the unique hash for the child node
 
 
-# API Endpoint for AST Visualization
+def check_function_memory(func, *args, limit_mb=100, **kwargs):
+    """Run a function and check its memory usage."""
+    tracemalloc.start()
+
+    # Measure memory before running the function
+    snapshot_before = tracemalloc.take_snapshot()
+
+    try:
+        result = func(*args, **kwargs)  # Run the function
+    finally:
+        # Measure memory after running the function
+        snapshot_after = tracemalloc.take_snapshot()
+        tracemalloc.stop()
+
+    # Calculate the memory usage difference
+    stats = snapshot_after.compare_to(snapshot_before, "lineno")
+    total_memory_used = sum(stat.size for stat in stats) / (1024 * 1024)  # Convert to MB
+
+    if total_memory_used > limit_mb:
+        raise MemoryError(
+            f"Function memory usage exceeded limit of {limit_mb}MB "
+            f"(current: {total_memory_used:.2f}MB)"
+        )
+
+    return result
+
+
 @router.get("/ast/visualize")
 async def visualize_ast(input_code: str = Query(..., max_length=1000)):
     """Generate an AST visualization for the provided Python code."""
-    try:
-        # Check for potential abuse (e.g., too large or complex input)
-        if len(input_code) > 5000:  # Adjust based on typical script size
-            raise HTTPException(status_code=413, detail="Input code is too large.")
 
+    def generate_ast_visualization():
         # Parse and generate AST visualization
         graph = pydot.Dot(graph_type="digraph", strict=True, concentrate=True, splines="polyline")
         parsed_ast = json_ast(input_code)
@@ -160,16 +181,25 @@ async def visualize_ast(input_code: str = Query(..., max_length=1000)):
         output_file_path = os.path.join(FULL_AST_DIR, output_filename)
         graph.write_png(output_file_path)
 
-        if os.path.exists(output_file_path):
-            return {
-                "input_code": input_code,
-                "file_path": f"static/images/ast_storage/{output_filename}",
-                "message": "AST image successfully generated.",
-            }
-        else:
+        if not os.path.exists(output_file_path):
             raise HTTPException(status_code=500, detail="Failed to generate AST image.")
 
-    except MemoryError:
-        raise HTTPException(status_code=413, detail="Memory usage exceeded limit.")
+        return output_filename
+
+    try:
+        # Check current function memory usage - prevent DoS attacks by limiting memory usage to 10MB
+        output_filename = check_function_memory(
+            generate_ast_visualization, limit_mb=MEMORY_LIMIT_MB
+        )
+
+        # Return the AST visualization file path
+        return {
+            "input_code": input_code,
+            "file_path": f"static/images/ast_storage/{output_filename}",
+            "message": "AST image successfully generated.",
+        }
+
+    except MemoryError as e:
+        raise HTTPException(status_code=413, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error generating AST: {str(e)}")
