@@ -16,7 +16,14 @@ Welcome to the GitHub repository for [my website](https://irahorecka.com), a vin
      - Dynamic "Loading..." states for feedback.
      - Powered by a custom-built API.
 
-### 3. **Projects**
+### 3. **Abstract Syntax Tree (AST)**
+   - Delve into the structural representation of code.
+   - Features include:
+     - Tree traversal and manipulation techniques.
+     - Tools for analyzing and transforming codebases.
+     - Applications in linters, compilers, and transpilers.
+
+### 4. **Projects**
    - Showcases my coding projects with links to GitHub repositories.
    - Highlights:
      - **pycraigslist**: Craigslist API wrapper.
@@ -24,7 +31,7 @@ Welcome to the GitHub repository for [my website](https://irahorecka.com), a vin
      - **youtube2audio**: GUI for downloading annotated YouTube videos as MP3s/MP4s.
      - Other API wrappers and visual tools.
 
-### 4. **Sidebar**
+### 5. **Sidebar**
    - Navigation links: Home, Comics, and Projects.
    - External profiles in a vintage dropdown menu (LinkedIn, GitHub, Google Scholar, etc.).
 
