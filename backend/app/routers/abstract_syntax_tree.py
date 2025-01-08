@@ -1,3 +1,5 @@
+import resource
+import platform
 from fastapi import APIRouter, HTTPException, Query
 import ast
 import os
@@ -9,6 +11,10 @@ import pydot
 from _ast import AST
 
 router = APIRouter()
+
+# Limit allowed AST Python memory usage to 10 MB
+if platform.system() != "Darwin":  # Skip on macOS
+    resource.setrlimit(resource.RLIMIT_AS, (10 * 1024 * 1024, 10 * 1024 * 1024))
 
 # Directory to save downloaded AST images
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Current file's directory
@@ -141,26 +147,19 @@ def draw(parent_name, child_name, graph, parent_hash):
 async def visualize_ast(input_code: str = Query(..., max_length=1000)):
     """Generate an AST visualization for the provided Python code."""
     try:
-        # Initialize a new directed graph
-        graph = pydot.Dot(
-            graph_type="digraph",
-            strict=True,
-            concentrate=True,
-            splines="polyline",
-        )
+        # Check for potential abuse (e.g., too large or complex input)
+        if len(input_code) > 5000:  # Adjust based on typical script size
+            raise HTTPException(status_code=413, detail="Input code is too large.")
 
-        # Parse input code into JSON-AST format
+        # Parse and generate AST visualization
+        graph = pydot.Dot(graph_type="digraph", strict=True, concentrate=True, splines="polyline")
         parsed_ast = json_ast(input_code)
-        # Generate the graph structure from the AST
         grapher(graph, parsed_ast)
-        # Generate a unique filename for the output image
+
         output_filename = f"ast_{uuid.uuid4().hex}.png"
         output_file_path = os.path.join(FULL_AST_DIR, output_filename)
-
-        # Write the graph to a PNG file
         graph.write_png(output_file_path)
 
-        # Return the output image path
         if os.path.exists(output_file_path):
             return {
                 "input_code": input_code,
@@ -170,6 +169,7 @@ async def visualize_ast(input_code: str = Query(..., max_length=1000)):
         else:
             raise HTTPException(status_code=500, detail="Failed to generate AST image.")
 
+    except MemoryError:
+        raise HTTPException(status_code=413, detail="Memory usage exceeded limit.")
     except Exception as e:
-        # Handle errors and raise appropriate HTTP exceptions
         raise HTTPException(status_code=400, detail=f"Error generating AST: {str(e)}")
