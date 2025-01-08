@@ -6,6 +6,7 @@ import MetabolicNetwork from './MetabolicNetwork';
 import ContentRow from './ContentRow';
 import CodingProjects from './CodingProjects';
 import WhatsHot from './WhatsHot';
+import AstVisualizer from './AstVisualizer';
 import Footer from './Footer';
 
 // Function to get the current date in the format "MONTH DAY"
@@ -15,6 +16,15 @@ function getCurrentDate() {
 }
 // Get the current year
 const currentYear = new Date().getFullYear();
+
+// Handle the addition of a content divider
+const addContentDivider = () => {
+  return (
+    <div className="left-content">
+      <div className="black-line"></div>
+    </div>
+  );
+};
 
 function Content() {
   return (
@@ -35,7 +45,6 @@ function Content() {
           <div className="year-background">{currentYear}</div>
           <div className="date-banner">{getCurrentDate()}</div>
         </section>
-
         {/* Dual Content Row */}
         <ContentRow
           leftContent={<ProfileSection />}
@@ -43,24 +52,16 @@ function Content() {
           topBorder={true}
           bottomBorder={true}
         />
-
         <div id="comics"></div>
         <WhatsHot />
-
         {/* Single Content Row (Duplicate Height but Single Content) */}
         <ContentRow leftContent={<ComicFinder />} singleColumn={true} />
-
-        <div className="left-content">
-          <div className="black-line"></div>
-        </div>
-
-        {/* Single Content Row (Duplicate Height but Single Content) */}
-        <ContentRow
-          leftContent={<CodingProjects />}
-          singleColumn={true}
-          id="projects"
-        />
-
+        <div id="ast"></div>
+        {addContentDivider()}
+        <ContentRow leftContent={<AstVisualizer />} singleColumn={true} />
+        <div id="projects"></div>
+        {addContentDivider()}
+        <ContentRow leftContent={<CodingProjects />} singleColumn={true} />
         {/* Footer */}
         <Footer />
       </main>
