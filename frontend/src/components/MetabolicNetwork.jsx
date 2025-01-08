@@ -18,13 +18,13 @@ const MetabolicNetwork = () => {
         (~3,000 of 6,000), making us surprisingly alike.
       </p>
       <p>
-        Exploring metabolism in yeast reveals how systems adapt under stress,
-        uncovering intricate backup mechanisms that sustain life.
+        Exploring metabolism in yeast reveals how cells adapt to stress by
+        uncovering intricate backup mechanisms that sustain life while offering
+        valuable insights into resilience in more complex organisms.
       </p>
       <p>
-        These discoveries not only deepen our understanding of cellular
-        resilience but also play an important role in advancing medical research
-        and drug discovery.
+        These discoveries deepen our understanding of cellular resilience and
+        play a key role in advancing medical research and drug discovery.
       </p>
     </div>
   );

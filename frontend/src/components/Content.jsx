@@ -52,16 +52,25 @@ function Content() {
           topBorder={true}
           bottomBorder={true}
         />
-        <div id="comics"></div>
         <WhatsHot />
         {/* Single Content Row (Duplicate Height but Single Content) */}
-        <ContentRow leftContent={<ComicFinder />} singleColumn={true} />
-        <div id="ast"></div>
+        <ContentRow
+          leftContent={<ComicFinder />}
+          singleColumn={true}
+          id="comics"
+        />
         {addContentDivider()}
-        <ContentRow leftContent={<AstVisualizer />} singleColumn={true} />
-        <div id="projects"></div>
+        <ContentRow
+          leftContent={<AstVisualizer />}
+          singleColumn={true}
+          id="ast"
+        />
         {addContentDivider()}
-        <ContentRow leftContent={<CodingProjects />} singleColumn={true} />
+        <ContentRow
+          leftContent={<CodingProjects />}
+          singleColumn={true}
+          id="projects"
+        />
         {/* Footer */}
         <Footer />
       </main>

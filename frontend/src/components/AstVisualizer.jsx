@@ -4,7 +4,7 @@ import axios from 'axios';
 const AstVisualizer = () => {
   const [astData, setAstData] = useState(null); // Stores the AST metadata
   const [inputCode, setInputCode] = useState(
-    'for i in range(42): j = i ** 2;print(f"{i} squared is {j}")'
+    'def fibonacci(n): return n if n <= 1 else fibonacci(n - 1) + fibonacci(n - 2)'
   ); // Default Python expression
   const [isLoading, setIsLoading] = useState(true); // Tracks initial page load
   const [buttonLoading, setButtonLoading] = useState(false); // Tracks button-specific loading
@@ -25,7 +25,7 @@ const AstVisualizer = () => {
       } catch (error) {
         console.error('Error fetching default AST:', error);
         setErrorMessage(
-          'Failed to load AST visualization or metadata. Please check your input.'
+          'Failed to load AST visualization. Please check your input.'
         );
       } finally {
         setIsLoading(false);
@@ -49,7 +49,9 @@ const AstVisualizer = () => {
       setAstData(response.data);
     } catch (error) {
       console.error('Error generating AST:', error);
-      setErrorMessage('Failed to load PDB structure or metadata.');
+      setErrorMessage(
+        'Failed to load AST visualization. Please check your input.'
+      );
     } finally {
       setButtonLoading(false);
     }
@@ -90,7 +92,7 @@ const AstVisualizer = () => {
             className="ast-image"
             style={{
               maxWidth: '100%',
-              maxHeight: '500px',
+              maxHeight: '600px',
               objectFit: 'contain',
             }} // Ensure it fits within the container
           />
