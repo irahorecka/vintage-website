@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 import requests
-from rcsbsearchapi.search import TextQuery, AttributeQuery, Attr
+from rcsbsearchapi.search import TextQuery
 
 
 router = APIRouter()
