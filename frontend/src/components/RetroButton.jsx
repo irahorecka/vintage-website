@@ -1,5 +1,4 @@
 import React from 'react';
-// import './RetroButton.css';
 
 const RetroButton = ({ text, onClick }) => {
   return (

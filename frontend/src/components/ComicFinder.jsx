@@ -13,6 +13,7 @@ const ComicFinder = () => {
   });
   const [comicName, setComicName] = useState('Calvin and Hobbes'); // Default comic name
   const [suggestions, setSuggestions] = useState([]);
+  const [debounceTimeout, setDebounceTimeout] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // For initial load
   const [buttonLoading, setButtonLoading] = useState({
     search: false,
@@ -79,6 +80,24 @@ const ComicFinder = () => {
     setSuggestions([]);
   };
 
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setComicName(value);
+
+    if (debounceTimeout) {
+      clearTimeout(debounceTimeout); // Clear previous timeout to avoid multiple triggers
+    }
+
+    if (value.trim().length > 0) {
+      const newTimeout = setTimeout(() => {
+        fetchSuggestions(value); // Trigger search after delay
+      }, 100); // 300ms delay
+      setDebounceTimeout(newTimeout); // Store the new timeout
+    } else {
+      clearSuggestions(); // Clear suggestions if input is empty
+    }
+  };
+
   useEffect(() => {
     if (!hasFetchedInitial.current) {
       fetchComic('search', true); // Explicitly mark this as an initial load
@@ -92,14 +111,6 @@ const ComicFinder = () => {
       setImageHeight(imgRef.current.offsetHeight);
     }
   }, [comic]); // Update whenever the comic changes
-
-  useEffect(() => {
-    if (comicName !== 'Calvin and Hobbes' && comicName.length > 0) {
-      fetchSuggestions(comicName);
-    } else {
-      clearSuggestions();
-    }
-  }, [comicName]); // Fetch suggestions when comicName changes
 
   return (
     <div className="comic-finder-container">
@@ -152,20 +163,13 @@ const ComicFinder = () => {
             className="comic-search-input"
             placeholder="Search for a comic..."
             value={comicName}
-            onChange={(e) => {
-              setComicName(e.target.value);
-              if (e.target.value.trim().length > 0) {
-                fetchSuggestions(e.target.value);
-              } else {
-                setSuggestions([]);
-              }
-            }}
+            onChange={handleInputChange}
             onFocus={() => {
               if (comicName.trim().length > 0) fetchSuggestions(comicName);
             }}
             onBlur={(e) => {
               if (!e.relatedTarget || e.relatedTarget.tagName !== 'LI') {
-                setTimeout(() => clearSuggestions(), 150);
+                setTimeout(() => clearSuggestions(), 150); // Clear suggestions after focus loss
               }
             }}
           />
@@ -176,8 +180,8 @@ const ComicFinder = () => {
                   <li
                     key={index}
                     onClick={() => {
-                      setComicName(suggestion.name);
-                      clearSuggestions();
+                      setComicName(suggestion.name); // Set the clicked suggestion as the input value
+                      clearSuggestions(); // Clear the suggestions immediately
                     }}
                   >
                     {suggestion.name}
