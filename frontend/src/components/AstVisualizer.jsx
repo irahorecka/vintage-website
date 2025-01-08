@@ -72,12 +72,12 @@ const AstVisualizer = () => {
       </div>
       <div className="ast-visualizer-text">
         <p>
-          Explore Python Abstract Syntax Trees (AST) effortlessly with this
-          visualization tool. ASTs break down Python code into a tree structure,
-          helping you understand how the code is parsed and executed. Just enter
-          a Python expression to see its AST structure come to life. Learn more
-          about the AST visualization library I developed on{' '}
-          <a href="https://github.com/irahorecka/astree">GitHub</a>.
+          Effortlessly explore Python Abstract Syntax Trees (AST) with this
+          visualization tool. ASTs break Python code into a tree structure,
+          revealing how the code is parsed and executed. Enter a Python
+          expression to see its AST structure come to life, powered by a{' '}
+          <a href="https://github.com/irahorecka/astree">library</a> I
+          developed.
         </p>
       </div>
 
