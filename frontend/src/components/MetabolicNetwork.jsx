@@ -18,9 +18,9 @@ const MetabolicNetwork = () => {
         (~3,000 of 6,000), making us surprisingly alike.
       </p>
       <p>
-        Exploring metabolism in yeast reveals how cells adapt to stress by
-        uncovering intricate backup mechanisms that sustain life while offering
-        valuable insights into resilience in more complex organisms.
+        Exploring yeast metabolism reveals how cells manage stress through
+        backup mechanisms that sustain life, providing insights into resilience
+        seen in complex organisms.
       </p>
       <p>
         These discoveries deepen our understanding of cellular resilience and
