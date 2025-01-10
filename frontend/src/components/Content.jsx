@@ -34,8 +34,9 @@ function Content() {
 
       {/* Main Content Area */}
       <main className="main-content">
+        <div id="home"></div>
         {/* Top Header */}
-        <section id="home" className="top-header">
+        <section className="top-header">
           <div className="quote-container">
             <h1>
               A point in every direction is the same as having no point at all.

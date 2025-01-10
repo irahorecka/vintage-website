@@ -14,14 +14,16 @@ const MetabolicNetwork = () => {
       </h3>
       <p>Baker's Yeast Metabolism in 3D!</p>
       <p>
-        Believe it or not, yeast shares about half of its genes with humans (~3,000 out of 6,000).
-        These genes are essential for core cellular processes that sustain life, making yeast
-        an invaluable model for studying human biology.
+        Believe it or not, yeast shares about half of its genes with humans
+        (~3,000 out of 6,000). These genes are essential for core cellular
+        processes that sustain life, making yeast an invaluable model for
+        studying human biology.
       </p>
       <p>
-        Studying yeast metabolism reveals how cells manage stress through backup systems
-        that ensure survival. These mechanisms are key to understanding resilience in more
-        complex organisms and drive progress in medical research and drug discovery.
+        Studying yeast metabolism reveals how cells manage stress through backup
+        systems that ensure survival. These mechanisms are key to understanding
+        resilience in more complex organisms and drive progress in medical
+        research and drug discovery.
       </p>
     </div>
   );
