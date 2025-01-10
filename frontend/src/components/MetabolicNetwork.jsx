@@ -14,7 +14,7 @@ const MetabolicNetwork = () => {
       </h3>
       <p>Baker's Yeast Metabolism in 3D!</p>
       <p>
-        Believe it or not, humans share about half of their genes with yeast (~3,000 out of 6,000).
+        Believe it or not, yeast shares about half of its genes with humans (~3,000 out of 6,000).
         These genes are essential for core cellular processes that sustain life, making yeast
         an invaluable model for studying human biology.
       </p>
