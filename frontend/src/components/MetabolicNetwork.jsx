@@ -23,8 +23,8 @@ const MetabolicNetwork = () => {
         seen in complex organisms.
       </p>
       <p>
-        These discoveries deepen our understanding of cellular resilience and
-        play a key role in advancing medical research and drug discovery.
+        Such findings advance our understanding of basic biology and drive
+        progress in medical research and drug discovery.
       </p>
     </div>
   );
