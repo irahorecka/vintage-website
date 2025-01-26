@@ -20,10 +20,10 @@ const MetabolicNetwork = () => {
         studying human biology.
       </p>
       <p>
-        Yeast metabolism reveals how cells endure stress through backup
-        systems—much like our own. These systems activate to safeguard vital
-        processes during failure, ensuring survival. Understanding them drives
-        advancements in disease treatment and the development of new therapies.
+        Yeast metabolism reveals how cells survive stress with backup systems,
+        much like ours. These systems protect vital processes during failure,
+        ensuring survival. Exploring them bridges fundamental biology with
+        advances in disease treatment and therapies.
       </p>
     </div>
   );
