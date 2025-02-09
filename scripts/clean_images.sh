@@ -1,11 +1,15 @@
 #!/bin/bash
 
-# Set the base directory
-BASE_DIR="../backend/app/static/images"
+# Try to find the vintage-website/scripts directory, fallback to the current directory if not found
+BASE_DIR="$(find "$(pwd)" -type d -name 'vintage-website' -exec realpath {}/scripts \; 2>/dev/null | head -n 1)"
+if [ -z "$BASE_DIR" ]; then
+  echo "vintage-website/scripts not found. Falling back to the current directory."
+  BASE_DIR="$(pwd)"
+fi
 
-# Define the target directories
-AST_DIR="$BASE_DIR/ast_storage"
-COMICS_DIR="$BASE_DIR/comics_storage"
+# Define the target directories relative to BASE_DIR
+AST_DIR="${BASE_DIR}/../backend/app/static/images/ast_storage"
+COMICS_DIR="${BASE_DIR}/../backend/app/static/images/comics_storage"
 
 # Check if the directories exist and remove .png files
 if [ -d "$AST_DIR" ]; then
