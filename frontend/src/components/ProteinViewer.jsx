@@ -31,20 +31,6 @@ const capitalize = (text = '', mode = 'title', exceptions = []) => {
   }
 };
 
-const fetchRcsbMetadata = async (pdbId) => {
-  const response = await fetch(
-    `https://data.rcsb.org/rest/v1/core/entry/${pdbId}`
-  );
-  if (!response.ok) throw new Error('Failed to fetch RCSB metadata');
-  return response.json();
-};
-
-const fetchPdbStructure = async (pdbId) => {
-  const response = await fetch(`https://files.rcsb.org/download/${pdbId}.pdb`);
-  if (!response.ok) throw new Error('Failed to fetch PDB structure');
-  return response.text();
-};
-
 const initializeViewer = (containerId, pdbData) => {
   const viewerContainer = document.getElementById(containerId);
   if (!viewerContainer) throw new Error('3Dmol.js viewer container not found');
@@ -56,6 +42,15 @@ const initializeViewer = (containerId, pdbData) => {
   viewer.setStyle({}, { cartoon: { color: 'spectrum' } });
   viewer.zoomTo();
   viewer.render();
+  // Disable scroll zoom by preventing wheel events
+  viewerContainer.addEventListener(
+    "wheel",
+    (event) => {
+      event.stopPropagation(); // Stop the event from reaching 3Dmol
+      event.preventDefault(); // Prevent the default zoom behavior
+    },
+    { passive: false, capture: true } // Captures event *before* 3Dmol.js can act on it
+  );
 };
 
 const ProteinViewer = () => {
