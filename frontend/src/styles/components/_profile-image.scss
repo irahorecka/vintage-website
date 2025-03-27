@@ -1,0 +1,54 @@
+@use '../abstracts/index' as abstracts;
+
+.profile-image-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.profile-image {
+  width: 160px;
+  height: 160px;
+  border-radius: 5px;
+  border: 2px solid #8b0000;
+  box-shadow: 2px 2px 0 #4d0000;
+  margin: 15px auto 20px;
+  object-fit: cover;
+  display: block;
+}
+
+.fortune-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 160px;
+  height: 160px;
+  background-image: url(https://media.istockphoto.com/id/1294763851/vector/empty-blank-light-cream-or-beige-coloured-grunge-textured-vector-backgrounds.jpg?s=612x612&w=0&k=20&c=EWS5Pi3yUrPlWxICASa0b1E5oNGDD58twPyLRFTKhco=);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: monospace;
+  font-size: abstracts.$font-size-small;
+  color: abstracts.$dark-text-color;
+  font-weight: normal;
+  border-radius: 5px;
+  border: 2px solid #8b0000;
+  box-shadow: 2px 2px 0 #4d0000;
+  margin: 15px auto 20px;
+  padding: 15px;
+  text-align: center;
+}
+
+.typewriter-wrapper {
+  width: 100%;
+  text-align: left;
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .profile-image,
+  .fortune-text {
+    width: 180px;
+    height: 180px;
+  }
+}
