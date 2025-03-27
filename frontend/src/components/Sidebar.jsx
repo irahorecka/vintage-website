@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import ProfileImageWithFortune from './ProfileImageWithFortune';
 import RetroButton from './RetroButton';
 
 import CV from '../assets/ira-horecka-cv.pdf';
-import profilePic from '../assets/profile-landscape.png';
 
 const Sidebar = () => {
   const links = [
@@ -43,7 +43,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       {/* Profile Section */}
-      <img src={profilePic} alt="Profile" className="profile-image" />
+      <ProfileImageWithFortune />
       <h2 className="name">Ira Horecka</h2>
       <RetroButton text="CV" onClick={handleCVClick} />
 

@@ -2,8 +2,8 @@
   Disclaimer: This project displays comics retrieved from an external source for personal and educational purposes only.
   I do not claim ownership of the comics or their content. All rights belong to their respective creators and copyright holders.
 */
-import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import React, { useEffect, useRef, useState } from 'react';
 
 const ComicFinder = () => {
   const [comic, setComic] = useState(''); // Default empty state
@@ -139,7 +139,7 @@ const ComicFinder = () => {
               height: imageHeight || '30vh', // Default height if not yet determined
               fontSize: '1.2rem',
               fontFamily: 'Georgia, "Times New Roman", serif',
-              color: '#5f5f5f',
+              color: '#2b2b2b',
             }}
           >
             Loading comic...
