@@ -4,38 +4,50 @@ import Typewriter from 'typewriter-effect';
 
 import profilePic from '../assets/profile-landscape.png';
 
-const fortunes = [
-  'You will debug something on the first try.',
-  'A cat will sit on your keyboard today.',
-  'Your semicolon brings harmony.',
-  'Beware the infinite loop.',
-  "Today's bug is tomorrow's feature.",
-  '404: Fortune not found.',
-  'You will discover a missing import at 2 AM.',
-  'You’re one `console.log` away from brilliance.',
-  'The merge conflict will resolve in your favor.',
-  'Someone will star your repo today.',
-  'A forgotten TODO will become your greatest idea.',
-  'Your commit message will be poetry.',
-  'A rogue tab will reveal itself to be a space.',
-  'Your code will pass on the first CI run.',
-  'You will rename a variable and feel peace.',
-  'The compiler appreciates your efforts.',
-  'A PR will arrive when you least expect it.',
-];
-
 const ProfileImageWithFortune = () => {
   const [showFortune, setShowFortune] = useState(false);
   const [fortune, setFortune] = useState('');
-  const [unusedFortunes, setUnusedFortunes] = useState([...fortunes]);
+  const [allFortunes, setAllFortunes] = useState([]);
+  const [unusedFortunes, setUnusedFortunes] = useState([]);
   const [autoReset, setAutoReset] = useState(false);
   const [animationInProgress, setAnimationInProgress] = useState(false);
+
+  // Fetch fortunes from external text file and filter those with 60 or less characters.
+  // Also process each line:
+  //   - Fix punctuation spacing (remove space before punctuation)
+  //   - Capitalize the first letter.
+  useEffect(() => {
+    fetch(
+      'https://raw.githubusercontent.com/larryprice/fortune-cookie-api/refs/heads/master/data/proverbs.txt'
+    )
+      .then((response) => response.text())
+      .then((text) => {
+        const lines = text
+          .split('\n')
+          .map((line) => line.trim())
+          .filter((line) => line.length > 0 && line.length <= 60);
+        const processedLines = lines.map((line) => {
+          // Remove extra spaces before punctuation
+          line = line.replace(/\s+([,.!?:;])/g, '$1');
+          // Capitalize first character if not already
+          if (line.length > 0) {
+            line = line.charAt(0).toUpperCase() + line.slice(1);
+          }
+          return line;
+        });
+        setAllFortunes(processedLines);
+        setUnusedFortunes(processedLines);
+      })
+      .catch((error) => {
+        console.error('Error fetching fortunes:', error);
+      });
+  }, []);
 
   const handleClick = () => {
     if (!showFortune) {
       setAnimationInProgress(true);
       if (unusedFortunes.length === 0) {
-        setUnusedFortunes([...fortunes]);
+        setUnusedFortunes([...allFortunes]);
       }
       const randomIndex = Math.floor(Math.random() * unusedFortunes.length);
       const newFortune = unusedFortunes[randomIndex];
@@ -45,7 +57,7 @@ const ProfileImageWithFortune = () => {
       setFortune(newFortune);
       setUnusedFortunes(updatedUnusedFortunes);
       setShowFortune(true);
-      setAutoReset(false); // reset auto-reset flag
+      setAutoReset(false);
     } else {
       setShowFortune(false);
       setFortune('');
@@ -87,10 +99,7 @@ const ProfileImageWithFortune = () => {
         initial={false}
         animate={{
           opacity: showFortune ? 1 : 0,
-          transition: {
-            duration: 0.5,
-            delay: showFortune ? 0 : 0,
-          },
+          transition: { duration: 0.5, delay: showFortune ? 0.5 : 0 },
         }}
       >
         {fortune && (
