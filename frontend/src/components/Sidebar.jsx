@@ -45,7 +45,7 @@ const Sidebar = () => {
       {/* Profile Section */}
       <img src={profilePic} alt="Profile" className="profile-image" />
       <h2 className="name">Ira Horecka</h2>
-      <RetroButton text="C.V." onClick={handleCVClick} />
+      <RetroButton text="CV" onClick={handleCVClick} />
 
       <div className="divider"></div>
       <a href="#home">Home</a>

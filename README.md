@@ -6,7 +6,7 @@ Welcome to the GitHub repository for [my website](https://irahorecka.com), a vin
 
 ### 1. **Home**
    - Introduction with a quote and personal details.
-   - Overview of my background as a molecular biologist, protein chemist, and bioinformatician pursuing a Ph.D. in computational biology.
+   - Overview of my background as a molecular biologist, protein chemist, and bioinformatician pursuing a PhD in computational biology.
    - Interactive protein explorer powered by the RCSB Protein Data Bank, allowing users to search and view 3D protein structures.
 
 ### 2. **Comics Portal**

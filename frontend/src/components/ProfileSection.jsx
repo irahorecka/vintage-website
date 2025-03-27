@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import ProteinViewer from './ProteinViewer';
 
@@ -23,9 +23,9 @@ const ProfileSection = () => {
           </p>
           <p>
             I’m a molecular biologist, protein chemist, and bioinformatician,
-            currently pursuing a Ph.D. in computational biology at the
-            University of Toronto with Dr. Hannes Röst. When I’m not working,
-            you can find me bass fishing or restoring old bikes.
+            currently pursuing a PhD in computational biology at the University
+            of Toronto with Dr. Hannes Röst. When I’m not working, you can find
+            me bass fishing or restoring old bikes.
           </p>
         </div>
       </div>
