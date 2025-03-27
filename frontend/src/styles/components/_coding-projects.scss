@@ -7,7 +7,7 @@
 
   .coding-projects-text {
     align-items: center;
-    font-size: 1.15rem;
+    font-size: abstracts.$font-size-base;
     line-height: 1.4;
   }
 
@@ -52,7 +52,7 @@
       .stat {
         display: flex;
         align-items: stretch;
-        font-size: 0.9rem;
+        font-size: abstracts.$font-size-small;
         color: abstracts.$dark-text-color; // Same black for consistency
 
         .stat-icon {
@@ -63,7 +63,7 @@
       }
 
       .languages {
-        font-size: 0.9rem;
+        font-size: abstracts.$font-size-small;
         color: abstracts.$primary-color;
       }
     }

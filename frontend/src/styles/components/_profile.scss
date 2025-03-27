@@ -25,17 +25,6 @@
   max-width: 1000px; // Restrict width to match the container
 }
 
-.profile-image {
-  width: 160px;
-  height: 160px;
-  //   border-radius: 50%;
-  border-radius: 5px;
-  object-fit: cover;
-  margin: 15px auto 20px;
-  border: 2px solid #8b0000;
-  box-shadow: 2px 2px 0 #4d0000;
-}
-
 .profile-image-icon {
   width: clamp(80px, 15vw, 120px);
   height: auto;
@@ -46,7 +35,7 @@
 .profile-text {
   flex: 1;
   align-items: center;
-  font-size: 1.15rem;
+  font-size: abstracts.$font-size-base;
   line-height: 1.4;
 }
 
@@ -60,13 +49,5 @@
   .profile-text {
     text-align: left;
     padding-top: 10px;
-  }
-}
-
-@media (max-width: 768px) {
-  .profile-image {
-    width: 180px;
-    height: 180px;
-    margin: 20px auto;
   }
 }

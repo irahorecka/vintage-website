@@ -1,3 +1,5 @@
+@use '../abstracts/index' as abstracts;
+
 .comic-finder-container {
   max-width: 1000px;
   background-color: #ffffff;
@@ -5,7 +7,7 @@
 
 .comic-finder-text {
   align-items: center;
-  font-size: 1.15rem;
+  font-size: abstracts.$font-size-base;
   line-height: 1.4;
 }
 

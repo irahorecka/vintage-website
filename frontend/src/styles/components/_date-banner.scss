@@ -1,8 +1,10 @@
+@use '../abstracts/index' as abstracts;
+
 .date-banner {
   position: absolute;
   top: 5px;
   right: 2.5%;
-  font-size: 1.15rem;
+  font-size: abstracts.$font-size-base;
   font-weight: bold;
   color: #ffffff;
   background: linear-gradient(to right, #ffffff, #990c00, #000000);

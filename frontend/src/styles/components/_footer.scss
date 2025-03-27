@@ -1,9 +1,11 @@
+@use '../abstracts/index' as abstracts;
+
 .footer {
   background-color: #ffffff;
   text-align: left;
   padding: 0 20px 15px;
   font-family: 'Georgia', 'Times New Roman', serif;
-  font-size: 0.9rem;
+  font-size: abstracts.$font-size-small;
 }
 
 .footer-content {

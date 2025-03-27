@@ -1,9 +1,7 @@
+// Colors
 $primary-color: #8b0000; // Deep red, rich and vintage-like
 $secondary-color: #4d0000; // Darker red for accents and depth
 $text-muted: #5f5f5f; // Muted gray for subtle text
-$spacing: 2rem;
-
-// Colors
 $dark-text-color: #2b2b2b; // Slightly softer black for text
 $light-bg-color: #f4f4f4; // Warm light gray background
 $link-color: #800000; // Dark red for links
@@ -13,11 +11,13 @@ $button-border-color-hover: $link-hover-color; // Match hover color with link ho
 
 // Fonts
 $font-family-base: Georgia, 'Times New Roman', serif; // Serif font for a classic vintage feel
-$font-size-base: 1rem; // Keep the base size
-$line-height-base: 1.5;
+$font-size-base: 1.15rem; // Keep the base size
+$font-size-small: 0.9rem; // Smaller size for smaller elements
 $font-weight-base: 400;
 $font-weight-bold: 600; // Slightly bolder for headings
+$line-height-base: 1.5;
 
 // Spacing
 $button-padding: 0.8em 1.5em; // Slightly more padding for a vintage button feel
 $button-border-radius: 4px; // Subtle rounded corners
+$spacing: 2rem; // Base spacing unit for margins and padding
