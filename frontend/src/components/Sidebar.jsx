@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import RetroButton from './RetroButton';
 
-import profilePic from '../assets/profile-landscape.png';
 import CV from '../assets/ira-horecka-cv.pdf';
+import profilePic from '../assets/profile-landscape.png';
 
 const Sidebar = () => {
   const links = [
@@ -32,7 +32,7 @@ const Sidebar = () => {
   };
 
   const handleCVClick = () => {
-    window.location.href = CV; // Open the PDF in the same window
+    window.open(CV, '_blank', 'noopener,noreferrer'); // Open the CV in a new tab
   };
 
   // Handle selection change in the dropdown

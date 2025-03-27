@@ -44,7 +44,7 @@ const initializeViewer = (containerId, pdbData) => {
   viewer.render();
   // Disable scroll zoom by preventing wheel events
   viewerContainer.addEventListener(
-    "wheel",
+    'wheel',
     (event) => {
       event.stopPropagation(); // Stop the event from reaching 3Dmol
       event.preventDefault(); // Prevent the default zoom behavior
