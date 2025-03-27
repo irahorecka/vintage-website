@@ -99,7 +99,7 @@ const ProfileImageWithFortune = () => {
         initial={false}
         animate={{
           opacity: showFortune ? 1 : 0,
-          transition: { duration: 0.5, delay: showFortune ? 0.5 : 0 },
+          transition: { duration: 0.5, delay: 0 },
         }}
       >
         {fortune && (
@@ -112,9 +112,9 @@ const ProfileImageWithFortune = () => {
               }}
               onInit={(typewriter) => {
                 typewriter
-                  .pauseFor(500)
+                  .pauseFor(600) // Wait an additional 100ms after fade in
                   .typeString(fortune)
-                  .pauseFor(2000)
+                  .pauseFor(1800)
                   .deleteAll(30)
                   .callFunction(() => {
                     setAutoReset(true);
