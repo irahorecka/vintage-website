@@ -9,7 +9,6 @@ from app.routers import abstract_syntax_tree, comic_finder, protein_explorer
 
 # Directory to fetch static text files
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Current file's directory
-FULL_TEXT_DIR = os.path.abspath(os.path.join(BASE_DIR, "static", "text"))
 
 # Create the FastAPI instance
 app = FastAPI()
@@ -32,22 +31,11 @@ app.include_router(abstract_syntax_tree.router, prefix="/api", tags=["AST Genera
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 
-# Define routes for static text files
 @app.get("/humans.txt", response_class=PlainTextResponse)
-async def human_txt():
-    file_path = os.path.join(FULL_TEXT_DIR, "humans.txt")
+async def humans_txt():
+    file_path = os.path.join(BASE_DIR, "static", "humans.txt")
     try:
         with open(file_path, "r") as file:
             return file.read()
     except FileNotFoundError:
         return PlainTextResponse("humans.txt not found.", status_code=404)
-
-
-@app.get("/easteregg.txt", response_class=PlainTextResponse)
-async def easteregg_txt():
-    file_path = os.path.join(FULL_TEXT_DIR, "easteregg.txt")
-    try:
-        with open(file_path, "r") as file:
-            return file.read()
-    except FileNotFoundError:
-        return PlainTextResponse("easteregg.txt not found.", status_code=404)
