@@ -17,4 +17,3 @@ backend/.env
 .vscode/
 __pycache__/
 notes/
-comics_storage/
