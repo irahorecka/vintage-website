@@ -33,7 +33,7 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 @app.get("/humans.txt", response_class=PlainTextResponse)
 async def humans_txt():
-    file_path = os.path.join(BASE_DIR, "static", "humans.txt")
+    file_path = os.path.join(BASE_DIR, "text", "humans.txt")
     try:
         with open(file_path, "r") as file:
             return file.read()
