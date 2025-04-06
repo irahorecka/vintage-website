@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const CodingProjects = () => {
   const [projects, setProjects] = useState([]);
+  const [totalStars, setTotalStars] = useState(0);
+
   useEffect(() => {
     const fetchPinnedRepos = async () => {
       try {
@@ -51,6 +53,20 @@ const CodingProjects = () => {
         }));
 
         setProjects(formattedProjects);
+
+        // Fetch total stars from all public repos
+        const starCountResponse = await fetch(
+          `https://api.github.com/users/${import.meta.env.VITE_GITHUB_USERNAME}/repos?per_page=100`,
+          {
+            headers: {
+              Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
+            },
+          }
+        );
+        const allRepos = await starCountResponse.json();
+        setTotalStars(
+          allRepos.reduce((acc, repo) => acc + repo.stargazers_count, 0)
+        );
       } catch (error) {
         console.error('Error fetching pinned repos:', error);
       }
@@ -68,7 +84,8 @@ const CodingProjects = () => {
         <p>
           These are some of the projects I’ve worked on, ranging from API
           wrappers for popular websites to desktop GUI applications for music
-          downloading. Check out my{' '}
+          downloading. These projects have received over {totalStars} GitHub
+          stars combined. Check out my{' '}
           <a href="https://github.com/irahorecka">GitHub</a> or click through to
           learn more about each.
         </p>
