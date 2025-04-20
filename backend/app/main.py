@@ -1,3 +1,8 @@
+"""
+backend/app/main
+~~~~~~~~~~~~~~~~
+"""
+
 import os
 
 from fastapi import FastAPI

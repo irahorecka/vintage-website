@@ -1,3 +1,8 @@
+"""
+backend/app/routers/comic_finder
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"""
+
 import os
 
 import aiohttp

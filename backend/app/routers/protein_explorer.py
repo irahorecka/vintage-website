@@ -1,3 +1,8 @@
+"""
+backend/app/routers/protein_explorer
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"""
+
 import requests
 from fastapi import APIRouter, HTTPException
 from rcsbsearchapi.search import TextQuery
