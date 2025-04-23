@@ -22,9 +22,9 @@ const ProfileSection = () => {
             React, Vite, Sass, and a FastAPI backend.
           </p>
           <p>
-            I’m a molecular biologist, protein chemist, and bioinformatician,
+            I'm a molecular biologist, protein chemist, and bioinformatician,
             currently pursuing a PhD in computational biology at the University
-            of Toronto with Dr. Hannes Röst. When I’m not working, you can find
+            of Toronto with Dr. Hannes Röst. When I'm not working, you can find
             me bass fishing or restoring old bikes.
           </p>
         </div>

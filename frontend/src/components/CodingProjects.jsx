@@ -82,7 +82,7 @@ const CodingProjects = () => {
       </div>
       <div className="coding-projects-text">
         <p>
-          These are some of the projects I’ve worked on, ranging from API
+          These are some of the projects I've worked on, ranging from API
           wrappers for popular websites to desktop GUI applications for music
           downloading. These projects have received over {totalStars} GitHub
           stars combined. Check out my{' '}

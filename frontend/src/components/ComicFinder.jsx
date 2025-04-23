@@ -122,9 +122,10 @@ const ComicFinder = () => {
           I built this comics portal as a side project to make it easy to
           explore classic comic strips. You can search by date to find a
           specific strip or browse randomly for something unexpected. It's
-          powered by an <a href="https://github.com/irahorecka/comics">API</a> I
-          wrote to handle the queries and keep everything running smoothly.
-          Simple, functional, and fun to use!
+          powered by a lightweight&nbsp;
+          <a href="https://github.com/irahorecka/comics">API wrapper</a> I wrote
+          to fetch content reliably from the source. Simple, functional, and fun
+          to use!
         </p>
       </div>
 
