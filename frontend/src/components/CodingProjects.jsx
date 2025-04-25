@@ -64,9 +64,42 @@ const CodingProjects = () => {
           }
         );
         const allRepos = await starCountResponse.json();
-        setTotalStars(
-          allRepos.reduce((acc, repo) => acc + repo.stargazers_count, 0)
+        let totalStars = allRepos.reduce(
+          (acc, repo) => acc + repo.stargazers_count,
+          0
         );
+
+        // Fetch additional repos and add their stars to totalStars
+        const addlReposRaw = import.meta.env.VITE_GITHUB_REPOS;
+        if (addlReposRaw) {
+          const addlRepos = addlReposRaw
+            .split(',')
+            .map((r) => r.trim())
+            .filter(Boolean);
+          for (const repoFullName of addlRepos) {
+            // repoFullName expected in "owner/repo" format
+            try {
+              const resp = await fetch(
+                `https://api.github.com/repos/${repoFullName}`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
+                  },
+                }
+              );
+              if (!resp.ok) continue;
+              const repoData = await resp.json();
+              if (typeof repoData.stargazers_count === 'number') {
+                totalStars += repoData.stargazers_count;
+              }
+            } catch (e) {
+              // Skip this repo on error
+              continue;
+            }
+          }
+        }
+        // totalStars += 500;
+        setTotalStars(totalStars);
       } catch (error) {
         console.error('Error fetching pinned repos:', error);
       }
