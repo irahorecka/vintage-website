@@ -147,11 +147,10 @@ const ComicFinder = () => {
           </div>
         ) : (
           <img
-            ref={imgRef} // Attach ref to the image
+            ref={imgRef}
             src={`https://irahorecka.com/${comic}`}
             alt="Comic Display"
             className="comic-image"
-            style={{ objectFit: 'contain' }}
           />
         )}
       </div>
