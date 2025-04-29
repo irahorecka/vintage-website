@@ -95,7 +95,7 @@ async def fetch_comic(comic: str, date: str = None):
             date = comic_instance.date.replace("-", "")
 
         # Generate a unique filename using the resolved date
-        filename = f"{comic_key}_{date}.png"
+        filename = f"{comic_key}_{date}.webp"
         download_file_path = os.path.join(FULL_COMICS_DIR, filename)
 
         # Check if the file already exists (only for specific dates)

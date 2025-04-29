@@ -20,8 +20,8 @@ else
 fi
 
 if [ -d "$COMICS_DIR" ]; then
-  echo "Cleaning .png files in $COMICS_DIR..."
-  find "$COMICS_DIR" -type f -name "*.png" -exec rm -f {} \;
+  echo "Cleaning .webp files in $COMICS_DIR..."
+  find "$COMICS_DIR" -type f -name "*.webp" -exec rm -f {} \;
 else
   echo "Directory $COMICS_DIR does not exist."
 fi
