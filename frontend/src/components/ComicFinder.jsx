@@ -146,12 +146,18 @@ const ComicFinder = () => {
             Loading comic...
           </div>
         ) : (
-          <img
-            ref={imgRef}
-            src={`https://irahorecka.com/${comic}`}
-            alt="Comic Display"
-            className="comic-image"
-          />
+          <a
+            href={`https://irahorecka.com/${comic}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              ref={imgRef}
+              src={`https://irahorecka.com/${comic}`}
+              alt="Comic Display"
+              className="comic-image"
+            />
+          </a>
         )}
       </div>
 

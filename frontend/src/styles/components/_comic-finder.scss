@@ -21,11 +21,5 @@
     height: auto;
     object-fit: contain;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    image-rendering: optimizeSpeed; /* Older versions of Firefox */
-    image-rendering: -moz-crisp-edges; /* Firefox 6.0+ */
-    image-rendering: -webkit-optimize-contrast; /* Older Webkit */
-    image-rendering: -o-pixelated; /* Opera */
-    image-rendering: pixelated; /* Modern browsers (Chrome, Firefox) */
-    -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard) */
   }
 }
