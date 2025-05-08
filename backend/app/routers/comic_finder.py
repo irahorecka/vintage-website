@@ -27,7 +27,7 @@ AVAILABLE_COMICS = {}
 async def load_comics():
     """Load comics data from the provided URL on startup."""
     global AVAILABLE_COMICS
-    url = "https://raw.githubusercontent.com/irahorecka/comics/refs/heads/main/src/comics/constants/endpoints.json"
+    url = "https://raw.githubusercontent.com/irahorecka/comics/refs/heads/main/src/comics/_constants/_endpoints.json"
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             if response.status == 200:
