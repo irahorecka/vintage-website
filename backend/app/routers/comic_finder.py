@@ -87,10 +87,10 @@ async def fetch_comic(comic: str, date: str = None):
     try:
         # Fetch comic instance and handle random vs specific date
         if date:
-            comic_instance = comics.search(comic_key).date(date)
+            comic_instance = comics.search(comic_key, date=date)
             date = date.replace("-", "")  # Remove hyphens for filename consistency
         else:
-            comic_instance = comics.search(comic_key).random_date()
+            comic_instance = comics.search(comic_key, date="random")
             # Retrieve the date from the instance after fetching
             date = comic_instance.date.replace("-", "")
 
@@ -100,7 +100,7 @@ async def fetch_comic(comic: str, date: str = None):
 
         # Check if the file already exists (only for specific dates)
         if not os.path.exists(download_file_path):
-            comic_instance.download(download_file_path)
+            comic_instance.download(download_file_path, retries=10, base_delay=0.25)
 
         return {
             "comic": comic,
