@@ -3,7 +3,7 @@
   I do not claim ownership of the comics or their content. All rights belong to their respective creators and copyright holders.
 */
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const ComicFinder = () => {
   const [comic, setComic] = useState(''); // Default empty state
@@ -11,7 +11,7 @@ const ComicFinder = () => {
     const today = new Date();
     return today.toLocaleDateString('en-CA'); // 'en-CA' gives an ISO-like format: YYYY-MM-DD
   });
-  const [comicName, setComicName] = useState('Calvin and Hobbes'); // Default comic name
+  const [comicName, setComicName] = useState('Peanuts'); // Default comic name
   const [suggestions, setSuggestions] = useState([]);
   const [debounceTimeout, setDebounceTimeout] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // For initial load
@@ -103,7 +103,7 @@ const ComicFinder = () => {
       fetchComic('search', true); // Explicitly mark this as an initial load
       hasFetchedInitial.current = true;
     }
-  }, []); // Fetch today's Calvin and Hobbes comic on initial render
+  }, []); // Fetch today's Peanuts comic on initial render
 
   useEffect(() => {
     if (imgRef.current) {
