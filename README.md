@@ -5,43 +5,50 @@ Welcome to the GitHub repository for [my website](https://irahorecka.com), a vin
 ## Features
 
 ### 1. **Home**
-   - Introduction with a quote and personal details.
-   - Overview of my background as a molecular biologist, protein chemist, and bioinformatician pursuing a PhD in computational biology.
-   - Interactive protein explorer powered by the RCSB Protein Data Bank, allowing users to search and view 3D protein structures.
+
+- Introduction with a quote and personal details.
+- Overview of my background as a molecular biologist, protein chemist, and bioinformatician pursuing a PhD in computational biology.
+- Interactive protein explorer powered by the RCSB Protein Data Bank, allowing users to search and view 3D protein structures.
 
 ### 2. **Comics Portal**
-   - Explore classic comic strips via date-based search or random browsing.
-   - Features include:
-     - Fuzzy search with interactive suggestions.
-     - Dynamic "Loading..." states for feedback.
-     - Powered by a custom-built API.
+
+- Explore classic comic strips via date-based search or random browsing.
+- Features include:
+  - Fuzzy search with interactive suggestions.
+  - Dynamic "Loading..." states for feedback.
+  - Powered by a custom-built API.
 
 ### 3. **Abstract Syntax Tree (AST)**
-   - Delve into the structural representation of code.
-   - Features include:
-     - Tree traversal and manipulation techniques.
-     - Tools for analyzing and transforming codebases.
-     - Applications in linters, compilers, and transpilers.
+
+- Delve into the structural representation of code.
+- Features include:
+  - Tree traversal and manipulation techniques.
+  - Tools for analyzing and transforming codebases.
+  - Applications in linters, compilers, and transpilers.
 
 ### 4. **Projects**
-   - Showcases my coding projects with links to GitHub repositories.
-   - Highlights:
-     - **pycraigslist**: Craigslist API wrapper.
-     - **comics**: GoComics API wrapper.
-     - **youtube2audio**: GUI for downloading annotated YouTube videos as MP3s/MP4s.
-     - Other API wrappers and visual tools.
+
+- Showcases my coding projects with links to GitHub repositories.
+- Highlights:
+  - **pycraigslist**: Craigslist API wrapper.
+  - **comics**: GoComics API wrapper.
+  - **youtube2audio**: GUI for downloading annotated YouTube videos as MP3s/MP4s.
+  - Other API wrappers and visual tools.
 
 ### 5. **Sidebar**
-   - Navigation links: Home, Comics, and Projects.
-   - External profiles in a vintage dropdown menu (LinkedIn, GitHub, Google Scholar, etc.).
+
+- Navigation links: Home, Comics, and Projects.
+- External profiles in a vintage dropdown menu (LinkedIn, GitHub, Google Scholar, etc.).
 
 ## Technologies Used
+
 - **Frontend**: React, Vite, Sass
 - **Backend**: FastAPI
 - **APIs**: Custom APIs for comics and other data retrieval.
 - **Styling**: Retro-inspired design with dynamic interactivity.
 
 ## Environment Variables
+
 To run this project locally, you must create a `.env` file in the root directory with the following variables:
 
 ```bash
@@ -52,6 +59,7 @@ VITE_GITHUB_TOKEN=your_token_here
 Ensure you replace `your_token_here` with your actual GitHub token.
 
 ## How to Run Locally
+
 1. Clone the repository:
    ```bash
    git clone https://github.com/irahorecka/vintage-website.git
@@ -82,10 +90,11 @@ Ensure you replace `your_token_here` with your actual GitHub token.
    npm run dev
    ```
 8. Access the project locally:
-   - Frontend: ```http://localhost:5173```
-   - Backend: ```http://localhost:8000/docs```
+   - Frontend: `http://localhost:5173`
+   - Backend: `http://localhost:8000/docs`
 
 ## License
+
 This project is licensed under the [MIT License](LICENSE).
 
 ---
