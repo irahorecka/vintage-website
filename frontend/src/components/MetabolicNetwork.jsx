@@ -1,4 +1,3 @@
-import React from 'react';
 import metabolicNetwork from '../assets/metabolic-network.gif';
 
 const MetabolicNetwork = () => {

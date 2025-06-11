@@ -1,13 +1,12 @@
-import React from 'react';
-import Sidebar from './Sidebar';
-import ComicFinder from './ComicFinder'; // Import the new component
-import ProfileSection from './ProfileSection';
-import MetabolicNetwork from './MetabolicNetwork';
-import ContentRow from './ContentRow';
-import CodingProjects from './CodingProjects';
-import WhatsHot from './WhatsHot';
 import AstVisualizer from './AstVisualizer';
+import CodingProjects from './CodingProjects';
+import ComicFinder from './ComicFinder'; // Import the new component
+import ContentRow from './ContentRow';
 import Footer from './Footer';
+import MetabolicNetwork from './MetabolicNetwork';
+import ProfileSection from './ProfileSection';
+import Sidebar from './Sidebar';
+import WhatsHot from './WhatsHot';
 
 // Function to get the current date in the format "MONTH DAY"
 function getCurrentDate() {

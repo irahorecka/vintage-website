@@ -1,5 +1,3 @@
-import React from 'react';
-
 const WhatsHot = () => {
   return (
     <div className="whats-hot-container left-content">

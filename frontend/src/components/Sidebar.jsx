@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ProfileImageWithFortune from './ProfileImageWithFortune';
 import RetroButton from './RetroButton';
 

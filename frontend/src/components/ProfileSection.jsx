@@ -1,5 +1,3 @@
-import React from 'react';
-
 import ProteinViewer from './ProteinViewer';
 
 import profileIcon from '../assets/profile-icon.png';
@@ -18,7 +16,7 @@ const ProfileSection = () => {
         </div>
         <div className="profile-text">
           <p>
-            Welcome to my page! Take a look around - this site is powered by
+            Welcome to my page! Take a look around—this site is powered by
             React, Vite, Sass, and a FastAPI backend.
           </p>
           <p>

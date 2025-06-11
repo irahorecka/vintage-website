@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 const AstVisualizer = () => {
   const [astData, setAstData] = useState(null); // Stores the AST metadata
