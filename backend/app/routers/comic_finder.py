@@ -100,7 +100,7 @@ async def fetch_comic(comic: str, date: str = None):
 
         # Check if the file already exists (only for specific dates)
         if not os.path.exists(download_file_path):
-            comic_instance.download(download_file_path, retries=5, base_delay=0.5)
+            comic_instance.download(download_file_path, retries=3, base_delay=0.5)
 
         return {
             "comic": comic,
