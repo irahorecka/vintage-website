@@ -113,7 +113,7 @@ const CodingProjects = () => {
       <div className="section-header">
         <h2>Coding Projects</h2>
       </div>
-      <div className="coding-projects-text">
+      <div className="projects-text">
         <p>
           These are some of the projects I've worked on, ranging from API
           wrappers for popular websites to desktop GUI applications for music

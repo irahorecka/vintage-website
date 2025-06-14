@@ -6,6 +6,7 @@ import Footer from './Footer';
 import MetabolicNetwork from './MetabolicNetwork';
 import ProfileSection from './ProfileSection';
 import Sidebar from './Sidebar';
+import WebProjects from './WebProjects';
 import WhatsHot from './WhatsHot';
 
 // Function to get the current date in the format "MONTH DAY"
@@ -67,9 +68,15 @@ function Content() {
         />
         {addContentDivider()}
         <ContentRow
+          leftContent={<WebProjects />}
+          singleColumn={true}
+          id="websites"
+        />
+        {addContentDivider()}
+        <ContentRow
           leftContent={<CodingProjects />}
           singleColumn={true}
-          id="projects"
+          id="coding"
         />
         {/* Footer */}
         <Footer />

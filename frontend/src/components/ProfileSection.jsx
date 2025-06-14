@@ -16,8 +16,8 @@ const ProfileSection = () => {
         </div>
         <div className="profile-text">
           <p>
-            Welcome to my page! Take a look around—this site is powered by
-            React, Vite, Sass, and a FastAPI backend.
+            Welcome to my page! Take a look around—this site is served by Nginx
+            and built with React, Sass, and a FastAPI backend.
           </p>
           <p>
             I'm a molecular biologist, protein chemist, and bioinformatician,

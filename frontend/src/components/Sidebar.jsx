@@ -51,7 +51,8 @@ const Sidebar = () => {
       <a href="#home">Home</a>
       <a href="#comics">Comics</a>
       <a href="#ast">AST</a>
-      <a href="#projects">Projects</a>
+      <a href="#websites">Websites</a>
+      <a href="#coding">Coding</a>
 
       <div className="divider"></div>
       <h2>Find Me Elsewhere</h2>
