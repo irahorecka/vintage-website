@@ -1,0 +1,66 @@
+@use '../abstracts/index' as abstracts;
+
+.web-projects-container {
+  max-width: 1000px;
+  background-color: #ffffff;
+  margin: 0 auto;
+
+  .projects-text {
+    align-items: center;
+    font-size: abstracts.$font-size-base;
+    line-height: 1.4;
+  }
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 30px;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .project-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px;
+    background-color: #ffffff;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .project-row > div {
+    flex: 1;
+  }
+
+  .favicon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+
+  .project-title {
+    font-weight: bold;
+    font-size: 1.25rem;
+
+    .year {
+      font-weight: bold;
+      font-size: 1.25rem;
+      color: #666;
+    }
+  }
+
+  .project-description {
+    font-size: 1rem;
+    color: #444;
+  }
+
+  .project-stack {
+    font-size: abstracts.$font-size-small;
+    color: abstracts.$primary-color;
+  }
+}
