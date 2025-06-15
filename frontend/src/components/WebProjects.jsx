@@ -19,13 +19,13 @@ const WebProjects = () => {
       title: 'Human Genetic Interactions (2025)',
       description: 'Official site for the Human Genetic Interactions project',
       url: 'https://thecellmap.org/human/',
-      stack: ['React', 'Bootstrap', 'Django', 'Apache'],
+      stack: ['React', 'SigmaJS', 'Bootstrap', 'Django', 'Apache'],
     },
     {
       title: 'Toronto Bioinformatics Hackathon (2025)',
       description: 'Official site for the Toronto Bioinformatics Hackathon',
       url: 'https://hackbio.ca',
-      stack: ['jQuery', 'Bootstrap', 'Sass', 'Github Pages'],
+      stack: ['jQuery', 'Bootstrap', 'Github Pages'],
     },
     {
       title: 'Jellyfin Media Server (2024)',
