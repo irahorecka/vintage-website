@@ -70,7 +70,7 @@ function Content() {
         <ContentRow
           leftContent={<WebProjects />}
           singleColumn={true}
-          id="websites"
+          id="web"
         />
         {addContentDivider()}
         <ContentRow
