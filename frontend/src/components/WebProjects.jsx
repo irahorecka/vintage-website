@@ -84,8 +84,7 @@ const WebProjects = () => {
         <p>
           I've built a number of websites for personal use, lab projects, and
           events. Some are static, others dynamic—ranging from markdown-based
-          notebooks to full-stack applications with custom APIs. They’re built
-          to work, and built to last.
+          notebooks to full-stack applications with custom APIs.
         </p>
       </div>
       <div className="project-grid">
