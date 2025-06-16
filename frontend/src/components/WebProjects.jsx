@@ -90,11 +90,11 @@ const WebProjects = () => {
       </div>
       <div className="projects-text">
         <p>
-          I've built a number of websites for personal use, lab projects, and
-          events. Some are static, others dynamic—ranging from markdown-based
-          notebooks to full-stack applications with custom APIs. I take on the
-          occasional freelance project, so feel free to reach out if you have
-          something in mind.
+          I've built and contributed to a number of websites for personal use,
+          lab projects, and scientific tools. Some are static, others dynamic—
+          ranging from markdown-based notebooks to full-stack applications with
+          custom APIs. I take on the occasional freelance project, so feel free
+          to reach out if you have something in mind.
         </p>
       </div>
       <div className="project-grid">
