@@ -15,12 +15,12 @@ const WebProjects = () => {
       url: 'https://gardenofrecipes.org',
       stack: ['React', 'Tailwind CSS', 'Github Pages'],
     },
-    {
-      title: 'Human Genetic Interactions (2025)',
-      description: 'Official site for the Human Genetic Interactions project',
-      url: 'https://thecellmap.org/human/',
-      stack: ['React', 'SigmaJS', 'Bootstrap', 'Django', 'Apache'],
-    },
+    // {
+    //   title: 'Human Genetic Interactions (2025)',
+    //   description: 'Official site for the Human Genetic Interactions project',
+    //   url: 'https://thecellmap.org/human/',
+    //   stack: ['React', 'SigmaJS', 'Bootstrap', 'Django', 'Apache'],
+    // },
     {
       title: 'RISK Network Documentation (2025)',
       description: 'Official site for the RISK Network project',
