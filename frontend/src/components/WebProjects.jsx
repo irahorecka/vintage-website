@@ -22,6 +22,14 @@ const WebProjects = () => {
       stack: ['React', 'SigmaJS', 'Bootstrap', 'Django', 'Apache'],
     },
     {
+      title: 'RISK Network Documentation (2025)',
+      description: 'Official site for the RISK Network project',
+      url: 'https://riskportal.github.io/network-tutorial/',
+      stack: ['MkDocs', 'Binder', 'Github Pages'],
+      favicon:
+        'https://riskportal.github.io/network-tutorial/images/risk_logo.ico',
+    },
+    {
       title: 'Toronto Bioinformatics Hackathon (2025)',
       description: 'Official site for the Toronto Bioinformatics Hackathon',
       url: 'https://hackbio.ca',
@@ -84,7 +92,9 @@ const WebProjects = () => {
         <p>
           I've built a number of websites for personal use, lab projects, and
           events. Some are static, others dynamic—ranging from markdown-based
-          notebooks to full-stack applications with custom APIs.
+          notebooks to full-stack applications with custom APIs. I take on the
+          occasional freelance project, so feel free to reach out if you have
+          something in mind.
         </p>
       </div>
       <div className="project-grid">
