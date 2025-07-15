@@ -35,22 +35,22 @@ const WebProjects = () => {
       url: 'https://hackbio.ca',
       stack: ['jQuery', 'Bootstrap', 'Github Pages'],
     },
-    {
-      title: 'Jellyfin Media Server (2024)',
-      description: 'Personal site for my Jellyfin media server',
-      url: 'https://jellyfin.irahorecka.com',
-      stack: ['Nginx'],
-      favicon:
-        'https://static-00.iconduck.com/assets.00/jellyfin-icon-256x256-4ecyicmj.png',
-    },
-    {
-      title: 'Module-Level Genetic Interactions (2023)',
-      description:
-        'Personal site for the Module-Level Genetic Interactions project',
-      url: 'https://crosstalk.irahorecka.com',
-      stack: ['jQuery', 'SigmaJS', 'Bootstrap', 'Flask', 'Nginx'],
-      favicon: 'https://crosstalk.irahorecka.com/static/images/favicon.ico',
-    },
+    // {
+    //   title: 'Jellyfin Media Server (2024)',
+    //   description: 'Personal site for my Jellyfin media server',
+    //   url: 'https://jellyfin.irahorecka.com',
+    //   stack: ['Nginx'],
+    //   favicon:
+    //     'https://static-00.iconduck.com/assets.00/jellyfin-icon-256x256-4ecyicmj.png',
+    // },
+    // {
+    //   title: 'Module-Level Genetic Interactions (2023)',
+    //   description:
+    //     'Personal site for the Module-Level Genetic Interactions project',
+    //   url: 'https://crosstalk.irahorecka.com',
+    //   stack: ['jQuery', 'SigmaJS', 'Bootstrap', 'Flask', 'Nginx'],
+    //   favicon: 'https://crosstalk.irahorecka.com/static/images/favicon.ico',
+    // },
     {
       title: 'Personal Recipe Book (2022)',
       description: 'Templates-based recipe site with a minimalist aesthetic',
