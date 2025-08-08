@@ -1,59 +1,80 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <!-- Charset & viewport -->
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
 
-<head>
-  <!-- Charset & viewport -->
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <!-- Page identity -->
+    <title>Ira Horecka</title>
+    <meta
+      name="description"
+      content="Ira Horecka — PhD candidate in Computational Biology (University of Toronto, Röst Lab). Molecular biologist, protein chemist, and bioinformatician building scalable bioinformatics tools and scientific web apps."
+    />
+    <meta name="author" content="Ira Horecka" />
 
-  <!-- Page identity -->
-  <title>Ira Horecka</title>
-  <meta name="description"
-    content="Ira Horecka — PhD candidate in Computational Biology (University of Toronto, Röst Lab). Molecular biologist, protein chemist, and bioinformatician building scalable bioinformatics tools and scientific web apps." />
-  <meta name="author" content="Ira Horecka" />
+    <!-- Theme & color scheme -->
+    <meta name="theme-color" content="#0b0b0b" />
+    <meta name="color-scheme" content="light dark" />
 
-  <!-- Theme & color scheme -->
-  <meta name="theme-color" content="#0b0b0b" />
-  <meta name="color-scheme" content="light dark" />
+    <!-- Robots & referrer -->
+    <meta
+      name="robots"
+      content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
 
-  <!-- Robots & referrer -->
-  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
-  <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <!-- Canonical -->
+    <link rel="canonical" href="https://irahorecka.com/" />
 
-  <!-- Canonical -->
-  <link rel="canonical" href="https://irahorecka.com/" />
+    <!-- Favicon / Icons (ensure these exist; otherwise adjust paths) -->
+    <link rel="icon" type="image/x-icon" href="/icons/favicon.ico" />
+    <link rel="icon" type="image/png" href="/icons/web-icon.png" />
+    <link rel="apple-touch-icon" href="/icons/web-icon.png" />
 
-  <!-- Favicon / Icons (ensure these exist; otherwise adjust paths) -->
-  <link rel="icon" type="image/x-icon" href="/icons/favicon.ico" />
-  <link rel="icon" type="image/png" href="/icons/web-icon.png" />
-  <link rel="apple-touch-icon" href="/icons/web-icon.png" />
+    <!-- Social: Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ira Horecka" />
+    <meta property="og:locale" content="en_CA" />
+    <meta property="og:url" content="https://irahorecka.com/" />
+    <meta property="og:title" content="Ira Horecka" />
+    <meta
+      property="og:description"
+      content="PhD candidate at the University of Toronto (Röst Lab). Research in genetic interaction networks, mass spectrometry, and bioinformatics."
+    />
+    <meta
+      property="og:image"
+      content="https://irahorecka.com/assets/profile.jpg"
+    />
 
-  <!-- Social: Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Ira Horecka" />
-  <meta property="og:locale" content="en_CA" />
-  <meta property="og:url" content="https://irahorecka.com/" />
-  <meta property="og:title" content="Ira Horecka" />
-  <meta property="og:description"
-    content="PhD candidate at the University of Toronto (Röst Lab). Research in genetic interaction networks, mass spectrometry, and bioinformatics." />
-  <meta property="og:image" content="https://irahorecka.com/assets/profile.jpg" />
+    <!-- Social: Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Ira Horecka" />
+    <meta
+      name="twitter:description"
+      content="Network analysis, mass spectrometry, bioinformatics. Building RISK and scientific web tools."
+    />
+    <meta
+      name="twitter:image"
+      content="https://irahorecka.com/assets/profile.jpg"
+    />
 
-  <!-- Social: Twitter / X -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Ira Horecka" />
-  <meta name="twitter:description"
-    content="Network analysis, mass spectrometry, bioinformatics. Building RISK and scientific web tools." />
-  <meta name="twitter:image" content="https://irahorecka.com/assets/profile.jpg" />
+    <!-- Performance hints -->
+    <link rel="preconnect" href="https://3Dmol.org" crossorigin />
+    <link rel="dns-prefetch" href="https://3Dmol.org" />
 
-  <!-- Performance hints -->
-  <link rel="preconnect" href="https://3Dmol.org" crossorigin />
-  <link rel="dns-prefetch" href="https://3Dmol.org" />
+    <!-- Optional PWA manifest (create if you want installability) -->
+    <link
+      rel="manifest"
+      href="/site.webmanifest"
+      type="application/manifest+json"
+    />
 
-  <!-- Optional PWA manifest (create if you want installability) -->
-  <link rel="manifest" href="/site.webmanifest" type="application/manifest+json" />
-
-  <!-- JSON-LD: Person (primary entity) -->
-  <script type="application/ld+json">
+    <!-- JSON-LD: Person (primary entity) -->
+    <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Person",
@@ -103,8 +124,8 @@
       }
     </script>
 
-  <!-- JSON-LD: WebSite (sitelinks + internal search alignment) -->
-  <script type="application/ld+json">
+    <!-- JSON-LD: WebSite (sitelinks + internal search alignment) -->
+    <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
@@ -116,8 +137,8 @@
       }
     </script>
 
-  <!-- JSON-LD: Organizations (helps entity disambiguation) -->
-  <script type="application/ld+json">
+    <!-- JSON-LD: Organizations (helps entity disambiguation) -->
+    <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@graph": [
@@ -138,8 +159,8 @@
       }
     </script>
 
-  <!-- JSON-LD: Flagship Software (RISK) -->
-  <script type="application/ld+json">
+    <!-- JSON-LD: Flagship Software (RISK) -->
+    <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "SoftwareSourceCode",
@@ -152,16 +173,15 @@
         "url": "https://github.com/riskportal/network"
       }
     </script>
-</head>
+  </head>
 
-<body>
-  <div id="root"></div>
+  <body>
+    <div id="root"></div>
 
-  <!-- External libs -->
-  <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+    <!-- External libs -->
+    <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
 
-  <!-- Vite entry -->
-  <script type="module" src="/src/main.jsx"></script>
-</body>
-
+    <!-- Vite entry -->
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
