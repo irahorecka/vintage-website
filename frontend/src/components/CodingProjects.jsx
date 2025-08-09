@@ -117,8 +117,8 @@ const CodingProjects = () => {
         <p>
           These are some of the projects I've worked on, ranging from API
           wrappers for popular websites to desktop GUI applications for music
-          downloading. These projects have received over {totalStars} GitHub
-          stars combined. Check out my{' '}
+          downloading. These projects have received {totalStars} GitHub stars
+          combined. Check out my{' '}
           <a href="https://github.com/irahorecka">GitHub</a> or click through to
           learn more about each.
         </p>
