@@ -15,20 +15,13 @@
       content="Ira Horecka — PhD candidate in Computational Biology (University of Toronto, Röst Lab). Molecular biologist, protein chemist, and bioinformatician building scalable bioinformatics tools and scientific web apps."
     />
     <meta name="author" content="Ira Horecka" />
-
-    <!-- Theme & color scheme -->
-    <meta name="theme-color" content="#0b0b0b" />
-    <meta name="color-scheme" content="light dark" />
+    <link rel="canonical" href="https://irahorecka.com/" />
 
     <!-- Robots & referrer -->
     <meta
       name="robots"
       content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1"
     />
-    <meta name="referrer" content="strict-origin-when-cross-origin" />
-
-    <!-- Canonical -->
-    <link rel="canonical" href="https://irahorecka.com/" />
 
     <!-- Favicon / Icons (ensure these exist; otherwise adjust paths) -->
     <link rel="icon" type="image/x-icon" href="/icons/favicon.ico" />
@@ -60,17 +53,6 @@
     <meta
       name="twitter:image"
       content="https://irahorecka.com/assets/profile.jpg"
-    />
-
-    <!-- Performance hints -->
-    <link rel="preconnect" href="https://3Dmol.org" crossorigin />
-    <link rel="dns-prefetch" href="https://3Dmol.org" />
-
-    <!-- Optional PWA manifest (create if you want installability) -->
-    <link
-      rel="manifest"
-      href="/site.webmanifest"
-      type="application/manifest+json"
     />
 
     <!-- JSON-LD: Person (primary entity) -->
@@ -136,50 +118,13 @@
         "inLanguage": "en"
       }
     </script>
-
-    <!-- JSON-LD: Organizations (helps entity disambiguation) -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "Organization",
-            "@id": "https://www.utoronto.ca/#org",
-            "name": "University of Toronto",
-            "url": "https://www.utoronto.ca/",
-            "sameAs": ["https://en.wikipedia.org/wiki/University_of_Toronto"]
-          },
-          {
-            "@type": "Organization",
-            "@id": "https://www.roestlab.org/#org",
-            "name": "Röst Lab",
-            "url": "https://www.roestlab.org/"
-          }
-        ]
-      }
-    </script>
-
-    <!-- JSON-LD: Flagship Software (RISK) -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "SoftwareSourceCode",
-        "name": "RISK",
-        "description": "A robust tool for scalable network analysis and high-quality visualization.",
-        "programmingLanguage": ["Python"],
-        "codeRepository": "https://github.com/riskportal/network",
-        "license": "https://opensource.org/licenses/GPL-3.0",
-        "creator": { "@id": "https://irahorecka.com/#person" },
-        "url": "https://github.com/riskportal/network"
-      }
-    </script>
   </head>
 
   <body>
     <div id="root"></div>
 
     <!-- External libs -->
-    <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+    <script defer src="https://3Dmol.org/build/3Dmol-min.js"></script>
 
     <!-- Vite entry -->
     <script type="module" src="/src/main.jsx"></script>
