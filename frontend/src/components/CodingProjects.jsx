@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 const CodingProjects = () => {
   const [projects, setProjects] = useState([]);
   const [totalStars, setTotalStars] = useState(0);
+  const [totalForks, setTotalForks] = useState(0);
 
   useEffect(() => {
     const fetchPinnedRepos = async () => {
@@ -54,7 +55,7 @@ const CodingProjects = () => {
 
         setProjects(formattedProjects);
 
-        // Fetch total stars from all public repos
+        // Fetch total stars and forks from all public repos
         const starCountResponse = await fetch(
           `https://api.github.com/users/${import.meta.env.VITE_GITHUB_USERNAME}/repos?per_page=100`,
           {
@@ -68,8 +69,12 @@ const CodingProjects = () => {
           (acc, repo) => acc + repo.stargazers_count,
           0
         );
+        let totalForks = allRepos.reduce(
+          (acc, repo) => acc + repo.forks_count,
+          0
+        );
 
-        // Fetch additional repos and add their stars to totalStars
+        // Fetch additional repos and add their stars and forks to totals
         const addlReposRaw = import.meta.env.VITE_GITHUB_REPOS;
         if (addlReposRaw) {
           const addlRepos = addlReposRaw
@@ -92,6 +97,9 @@ const CodingProjects = () => {
               if (typeof repoData.stargazers_count === 'number') {
                 totalStars += repoData.stargazers_count;
               }
+              if (typeof repoData.forks_count === 'number') {
+                totalForks += repoData.forks_count;
+              }
             } catch (e) {
               // Skip this repo on error
               continue;
@@ -100,6 +108,7 @@ const CodingProjects = () => {
         }
         // totalStars += 500;
         setTotalStars(totalStars);
+        setTotalForks(totalForks);
       } catch (error) {
         console.error('Error fetching pinned repos:', error);
       }
@@ -118,7 +127,7 @@ const CodingProjects = () => {
           These are some of the projects I've worked on, ranging from API
           wrappers for popular websites to desktop GUI applications for music
           downloading. These projects have received {totalStars} GitHub stars
-          combined. Check out my{' '}
+          and {totalForks} forks combined. Check out my{' '}
           <a href="https://github.com/irahorecka">GitHub</a> or click through to
           learn more about each.
         </p>
