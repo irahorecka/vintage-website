@@ -23,7 +23,7 @@ const WebProjects = () => {
     // },
     {
       title: 'RISK Documentation (2025)',
-      description: 'Official site for the RISK bioinformatics tool (Horecka and Röst, 2025)',
+      description: 'Official site for the RISK bioinformatics tool, developed by Horecka and Röst (2025)',
       url: 'https://riskportal.github.io/risk-docs/',
       stack: ['MkDocs', 'Binder', 'Github Pages'],
       favicon:
