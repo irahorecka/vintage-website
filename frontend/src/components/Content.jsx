@@ -56,12 +56,6 @@ function Content() {
         <WhatsHot />
         {/* Single Content Row (Duplicate Height but Single Content) */}
         <ContentRow
-          leftContent={<ComicFinder />}
-          singleColumn={true}
-          id="comics"
-        />
-        {addContentDivider()}
-        <ContentRow
           leftContent={<AstVisualizer />}
           singleColumn={true}
           id="ast"
