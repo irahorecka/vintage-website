@@ -26,6 +26,7 @@ fi
 # Install Python dependencies
 echo "Installing Python dependencies..."
 pip install --no-cache-dir -r requirements.txt
+python -m playwright install --with-deps  # install playwright browsers for comics library
 if [ $? -ne 0 ]; then
   echo "Error: Failed to install Python dependencies."
   deactivate
