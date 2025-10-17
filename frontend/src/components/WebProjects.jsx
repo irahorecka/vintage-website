@@ -22,12 +22,12 @@ const WebProjects = () => {
     //   stack: ['React', 'SigmaJS', 'Bootstrap', 'Django', 'Apache'],
     // },
     {
-      title: 'RISK Network Documentation (2025)',
-      description: 'Official site for the RISK Network project',
-      url: 'https://riskportal.github.io/network-tutorial/',
+      title: 'RISK Documentation (2025)',
+      description: 'Official site for the RISK bioinformatics tool, developed by Horecka and Röst (2025)',
+      url: 'https://riskportal.github.io/risk-docs/',
       stack: ['MkDocs', 'Binder', 'Github Pages'],
       favicon:
-        'https://riskportal.github.io/network-tutorial/images/risk_logo.ico',
+        'https://riskportal.github.io/risk-docs/images/risk_logo.ico',
     },
     {
       title: 'Toronto Bioinformatics Hackathon (2025)',

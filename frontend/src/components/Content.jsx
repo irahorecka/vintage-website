@@ -1,6 +1,5 @@
 import AstVisualizer from './AstVisualizer';
 import CodingProjects from './CodingProjects';
-import ComicFinder from './ComicFinder'; // Import the new component
 import ContentRow from './ContentRow';
 import Footer from './Footer';
 import MetabolicNetwork from './MetabolicNetwork';
@@ -55,12 +54,6 @@ function Content() {
         />
         <WhatsHot />
         {/* Single Content Row (Duplicate Height but Single Content) */}
-        <ContentRow
-          leftContent={<ComicFinder />}
-          singleColumn={true}
-          id="comics"
-        />
-        {addContentDivider()}
         <ContentRow
           leftContent={<AstVisualizer />}
           singleColumn={true}

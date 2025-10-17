@@ -1,8 +1,6 @@
 aiohttp
-comics
 fastapi
 fastapi-cors
-playwright
 pydot
 rapidfuzz
 rcsbsearchapi==1.3.0
