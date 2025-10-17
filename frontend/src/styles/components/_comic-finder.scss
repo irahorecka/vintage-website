@@ -1,0 +1,25 @@
+@use '../abstracts/index' as abstracts;
+
+.comic-finder-container {
+  max-width: 1000px;
+  background-color: #ffffff;
+}
+
+.comic-finder-text {
+  align-items: center;
+  font-size: abstracts.$font-size-base;
+  line-height: 1.4;
+}
+
+.comic-image-container {
+  width: 100%;
+  text-align: center;
+  margin: 30px auto;
+
+  .comic-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+}

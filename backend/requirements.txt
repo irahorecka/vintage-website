@@ -1,4 +1,5 @@
 aiohttp
+comics
 fastapi
 fastapi-cors
 pydot
