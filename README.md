@@ -10,6 +10,14 @@ Welcome to the GitHub repository for [my website](https://irahorecka.com), a vin
 - Overview of my background as a molecular biologist, protein chemist, and bioinformatician pursuing a PhD in computational biology.
 - Interactive protein explorer powered by the RCSB Protein Data Bank, allowing users to search and view 3D protein structures.
 
+### 2. **Comics Portal**
+
+- Explore classic comic strips via date-based search or random browsing.
+- Features include:
+  - Fuzzy search with interactive suggestions.
+  - Dynamic "Loading..." states for feedback.
+  - Powered by a custom-built API.
+
 ### 3. **Abstract Syntax Tree (AST)**
 
 - Delve into the structural representation of code.
@@ -29,13 +37,14 @@ Welcome to the GitHub repository for [my website](https://irahorecka.com), a vin
 
 ### 5. **Sidebar**
 
-- Navigation links: Home, AST, and Projects.
+- Navigation links: Home, Comics, and Projects.
 - External profiles in a vintage dropdown menu (LinkedIn, GitHub, Google Scholar, etc.).
 
 ## Technologies Used
 
 - **Frontend**: React, Vite, Sass
 - **Backend**: FastAPI
+- **APIs**: Custom APIs for comics and other data retrieval.
 - **Styling**: Retro-inspired design with dynamic interactivity.
 
 ## Environment Variables
