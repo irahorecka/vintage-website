@@ -27,7 +27,7 @@ const WebProjects = () => {
       url: 'https://riskportal.github.io/risk-docs/',
       stack: ['MkDocs', 'Binder', 'Github Pages'],
       favicon:
-        'https://riskportal.github.io/risk-docs/images/risk_logo.ico',
+        'https://riskportal.github.io/network-tutorial/images/risk_logo.ico',
     },
     {
       title: 'Toronto Bioinformatics Hackathon (2025)',

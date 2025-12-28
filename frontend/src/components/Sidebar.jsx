@@ -49,6 +49,7 @@ const Sidebar = () => {
 
       <div className="divider"></div>
       <a href="#home">Home</a>
+      <a href="#comics">Comics</a>
       <a href="#ast">AST</a>
       <a href="#web">Web</a>
       <a href="#coding">Coding</a>
