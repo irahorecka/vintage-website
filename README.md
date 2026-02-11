@@ -40,14 +40,17 @@ Welcome to the GitHub repository for [my website](https://irahorecka.com), a vin
 
 ## Environment Variables
 
-To run this project locally, you must create a `.env` file in the root directory with the following variables:
+To run this project locally, create `frontend/.env` with:
 
 ```bash
 VITE_GITHUB_USERNAME=your_username_here
-VITE_GITHUB_TOKEN=your_token_here
+VITE_GITHUB_ORGS=org1,org2
+VITE_GITHUB_REPOS=ownerA/repoA,ownerB/repoB
 ```
 
-Ensure you replace `your_token_here` with your actual GitHub token.
+`VITE_GITHUB_REPOS` is used for pinned cards (first 6, in order) and for combined star/fork totals.
+`VITE_GITHUB_ORGS` is optional and adds org repository totals.
+No GitHub token is used.
 
 ## How to Run Locally
 
