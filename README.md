@@ -2,36 +2,6 @@
 
 Welcome to the GitHub repository for [my website](https://irahorecka.com), a vintage-themed personal site showcasing my professional journey, projects, and interactive features. Built with modern technologies, this site combines functionality and nostalgia.
 
-## Features
-
-### 1. **Home**
-
-- Introduction with a quote and personal details.
-- Overview of my background as a molecular biologist, protein chemist, and bioinformatician pursuing a PhD in computational biology.
-- Interactive protein explorer powered by the RCSB Protein Data Bank, allowing users to search and view 3D protein structures.
-
-### 3. **Abstract Syntax Tree (AST)**
-
-- Delve into the structural representation of code.
-- Features include:
-  - Tree traversal and manipulation techniques.
-  - Tools for analyzing and transforming codebases.
-  - Applications in linters, compilers, and transpilers.
-
-### 4. **Projects**
-
-- Showcases my coding projects with links to GitHub repositories.
-- Highlights:
-  - **pycraigslist**: Craigslist API wrapper.
-  - **comics**: GoComics API wrapper.
-  - **youtube2audio**: GUI for downloading annotated YouTube videos as MP3s/MP4s.
-  - Other API wrappers and visual tools.
-
-### 5. **Sidebar**
-
-- Navigation links: Home, AST, and Projects.
-- External profiles in a vintage dropdown menu (LinkedIn, GitHub, Google Scholar, etc.).
-
 ## Technologies Used
 
 - **Frontend**: React, Vite, Sass
