@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
 
+// Shared configuration for GitHub fetch behavior.
+const GITHUB_API_BASE = 'https://api.github.com';
+const PINNED_REPO_LIMIT = 6;
+
 // Env config uses comma-separated values for optional repo/org include lists.
 const parseCsv = (rawValue) =>
   (rawValue || '')
@@ -10,6 +14,10 @@ const parseCsv = (rawValue) =>
 // Canonical repo key used for dedupe across all API sources.
 const getRepoId = (repo) =>
   typeof repo?.full_name === 'string' ? repo.full_name.toLowerCase() : null;
+
+// Fallback link used when repo API responses fail.
+const getGitHubRepoLink = (repoFullName) =>
+  `https://github.com/${repoFullName}`;
 
 const appendRepoTotals = (repo, totals, seenRepoIds) => {
   const repoId = getRepoId(repo);
@@ -27,7 +35,12 @@ const appendRepoTotals = (repo, totals, seenRepoIds) => {
   }
 };
 
-const fetchAllRepos = async (baseUrl, headers) => {
+const addReposToTotals = (repos, totals, seenRepoIds) => {
+  repos.forEach((repo) => appendRepoTotals(repo, totals, seenRepoIds));
+};
+
+// Generic pagination helper for GitHub list endpoints.
+const fetchAllRepos = async (baseUrl) => {
   let page = 1;
   const repos = [];
 
@@ -35,8 +48,7 @@ const fetchAllRepos = async (baseUrl, headers) => {
     // Preserve existing query params when appending pagination.
     const separator = baseUrl.includes('?') ? '&' : '?';
     const response = await fetch(
-      `${baseUrl}${separator}per_page=100&page=${page}`,
-      { headers }
+      `${baseUrl}${separator}per_page=100&page=${page}`
     );
 
     if (!response.ok) {
@@ -59,135 +71,127 @@ const fetchAllRepos = async (baseUrl, headers) => {
   return repos;
 };
 
+// Single-repo fetch with memoization to avoid duplicate API calls.
+const fetchRepoByFullName = async (repoFullName, repoCache) => {
+  const cacheKey = repoFullName.toLowerCase();
+  if (repoCache.has(cacheKey)) {
+    return repoCache.get(cacheKey);
+  }
+
+  try {
+    const response = await fetch(`${GITHUB_API_BASE}/repos/${repoFullName}`);
+    if (!response.ok) {
+      repoCache.set(cacheKey, null);
+      return null;
+    }
+
+    const repo = await response.json();
+    repoCache.set(cacheKey, repo);
+    return repo;
+  } catch {
+    repoCache.set(cacheKey, null);
+    return null;
+  }
+};
+
+// Stable UI fallback for missing/inaccessible repositories.
+const buildUnavailableProject = (repoFullName, description) => ({
+  title: repoFullName,
+  description,
+  stars: 0,
+  forks: 0,
+  languages: [],
+  link: getGitHubRepoLink(repoFullName),
+});
+
+// Convert a GitHub repo payload into the project card view-model.
+const formatProjectCard = (repo, orgPrefixes) => {
+  const owner = repo?.owner?.login || '';
+  const isOrgRepo = orgPrefixes.has(owner.toLowerCase());
+  const primaryLanguage = repo.language ? [repo.language] : [];
+  const fullName =
+    repo.full_name ||
+    [repo?.owner?.login, repo?.name].filter(Boolean).join('/');
+
+  return {
+    title: isOrgRepo && fullName ? fullName : repo.name,
+    description: repo.description || 'No description provided.',
+    stars: repo.stargazers_count || 0,
+    forks: repo.forks_count || 0,
+    languages: primaryLanguage,
+    link: repo.html_url || getGitHubRepoLink(fullName),
+  };
+};
+
+// Resolve pinned repos in parallel while preserving env order.
+const fetchPinnedProjects = async (pinnedRepoNames, orgPrefixes, repoCache) =>
+  Promise.all(
+    pinnedRepoNames.map(async (repoFullName) => {
+      const repo = await fetchRepoByFullName(repoFullName, repoCache);
+      if (!repo) {
+        return buildUnavailableProject(
+          repoFullName,
+          'Unavailable (private repo, typo, or rate-limited).'
+        );
+      }
+      return formatProjectCard(repo, orgPrefixes);
+    })
+  );
+
 const CodingProjects = () => {
   const [projects, setProjects] = useState([]);
   const [totalStars, setTotalStars] = useState(0);
   const [totalForks, setTotalForks] = useState(0);
 
   useEffect(() => {
-    const fetchPinnedRepos = async () => {
+    // Run once on mount: fetch cards first, then aggregate totals.
+    const fetchRepos = async () => {
       try {
-        const query = `
-          {
-            user(login: "${import.meta.env.VITE_GITHUB_USERNAME}") {
-              pinnedItems(first: 6, types: REPOSITORY) {
-                nodes {
-                  ... on Repository {
-                    name
-                    description
-                    stargazers {
-                      totalCount
-                    }
-                    forkCount
-                    url
-                    languages(first: 5) {
-                      nodes {
-                        name
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        `;
+        // Read all repo inputs from env; first N entries are treated as pinned.
+        const envRepos = parseCsv(import.meta.env.VITE_GITHUB_REPOS);
+        const pinnedRepoNames = envRepos.slice(0, PINNED_REPO_LIMIT);
+        const addlOrgs = parseCsv(import.meta.env.VITE_GITHUB_ORGS);
+        const username = import.meta.env.VITE_GITHUB_USERNAME;
+        const repoCache = new Map();
 
-        const response = await fetch('https://api.github.com/graphql', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
-          },
-          body: JSON.stringify({ query }),
-        });
+        // Keep org names normalized for display decisions.
+        const orgPrefixes = new Set(addlOrgs.map((org) => org.toLowerCase()));
 
-        const { data } = await response.json();
-        // Org-owned repos can be displayed as "org/repo" for clarity.
-        const orgPrefixes = new Set(
-          parseCsv(import.meta.env.VITE_GITHUB_ORGS).map((org) =>
-            org.toLowerCase()
-          )
+        const pinnedProjects = await fetchPinnedProjects(
+          pinnedRepoNames,
+          orgPrefixes,
+          repoCache
         );
+        // Show cards as soon as pinned data is ready.
+        setProjects(pinnedProjects);
 
-        const formattedProjects = data.user.pinnedItems.nodes.map((repo) => ({
-          title: (() => {
-            // Parse owner/repo from URL to optionally prefix org repos in the card title.
-            try {
-              const [owner, repoName] = new URL(repo.url).pathname
-                .split('/')
-                .filter(Boolean);
-              if (owner && repoName && orgPrefixes.has(owner.toLowerCase())) {
-                return `${owner}/${repoName}`;
-              }
-            } catch {
-              // Fall through to the default display title.
-            }
-            return repo.name;
-          })(),
-          description: repo.description || 'No description provided.',
-          stars: repo.stargazers.totalCount,
-          forks: repo.forkCount,
-          languages: repo.languages.nodes.map((lang) => lang.name),
-          link: repo.url,
-        }));
-
-        setProjects(formattedProjects);
-
-        // Reuse the same auth header for all GitHub API calls in this effect.
-        const githubHeaders = {
-          Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
-        };
-
-        // Fetch total stars/forks from all personal public repos (with pagination).
-        const allRepos = await fetchAllRepos(
-          `https://api.github.com/users/${import.meta.env.VITE_GITHUB_USERNAME}/repos`,
-          githubHeaders
-        );
         const totals = { stars: 0, forks: 0 };
         // Shared dedupe set prevents double-counting the same repo from different endpoints.
         const seenRepoIds = new Set();
-        allRepos.forEach((repo) => appendRepoTotals(repo, totals, seenRepoIds));
 
-        // Fetch additional repos and add their stars and forks to totals
-        // `VITE_GITHUB_REPOS` expects "owner/repo" entries.
-        const addlReposRaw = import.meta.env.VITE_GITHUB_REPOS;
-        if (addlReposRaw) {
-          const addlRepos = parseCsv(addlReposRaw);
-          for (const repoFullName of addlRepos) {
-            // repoFullName expected in "owner/repo" format
-            try {
-              const resp = await fetch(
-                `https://api.github.com/repos/${repoFullName}`,
-                {
-                  headers: githubHeaders,
-                }
-              );
-              if (!resp.ok) continue;
-              const repoData = await resp.json();
-              appendRepoTotals(repoData, totals, seenRepoIds);
-            } catch {
-              // Skip this repo on error
-              continue;
-            }
-          }
+        if (username) {
+          // Include all personal public repos in totals.
+          const personalRepos = await fetchAllRepos(
+            `${GITHUB_API_BASE}/users/${username}/repos`
+          );
+          addReposToTotals(personalRepos, totals, seenRepoIds);
         }
 
-        // Fetch all repos in extra orgs (e.g., riskportal,himalayas-base).
-        // Useful when contributions live outside the main user account.
-        const addlOrgs = parseCsv(import.meta.env.VITE_GITHUB_ORGS);
-        for (const org of addlOrgs) {
-          try {
-            const orgRepos = await fetchAllRepos(
-              `https://api.github.com/orgs/${org}/repos?type=public`,
-              githubHeaders
-            );
-            orgRepos.forEach((repo) =>
-              appendRepoTotals(repo, totals, seenRepoIds)
-            );
-          } catch {
-            continue;
-          }
-        }
+        // Also count explicitly listed repos (reuses the same cache).
+        const envRepoData = await Promise.all(
+          envRepos.map((repoFullName) =>
+            fetchRepoByFullName(repoFullName, repoCache)
+          )
+        );
+        addReposToTotals(envRepoData.filter(Boolean), totals, seenRepoIds);
+
+        // Add optional org-wide totals for external contribution repos.
+        const orgRepoLists = await Promise.all(
+          addlOrgs.map((org) =>
+            fetchAllRepos(`${GITHUB_API_BASE}/orgs/${org}/repos?type=public`)
+          )
+        );
+        addReposToTotals(orgRepoLists.flat(), totals, seenRepoIds);
 
         setTotalStars(totals.stars);
         setTotalForks(totals.forks);
@@ -196,7 +200,7 @@ const CodingProjects = () => {
       }
     };
 
-    fetchPinnedRepos();
+    fetchRepos();
   }, []);
 
   return (
