@@ -163,7 +163,12 @@ const Publications = () => {
       <div className="publications-text">
         <p>
           A curated list of my scientific publications, also available on{' '}
-          <a href="https://scholar.google.com/citations?user=RYufrIkAAAAJ&hl=en">
+          <a
+            href="https://scholar.google.com/citations?user=RYufrIkAAAAJ&hl=en"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Google Scholar profile"
+          >
             Google Scholar
           </a>
           .
@@ -195,6 +200,7 @@ const Publications = () => {
                       href={citationData.citationsUrl}
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label={`Open citations for ${publication.title}`}
                       className="publication-cited-by publication-cited-by-link"
                     >
                       Cited by {citationData.count}
@@ -209,6 +215,7 @@ const Publications = () => {
                     href={publication.url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`Open DOI for ${publication.title}`}
                     className="publication-link"
                   >
                     DOI

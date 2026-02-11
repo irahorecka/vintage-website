@@ -27,7 +27,11 @@ const Sidebar = () => {
 
   const handleGoClick = () => {
     if (selectedLink) {
-      window.location.href = selectedLink; // Navigate to the selected URL in the same window
+      if (selectedLink.startsWith('mailto:')) {
+        window.location.href = selectedLink;
+        return;
+      }
+      window.open(selectedLink, '_blank', 'noopener,noreferrer');
     }
   };
 

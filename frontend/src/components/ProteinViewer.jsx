@@ -208,7 +208,15 @@ const ProteinViewer = () => {
         <p>
           Genes act as blueprints for molecular machines called proteins.
           Explore detailed 3D protein structures from{' '}
-          <a href="https://www.rcsb.org/">RCSB Protein Data Bank</a>.
+          <a
+            href="https://www.rcsb.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="RCSB Protein Data Bank"
+          >
+            RCSB Protein Data Bank
+          </a>
+          .
         </p>
         <div className="query-control-bar">
           <input

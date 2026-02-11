@@ -113,6 +113,7 @@ const WebProjects = () => {
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`${project.title}`}
             className="project-row"
           >
             <img src={project.favicon} alt="favicon" className="favicon" />

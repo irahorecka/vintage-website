@@ -6,7 +6,12 @@ const Footer = () => {
           <span>Maintained online by Ira Horecka</span>
           <span>|</span>
           <span>
-            <a href="https://github.com/irahorecka/vintage-website">
+            <a
+              href="https://github.com/irahorecka/vintage-website"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Source code repository"
+            >
               Source Code
             </a>
           </span>

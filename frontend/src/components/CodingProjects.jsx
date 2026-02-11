@@ -302,8 +302,15 @@ const CodingProjects = () => {
           popular websites to desktop GUI applications for music downloading.
           These projects have received {totalStars} GitHub stars and{' '}
           {totalForks} forks combined. Check out my{' '}
-          <a href="https://github.com/irahorecka">GitHub</a> or click through to
-          learn more about each.
+          <a
+            href="https://github.com/irahorecka"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub profile"
+          >
+            GitHub
+          </a>{' '}
+          or click through to learn more about each.
         </p>
       </div>
       {/* Projects Grid */}
@@ -311,7 +318,9 @@ const CodingProjects = () => {
         {projects.map((project, index) => (
           <a
             href={project.link}
+            target="_blank"
             rel="noopener noreferrer"
+            aria-label={`${project.title}`}
             className="project-card"
             key={index}
           >
