@@ -3,6 +3,7 @@ import CodingProjects from './CodingProjects';
 import ContentRow from './ContentRow';
 import Footer from './Footer';
 import MetabolicNetwork from './MetabolicNetwork';
+import Publications from './Publications';
 import ProfileSection from './ProfileSection';
 import Sidebar from './Sidebar';
 import WebProjects from './WebProjects';
@@ -70,6 +71,12 @@ function Content() {
           leftContent={<CodingProjects />}
           singleColumn={true}
           id="coding"
+        />
+        {addContentDivider()}
+        <ContentRow
+          leftContent={<Publications />}
+          singleColumn={true}
+          id="publications"
         />
         {/* Footer */}
         <Footer />
