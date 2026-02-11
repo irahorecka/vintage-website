@@ -40,6 +40,7 @@
 
     .query-search-input {
       width: 100%;
+      // Match button height so controls align cleanly on the same baseline.
       height: 28px;
       background-color: #ffffff;
       color: abstracts.$dark-text-color;
@@ -77,6 +78,7 @@
     }
 
     .query-button {
+      // Match input height to keep the "Search" button vertically centered in the row.
       height: 28px;
       width: 100px;
       margin-bottom: 0;

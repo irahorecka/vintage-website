@@ -24,6 +24,7 @@
   }
 
   .publications-list > .publication-entry:last-child {
+    // Keep the final item visually open-ended instead of trailing divider.
     padding-bottom: 0;
     border-bottom: none;
   }
