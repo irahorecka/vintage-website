@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 
-// Shared configuration for GitHub fetch behavior.
+// Shared constants for GitHub API calls and pinned-card count.
 const GITHUB_API_BASE = 'https://api.github.com';
 const PINNED_REPO_LIMIT = 6;
+const CACHE_KEY = 'codingProjectsCache';
 
-// Env config uses comma-separated values for optional repo/org include lists.
+// Env list values are provided as comma-separated strings.
 const parseCsv = (rawValue) =>
   (rawValue || '')
     .split(',')
@@ -15,9 +16,37 @@ const parseCsv = (rawValue) =>
 const getRepoId = (repo) =>
   typeof repo?.full_name === 'string' ? repo.full_name.toLowerCase() : null;
 
-// Fallback link used when repo API responses fail.
+// Safe GitHub page URL used when API fields are missing/unavailable.
 const getGitHubRepoLink = (repoFullName) =>
   `https://github.com/${repoFullName}`;
+
+const loadCachedProjects = () => {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const cached = JSON.parse(raw);
+    if (!cached?.timestamp) return null;
+    return cached;
+  } catch {
+    return null;
+  }
+};
+
+const saveCachedProjects = (projects, totalStars, totalForks) => {
+  try {
+    localStorage.setItem(
+      CACHE_KEY,
+      JSON.stringify({
+        timestamp: Date.now(),
+        projects,
+        totalStars,
+        totalForks,
+      })
+    );
+  } catch {
+    // Ignore storage errors (private mode, quota, etc).
+  }
+};
 
 const appendRepoTotals = (repo, totals, seenRepoIds) => {
   const repoId = getRepoId(repo);
@@ -39,7 +68,7 @@ const addReposToTotals = (repos, totals, seenRepoIds) => {
   repos.forEach((repo) => appendRepoTotals(repo, totals, seenRepoIds));
 };
 
-// Generic pagination helper for GitHub list endpoints.
+// Pagination helper for GitHub list endpoints.
 const fetchAllRepos = async (baseUrl) => {
   let page = 1;
   const repos = [];
@@ -71,25 +100,15 @@ const fetchAllRepos = async (baseUrl) => {
   return repos;
 };
 
-// Single-repo fetch with memoization to avoid duplicate API calls.
-const fetchRepoByFullName = async (repoFullName, repoCache) => {
-  const cacheKey = repoFullName.toLowerCase();
-  if (repoCache.has(cacheKey)) {
-    return repoCache.get(cacheKey);
-  }
-
+// Fetch one repository by "owner/repo"; returns null on any failure.
+const fetchRepoByFullName = async (repoFullName) => {
   try {
     const response = await fetch(`${GITHUB_API_BASE}/repos/${repoFullName}`);
     if (!response.ok) {
-      repoCache.set(cacheKey, null);
       return null;
     }
-
-    const repo = await response.json();
-    repoCache.set(cacheKey, repo);
-    return repo;
+    return await response.json();
   } catch {
-    repoCache.set(cacheKey, null);
     return null;
   }
 };
@@ -123,20 +142,26 @@ const formatProjectCard = (repo, orgPrefixes) => {
   };
 };
 
-// Resolve pinned repos in parallel while preserving env order.
-const fetchPinnedProjects = async (pinnedRepoNames, orgPrefixes, repoCache) =>
-  Promise.all(
-    pinnedRepoNames.map(async (repoFullName) => {
-      const repo = await fetchRepoByFullName(repoFullName, repoCache);
-      if (!repo) {
-        return buildUnavailableProject(
-          repoFullName,
-          'Unavailable (private repo, typo, or rate-limited).'
-        );
-      }
-      return formatProjectCard(repo, orgPrefixes);
-    })
-  );
+// Index repositories by normalized "owner/repo" for quick lookups.
+const buildRepoIndex = (repos) => {
+  const index = new Map();
+  repos.forEach((repo) => {
+    const repoId = getRepoId(repo);
+    if (repoId) {
+      index.set(repoId, repo);
+    }
+  });
+  return index;
+};
+
+const safeFetchAllRepos = async (baseUrl) => {
+  try {
+    return await fetchAllRepos(baseUrl);
+  } catch {
+    // Treat transient network failures as empty pages.
+    return [];
+  }
+};
 
 const CodingProjects = () => {
   const [projects, setProjects] = useState([]);
@@ -147,54 +172,117 @@ const CodingProjects = () => {
     // Run once on mount: fetch cards first, then aggregate totals.
     const fetchRepos = async () => {
       try {
+        const cached = loadCachedProjects();
+        if (cached) {
+          setProjects(cached.projects || []);
+          setTotalStars(cached.totalStars || 0);
+          setTotalForks(cached.totalForks || 0);
+        }
+
         // Read all repo inputs from env; first N entries are treated as pinned.
         const envRepos = parseCsv(import.meta.env.VITE_GITHUB_REPOS);
         const pinnedRepoNames = envRepos.slice(0, PINNED_REPO_LIMIT);
         const addlOrgs = parseCsv(import.meta.env.VITE_GITHUB_ORGS);
         const username = import.meta.env.VITE_GITHUB_USERNAME;
-        const repoCache = new Map();
 
         // Keep org names normalized for display decisions.
         const orgPrefixes = new Set(addlOrgs.map((org) => org.toLowerCase()));
 
-        const pinnedProjects = await fetchPinnedProjects(
-          pinnedRepoNames,
-          orgPrefixes,
-          repoCache
-        );
-        // Show cards as soon as pinned data is ready.
+        // Fetch user and org repositories once; reuse this data for cards and totals.
+        if (username) {
+          const personalRepos = await safeFetchAllRepos(
+            `${GITHUB_API_BASE}/users/${username}/repos`
+          );
+          const orgRepoLists = await Promise.all(
+            addlOrgs.map((org) =>
+              safeFetchAllRepos(
+                `${GITHUB_API_BASE}/orgs/${org}/repos?type=public`
+              )
+            )
+          );
+
+          const knownRepos = [...personalRepos, ...orgRepoLists.flat()];
+          const repoIndex = buildRepoIndex(knownRepos);
+          const hasNetworkData = knownRepos.length > 0;
+
+          // For env repos outside username/org lists, fetch only the missing ones.
+          const missingEnvRepos = (
+            await Promise.all(
+              envRepos.map((repoFullName) => {
+                const key = repoFullName.toLowerCase();
+                return repoIndex.has(key)
+                  ? Promise.resolve(null)
+                  : fetchRepoByFullName(repoFullName);
+              })
+            )
+          ).filter(Boolean);
+
+          missingEnvRepos.forEach((repo) => {
+            const repoId = getRepoId(repo);
+            if (repoId) {
+              repoIndex.set(repoId, repo);
+            }
+          });
+
+          // Render pinned cards in env order, using unavailable placeholders when missing.
+          const pinnedProjects = pinnedRepoNames.map((repoFullName) => {
+            const repo = repoIndex.get(repoFullName.toLowerCase());
+            if (!repo) {
+              return buildUnavailableProject(
+                repoFullName,
+                'Unavailable (private repo, typo, or rate-limited).'
+              );
+            }
+            return formatProjectCard(repo, orgPrefixes);
+          });
+          setProjects(pinnedProjects);
+
+          const totals = { stars: 0, forks: 0 };
+          // Shared dedupe set prevents double-counting the same repo from different endpoints.
+          const seenRepoIds = new Set();
+          addReposToTotals(
+            [...knownRepos, ...missingEnvRepos],
+            totals,
+            seenRepoIds
+          );
+          setTotalStars(totals.stars);
+          setTotalForks(totals.forks);
+
+          if (hasNetworkData || missingEnvRepos.length > 0) {
+            saveCachedProjects(pinnedProjects, totals.stars, totals.forks);
+          }
+          return;
+        }
+
+        // No username configured: still render cards from explicit env repos.
+        const explicitRepos = (
+          await Promise.all(
+            envRepos.map((repoFullName) => fetchRepoByFullName(repoFullName))
+          )
+        ).filter(Boolean);
+        const repoIndex = buildRepoIndex(explicitRepos);
+
+        const pinnedProjects = pinnedRepoNames.map((repoFullName) => {
+          const repo = repoIndex.get(repoFullName.toLowerCase());
+          if (!repo) {
+            return buildUnavailableProject(
+              repoFullName,
+              'Unavailable (private repo, typo, or rate-limited).'
+            );
+          }
+          return formatProjectCard(repo, orgPrefixes);
+        });
         setProjects(pinnedProjects);
 
         const totals = { stars: 0, forks: 0 };
-        // Shared dedupe set prevents double-counting the same repo from different endpoints.
         const seenRepoIds = new Set();
-
-        if (username) {
-          // Include all personal public repos in totals.
-          const personalRepos = await fetchAllRepos(
-            `${GITHUB_API_BASE}/users/${username}/repos`
-          );
-          addReposToTotals(personalRepos, totals, seenRepoIds);
-        }
-
-        // Also count explicitly listed repos (reuses the same cache).
-        const envRepoData = await Promise.all(
-          envRepos.map((repoFullName) =>
-            fetchRepoByFullName(repoFullName, repoCache)
-          )
-        );
-        addReposToTotals(envRepoData.filter(Boolean), totals, seenRepoIds);
-
-        // Add optional org-wide totals for external contribution repos.
-        const orgRepoLists = await Promise.all(
-          addlOrgs.map((org) =>
-            fetchAllRepos(`${GITHUB_API_BASE}/orgs/${org}/repos?type=public`)
-          )
-        );
-        addReposToTotals(orgRepoLists.flat(), totals, seenRepoIds);
-
+        addReposToTotals(explicitRepos, totals, seenRepoIds);
         setTotalStars(totals.stars);
         setTotalForks(totals.forks);
+
+        if (explicitRepos.length > 0) {
+          saveCachedProjects(pinnedProjects, totals.stars, totals.forks);
+        }
       } catch (error) {
         console.error('Error fetching pinned repos:', error);
       }
