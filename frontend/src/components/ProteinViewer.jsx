@@ -1,3 +1,4 @@
+/* global $3Dmol */
 import { useEffect, useState } from 'react';
 
 import _ from 'lodash';

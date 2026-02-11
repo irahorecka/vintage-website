@@ -1,0 +1,91 @@
+@use '../abstracts/index' as abstracts;
+
+.publications-container {
+  max-width: 1000px;
+  background-color: #ffffff;
+  margin: 0;
+
+  .publications-text {
+    align-items: center;
+    font-size: abstracts.$font-size-base;
+    line-height: 1.4;
+  }
+
+  .publications-list {
+    margin: 30px auto 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .publication-entry {
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+  }
+
+  .publications-list > .publication-entry:last-child {
+    // Keep the final item visually open-ended instead of trailing divider.
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .publication-citation {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: abstracts.$dark-text-color;
+  }
+
+  .publication-author-self {
+    font-weight: abstracts.$font-weight-bold;
+  }
+
+  .publication-title {
+    font-style: italic;
+  }
+
+  .publication-venue {
+    font-style: italic;
+  }
+
+  .publication-meta {
+    margin-top: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+    font-size: abstracts.$font-size-small;
+  }
+
+  .publication-note {
+    color: abstracts.$text-muted;
+  }
+
+  .publication-cited-by {
+    color: abstracts.$primary-color;
+    font-weight: abstracts.$font-weight-bold;
+  }
+
+  .publication-cited-by-link,
+  .publication-link {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .publication-link {
+    color: abstracts.$primary-color;
+  }
+}
+
+@media (max-width: 768px) {
+  .publications-container {
+    .publications-list {
+      margin-top: 20px;
+      gap: 12px;
+    }
+
+    .publication-citation {
+      font-size: 1rem;
+    }
+  }
+}

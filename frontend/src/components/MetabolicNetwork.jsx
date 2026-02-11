@@ -11,7 +11,7 @@ const MetabolicNetwork = () => {
       <h3>
         <i>Saccharomyces cerevisiae</i>
       </h3>
-      <p>Baker's Yeast Metabolism in 3D!</p>
+      <p>Baker&apos;s Yeast Metabolism in 3D!</p>
       <p>
         Believe it or not, yeast shares about half of its genes with humans
         (~3,000 out of 6,000). These genes are essential for core cellular
@@ -19,10 +19,10 @@ const MetabolicNetwork = () => {
         studying human biology.
       </p>
       <p>
-        Yeast metabolism reveals how cells survive stress using backup
-        systems—much like ours. These mechanisms safeguard vital processes
-        during failure, ensuring survival. Studying them bridges fundamental
-        biology with advances in disease treatment.
+        Yeast metabolism reveals how cells survive stress using backup systems,
+        much like ours. These mechanisms safeguard vital processes during
+        failure, ensuring resilience. Studying them bridges fundamental biology
+        with advances in disease treatment.
       </p>
     </div>
   );

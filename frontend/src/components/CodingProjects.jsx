@@ -1,5 +1,64 @@
 import { useEffect, useState } from 'react';
 
+// Env config uses comma-separated values for optional repo/org include lists.
+const parseCsv = (rawValue) =>
+  (rawValue || '')
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean);
+
+// Canonical repo key used for dedupe across all API sources.
+const getRepoId = (repo) =>
+  typeof repo?.full_name === 'string' ? repo.full_name.toLowerCase() : null;
+
+const appendRepoTotals = (repo, totals, seenRepoIds) => {
+  const repoId = getRepoId(repo);
+  // Keep totals idempotent across multiple sources (user repos, org repos, explicit repos).
+  if (!repoId || seenRepoIds.has(repoId)) {
+    return;
+  }
+
+  seenRepoIds.add(repoId);
+  if (typeof repo.stargazers_count === 'number') {
+    totals.stars += repo.stargazers_count;
+  }
+  if (typeof repo.forks_count === 'number') {
+    totals.forks += repo.forks_count;
+  }
+};
+
+const fetchAllRepos = async (baseUrl, headers) => {
+  let page = 1;
+  const repos = [];
+
+  while (true) {
+    // Preserve existing query params when appending pagination.
+    const separator = baseUrl.includes('?') ? '&' : '?';
+    const response = await fetch(
+      `${baseUrl}${separator}per_page=100&page=${page}`,
+      { headers }
+    );
+
+    if (!response.ok) {
+      break;
+    }
+
+    const pageRepos = await response.json();
+    if (!Array.isArray(pageRepos) || pageRepos.length === 0) {
+      break;
+    }
+
+    repos.push(...pageRepos);
+    // Stop when GitHub returns fewer than `per_page` items for the final page.
+    if (pageRepos.length < 100) {
+      break;
+    }
+    page += 1;
+  }
+
+  return repos;
+};
+
 const CodingProjects = () => {
   const [projects, setProjects] = useState([]);
   const [totalStars, setTotalStars] = useState(0);
@@ -43,9 +102,28 @@ const CodingProjects = () => {
         });
 
         const { data } = await response.json();
+        // Org-owned repos can be displayed as "org/repo" for clarity.
+        const orgPrefixes = new Set(
+          parseCsv(import.meta.env.VITE_GITHUB_ORGS).map((org) =>
+            org.toLowerCase()
+          )
+        );
 
         const formattedProjects = data.user.pinnedItems.nodes.map((repo) => ({
-          title: repo.name,
+          title: (() => {
+            // Parse owner/repo from URL to optionally prefix org repos in the card title.
+            try {
+              const [owner, repoName] = new URL(repo.url).pathname
+                .split('/')
+                .filter(Boolean);
+              if (owner && repoName && orgPrefixes.has(owner.toLowerCase())) {
+                return `${owner}/${repoName}`;
+              }
+            } catch {
+              // Fall through to the default display title.
+            }
+            return repo.name;
+          })(),
           description: repo.description || 'No description provided.',
           stars: repo.stargazers.totalCount,
           forks: repo.forkCount,
@@ -55,60 +133,64 @@ const CodingProjects = () => {
 
         setProjects(formattedProjects);
 
-        // Fetch total stars and forks from all public repos
-        const starCountResponse = await fetch(
-          `https://api.github.com/users/${import.meta.env.VITE_GITHUB_USERNAME}/repos?per_page=100`,
-          {
-            headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
-            },
-          }
+        // Reuse the same auth header for all GitHub API calls in this effect.
+        const githubHeaders = {
+          Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
+        };
+
+        // Fetch total stars/forks from all personal public repos (with pagination).
+        const allRepos = await fetchAllRepos(
+          `https://api.github.com/users/${import.meta.env.VITE_GITHUB_USERNAME}/repos`,
+          githubHeaders
         );
-        const allRepos = await starCountResponse.json();
-        let totalStars = allRepos.reduce(
-          (acc, repo) => acc + repo.stargazers_count,
-          0
-        );
-        let totalForks = allRepos.reduce(
-          (acc, repo) => acc + repo.forks_count,
-          0
-        );
+        const totals = { stars: 0, forks: 0 };
+        // Shared dedupe set prevents double-counting the same repo from different endpoints.
+        const seenRepoIds = new Set();
+        allRepos.forEach((repo) => appendRepoTotals(repo, totals, seenRepoIds));
 
         // Fetch additional repos and add their stars and forks to totals
+        // `VITE_GITHUB_REPOS` expects "owner/repo" entries.
         const addlReposRaw = import.meta.env.VITE_GITHUB_REPOS;
         if (addlReposRaw) {
-          const addlRepos = addlReposRaw
-            .split(',')
-            .map((r) => r.trim())
-            .filter(Boolean);
+          const addlRepos = parseCsv(addlReposRaw);
           for (const repoFullName of addlRepos) {
             // repoFullName expected in "owner/repo" format
             try {
               const resp = await fetch(
                 `https://api.github.com/repos/${repoFullName}`,
                 {
-                  headers: {
-                    Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
-                  },
+                  headers: githubHeaders,
                 }
               );
               if (!resp.ok) continue;
               const repoData = await resp.json();
-              if (typeof repoData.stargazers_count === 'number') {
-                totalStars += repoData.stargazers_count;
-              }
-              if (typeof repoData.forks_count === 'number') {
-                totalForks += repoData.forks_count;
-              }
-            } catch (e) {
+              appendRepoTotals(repoData, totals, seenRepoIds);
+            } catch {
               // Skip this repo on error
               continue;
             }
           }
         }
-        // totalStars += 500;
-        setTotalStars(totalStars);
-        setTotalForks(totalForks);
+
+        // Fetch all repos in extra orgs (e.g., riskportal,himalayas-base).
+        // Useful when contributions live outside the main user account.
+        const addlOrgs = parseCsv(import.meta.env.VITE_GITHUB_ORGS);
+        for (const org of addlOrgs) {
+          try {
+            const orgRepos = await fetchAllRepos(
+              `https://api.github.com/orgs/${org}/repos?type=public`,
+              githubHeaders
+            );
+            orgRepos.forEach((repo) =>
+              appendRepoTotals(repo, totals, seenRepoIds)
+            );
+          } catch {
+            continue;
+          }
+        }
+
+        setTotalStars(totals.stars);
+        setTotalForks(totals.forks);
       } catch (error) {
         console.error('Error fetching pinned repos:', error);
       }
@@ -124,10 +206,10 @@ const CodingProjects = () => {
       </div>
       <div className="projects-text">
         <p>
-          These are some of the projects I've worked on, ranging from API
-          wrappers for popular websites to desktop GUI applications for music
-          downloading. These projects have received {totalStars} GitHub stars
-          and {totalForks} forks combined. Check out my{' '}
+          These are some of my coding projects, ranging from API wrappers for
+          popular websites to desktop GUI applications for music downloading.
+          These projects have received {totalStars} GitHub stars and{' '}
+          {totalForks} forks combined. Check out my{' '}
           <a href="https://github.com/irahorecka">GitHub</a> or click through to
           learn more about each.
         </p>

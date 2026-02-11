@@ -3,17 +3,13 @@ import { useEffect, useState } from 'react';
 const WebProjects = () => {
   const initialProjects = [
     {
-      title: 'Personal Portfolio (2025)',
+      title: 'HiMaLAYAS Documentation (2026)',
       description:
-        'Dynamic portfolio site showcasing my research and various projects',
-      url: 'https://irahorecka.com',
-      stack: ['React', 'Sass', 'FastAPI', 'Nginx'],
-    },
-    {
-      title: 'Schoellman Family Recipe Book (2025)',
-      description: 'Markdown-based family recipe site with a retro flair',
-      url: 'https://gardenofrecipes.org',
-      stack: ['React', 'Tailwind CSS', 'Github Pages'],
+        'Official site for the HiMaLAYAS bioinformatics tool, developed by Horecka and Röst (2026)',
+      url: 'https://himalayas-base.github.io/himalayas-docs/',
+      stack: ['MkDocs', 'Binder', 'Github Pages'],
+      favicon:
+        'https://himalayas-base.github.io/himalayas-docs/images/logo.ico',
     },
     // {
     //   title: 'Human Genetic Interactions (2025)',
@@ -22,15 +18,21 @@ const WebProjects = () => {
     //   stack: ['React', 'SigmaJS', 'Bootstrap', 'Django', 'Apache'],
     // },
     {
-      title: 'RISK Documentation (2025)',
-      description: 'Official site for the RISK bioinformatics tool, developed by Horecka and Röst (2025)',
+      title: 'RISK Documentation (2026)',
+      description:
+        'Official site for the RISK bioinformatics tool, developed by Horecka and Röst (2026)',
       url: 'https://riskportal.github.io/risk-docs/',
       stack: ['MkDocs', 'Binder', 'Github Pages'],
-      favicon:
-        'https://riskportal.github.io/risk-docs/images/risk_logo.ico',
+      favicon: 'https://riskportal.github.io/risk-docs/images/risk_logo.ico',
     },
     {
-      title: 'Toronto Bioinformatics Hackathon (2025)',
+      title: 'Schoellman Family Recipe Book (2025)',
+      description: 'Markdown-based family recipe site with a retro flair',
+      url: 'https://gardenofrecipes.org',
+      stack: ['React', 'Tailwind CSS', 'Github Pages'],
+    },
+    {
+      title: 'Toronto Bioinformatics Hackathon (2024)',
       description: 'Official site for the Toronto Bioinformatics Hackathon',
       url: 'https://hackbio.ca',
       stack: ['jQuery', 'Bootstrap', 'Github Pages'],
@@ -51,6 +53,13 @@ const WebProjects = () => {
     //   stack: ['jQuery', 'SigmaJS', 'Bootstrap', 'Flask', 'Nginx'],
     //   favicon: 'https://crosstalk.irahorecka.com/static/images/favicon.ico',
     // },
+    {
+      title: 'Personal Portfolio (2024)',
+      description:
+        'Dynamic portfolio site showcasing my research and various projects',
+      url: 'https://irahorecka.com',
+      stack: ['React', 'Sass', 'FastAPI', 'Nginx'],
+    },
     {
       title: 'Personal Recipe Book (2022)',
       description: 'Templates-based recipe site with a minimalist aesthetic',
@@ -90,11 +99,11 @@ const WebProjects = () => {
       </div>
       <div className="projects-text">
         <p>
-          I've built and contributed to a number of websites for personal use,
-          lab projects, and scientific tools. Some are static, others
-          dynamic, ranging from markdown-based notebooks to full-stack
-          applications with custom APIs. I take on the occasional freelance
-          project, so feel free to reach out if you have something in mind.
+          I&apos;ve built and contributed to websites for personal use, academic
+          projects, and commercial clients. These range from static,
+          markdown-based documentations to dynamic, full-stack applications with
+          custom APIs. I take on the occasional freelance project—feel free to
+          reach out if you have something in mind.
         </p>
       </div>
       <div className="project-grid">
