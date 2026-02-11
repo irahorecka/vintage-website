@@ -298,10 +298,9 @@ const CodingProjects = () => {
       </div>
       <div className="projects-text">
         <p>
-          These are some of my coding projects, ranging from API wrappers for
-          popular websites to desktop GUI applications for music downloading.
-          These projects have received {totalStars} GitHub stars and{' '}
-          {totalForks} forks combined. Check out my{' '}
+          These are some of my coding projects, ranging from API wrappers to
+          desktop GUI applications. These projects have received {totalStars}{' '}
+          GitHub stars and {totalForks} forks combined. Check out my{' '}
           <a
             href="https://github.com/irahorecka"
             target="_blank"
