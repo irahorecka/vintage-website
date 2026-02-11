@@ -3,7 +3,7 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-content">
         <p>
-          <span>Maintained online by Ira Horecka</span>
+          <span>Maintained by Ira Horecka</span>
           <span>|</span>
           <span>
             <a
