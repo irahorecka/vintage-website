@@ -32,10 +32,11 @@ const WebProjects = () => {
       stack: ['React', 'Tailwind CSS', 'Github Pages'],
     },
     {
-      title: 'Toronto Bioinformatics Hackathon (2024)',
-      description: 'Official site for the Toronto Bioinformatics Hackathon',
-      url: 'https://hackbio.ca',
-      stack: ['jQuery', 'Bootstrap', 'Github Pages'],
+      title: 'Personal Portfolio (2024)',
+      description:
+        'Dynamic portfolio site showcasing my research and various projects',
+      url: 'https://irahorecka.com',
+      stack: ['React', 'Sass', 'FastAPI', 'Nginx'],
     },
     // {
     //   title: 'Jellyfin Media Server (2024)',
@@ -54,11 +55,10 @@ const WebProjects = () => {
     //   favicon: 'https://crosstalk.irahorecka.com/static/images/favicon.ico',
     // },
     {
-      title: 'Personal Portfolio (2024)',
-      description:
-        'Dynamic portfolio site showcasing my research and various projects',
-      url: 'https://irahorecka.com',
-      stack: ['React', 'Sass', 'FastAPI', 'Nginx'],
+      title: 'Toronto Bioinformatics Hackathon (2024)',
+      description: 'Official site for the Toronto Bioinformatics Hackathon',
+      url: 'https://hackbio.ca',
+      stack: ['jQuery', 'Bootstrap', 'Github Pages'],
     },
     {
       title: 'Personal Recipe Book (2022)',
@@ -100,10 +100,10 @@ const WebProjects = () => {
       <div className="projects-text">
         <p>
           I&apos;ve built and contributed to websites for personal use, academic
-          projects, and commercial clients. These range from static,
-          markdown-based documentations to dynamic, full-stack applications with
-          custom APIs. I take on the occasional freelance project—feel free to
-          reach out if you have something in mind.
+          projects, and commercial clients. These range from static
+          documentations to dynamic, full-stack applications with custom APIs. I
+          take on the occasional freelance project—feel free to reach out if you
+          have something in mind.
         </p>
       </div>
       <div className="project-grid">
