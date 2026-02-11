@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 
+// Env config uses comma-separated values for optional repo/org include lists.
 const parseCsv = (rawValue) =>
   (rawValue || '')
     .split(',')
     .map((item) => item.trim())
     .filter(Boolean);
 
+// Canonical repo key used for dedupe across all API sources.
 const getRepoId = (repo) =>
   typeof repo?.full_name === 'string' ? repo.full_name.toLowerCase() : null;
 
@@ -30,6 +32,7 @@ const fetchAllRepos = async (baseUrl, headers) => {
   const repos = [];
 
   while (true) {
+    // Preserve existing query params when appending pagination.
     const separator = baseUrl.includes('?') ? '&' : '?';
     const response = await fetch(
       `${baseUrl}${separator}per_page=100&page=${page}`,
@@ -99,9 +102,28 @@ const CodingProjects = () => {
         });
 
         const { data } = await response.json();
+        // Org-owned repos can be displayed as "org/repo" for clarity.
+        const orgPrefixes = new Set(
+          parseCsv(import.meta.env.VITE_GITHUB_ORGS).map((org) =>
+            org.toLowerCase()
+          )
+        );
 
         const formattedProjects = data.user.pinnedItems.nodes.map((repo) => ({
-          title: repo.name,
+          title: (() => {
+            // Parse owner/repo from URL to optionally prefix org repos in the card title.
+            try {
+              const [owner, repoName] = new URL(repo.url).pathname
+                .split('/')
+                .filter(Boolean);
+              if (owner && repoName && orgPrefixes.has(owner.toLowerCase())) {
+                return `${owner}/${repoName}`;
+              }
+            } catch {
+              // Fall through to the default display title.
+            }
+            return repo.name;
+          })(),
           description: repo.description || 'No description provided.',
           stars: repo.stargazers.totalCount,
           forks: repo.forkCount,
@@ -111,6 +133,7 @@ const CodingProjects = () => {
 
         setProjects(formattedProjects);
 
+        // Reuse the same auth header for all GitHub API calls in this effect.
         const githubHeaders = {
           Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
         };
@@ -126,6 +149,7 @@ const CodingProjects = () => {
         allRepos.forEach((repo) => appendRepoTotals(repo, totals, seenRepoIds));
 
         // Fetch additional repos and add their stars and forks to totals
+        // `VITE_GITHUB_REPOS` expects "owner/repo" entries.
         const addlReposRaw = import.meta.env.VITE_GITHUB_REPOS;
         if (addlReposRaw) {
           const addlRepos = parseCsv(addlReposRaw);
@@ -141,7 +165,7 @@ const CodingProjects = () => {
               if (!resp.ok) continue;
               const repoData = await resp.json();
               appendRepoTotals(repoData, totals, seenRepoIds);
-            } catch (e) {
+            } catch {
               // Skip this repo on error
               continue;
             }
@@ -149,6 +173,7 @@ const CodingProjects = () => {
         }
 
         // Fetch all repos in extra orgs (e.g., riskportal,himalayas-base).
+        // Useful when contributions live outside the main user account.
         const addlOrgs = parseCsv(import.meta.env.VITE_GITHUB_ORGS);
         for (const org of addlOrgs) {
           try {

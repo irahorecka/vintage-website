@@ -20,10 +20,11 @@ const ProfileSection = () => {
             and built with React, Sass, and a FastAPI backend.
           </p>
           <p>
-            I'm a molecular biologist, protein chemist, and bioinformatician,
-            currently pursuing a PhD in computational biology at the University
-            of Toronto with Dr. Hannes Röst. When I'm not working, you can find
-            me bass fishing or restoring old bikes.
+            I&apos;m a molecular biologist, protein chemist, and
+            bioinformatician, currently at the University of Toronto pursuing a
+            Ph.D. in computational biology under the mentorship of Dr. Hannes
+            Röst. When I&apos;m not working, you can find me bass fishing or
+            restoring old bikes.
           </p>
         </div>
       </div>

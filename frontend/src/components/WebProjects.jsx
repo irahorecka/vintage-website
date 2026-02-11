@@ -99,7 +99,7 @@ const WebProjects = () => {
       </div>
       <div className="projects-text">
         <p>
-          I've built and contributed to websites for personal use, academic
+          I&apos;ve built and contributed to websites for personal use, academic
           projects, and commercial clients. These range from static,
           markdown-based documentations to dynamic, full-stack applications with
           custom APIs. I take on the occasional freelance project—feel free to

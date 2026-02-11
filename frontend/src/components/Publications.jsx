@@ -67,6 +67,7 @@ const extractWorkId = (openAlexWorkId) => {
 const buildCitationsUrl = (workId) =>
   `https://openalex.org/works?filter=${encodeURIComponent(`cites:${workId}`)}`;
 
+// Remove failed lookups before converting to a DOI -> citation data map.
 const mapCitationEntries = (entries) =>
   Object.fromEntries(entries.filter(Boolean));
 
@@ -147,6 +148,7 @@ const Publications = () => {
 
     fetchCitationCounts();
 
+    // Abort pending requests when unmounting or switching to avoid stale state updates.
     return () => {
       controller.abort();
     };
