@@ -16,7 +16,7 @@ const ProfileSection = () => {
         </div>
         <div className="profile-text">
           <p>
-            Welcome to my page! Take a look around—this site is served by Nginx
+            Welcome to my page. Take a look around—this site is served by Nginx
             and built with React, Sass, and a FastAPI backend.
           </p>
           <p>

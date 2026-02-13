@@ -11,7 +11,7 @@ const MetabolicNetwork = () => {
       <h3>
         <i>Saccharomyces cerevisiae</i>
       </h3>
-      <p>Baker&apos;s Yeast Metabolism in 3D!</p>
+      <p>Baker&apos;s Yeast Metabolism in 3D.</p>
       <p>
         Believe it or not, yeast shares about half of its genes with humans
         (~3,000 out of 6,000). These genes are essential for core cellular
