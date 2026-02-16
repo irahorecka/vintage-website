@@ -5,6 +5,15 @@ const TARGET_AUTHOR = 'Horecka, I.';
 
 const publications = [
   {
+    authors: 'Horecka, I., & Röst, H.',
+    year: '2026',
+    title: 'HiMaLAYAS: enrichment-based annotation of hierarchically clustered matrices',
+    venue: 'bioRxiv',
+    doi: '10.64898/2026.02.11.705303',
+    url: 'https://doi.org/10.64898/2026.02.11.705303',
+    note: 'Preprint, posted February 14, 2026',
+  },
+  {
     authors: 'Horecka, I., & Rost, H.',
     year: '2026',
     title:
@@ -22,6 +31,7 @@ const publications = [
     venue: 'bioRxiv',
     doi: '10.1101/2025.06.30.662193',
     url: 'https://doi.org/10.1101/2025.06.30.662193',
+    note: 'Preprint, posted July 2, 2025',
   },
   {
     authors:
