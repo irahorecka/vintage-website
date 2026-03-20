@@ -5,6 +5,17 @@ const TARGET_AUTHOR = 'Horecka, I.';
 
 const publications = [
   {
+    authors:
+      'Horecka, I., Ušaj, M., Masinas, M. P. D., Ward, H. N., Zhang, X., Hassan, A. Z., Billmann, M., Röst, H. L., Myers, C. L., Costanzo, M., Andrews, B., & Boone, C.',
+    year: '2026',
+    title:
+      'Expanding TheCellMap.org to visualize a genome-scale genetic interaction network for a human cell line',
+    venue: 'bioRxiv',
+    doi: '10.64898/2026.03.16.712129',
+    url: 'https://doi.org/10.64898/2026.03.16.712129',
+    note: 'Preprint, posted March 18, 2026',
+  },
+  {
     authors: 'Horecka, I., & Röst, H.',
     year: '2026',
     title: 'HiMaLAYAS: enrichment-based annotation of hierarchically clustered matrices',
