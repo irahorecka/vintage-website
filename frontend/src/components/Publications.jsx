@@ -18,14 +18,15 @@ const publications = [
   {
     authors: 'Horecka, I., & Röst, H.',
     year: '2026',
-    title: 'HiMaLAYAS: enrichment-based annotation of hierarchically clustered matrices',
+    title:
+      'HiMaLAYAS: enrichment-based annotation of hierarchically clustered matrices',
     venue: 'bioRxiv',
     doi: '10.64898/2026.02.11.705303',
     url: 'https://doi.org/10.64898/2026.02.11.705303',
     note: 'Preprint, posted February 14, 2026',
   },
   {
-    authors: 'Horecka, I., & Rost, H.',
+    authors: 'Horecka, I., & Röst, H.',
     year: '2026',
     title:
       'RISK: a next-generation tool for biological network annotation and visualization',
@@ -46,7 +47,7 @@ const publications = [
   },
   {
     authors:
-      'Sing, J. C., Charkow, J., AlHigaylan, M., Horecka, I., Xu, L., & Rost, H. L.',
+      'Sing, J. C., Charkow, J., AlHigaylan, M., Horecka, I., Xu, L., & Röst, H. L.',
     year: '2024',
     title:
       'MassDash: A Web-Based Dashboard for Data-Independent Acquisition Mass Spectrometry Visualization',
@@ -91,6 +92,25 @@ const buildCitationsUrl = (workId) =>
 // Remove failed lookups before converting to a DOI -> citation data map.
 const mapCitationEntries = (entries) =>
   Object.fromEntries(entries.filter(Boolean));
+
+const getCitationDisplayData = (publication, citationData) => {
+  if (!publication.doi) {
+    return null;
+  }
+
+  if (typeof citationData?.count === 'number') {
+    return {
+      count: citationData.count,
+      citationsUrl: citationData.citationsUrl || null,
+    };
+  }
+
+  // Fresh preprints may exist on bioRxiv before OpenAlex indexing catches up.
+  return {
+    count: 0,
+    citationsUrl: null,
+  };
+};
 
 const renderAuthors = (authors) => {
   if (typeof authors !== 'string' || authors.length === 0) {
@@ -199,6 +219,10 @@ const Publications = () => {
       <div className="publications-list">
         {publications.map((publication) => {
           const citationData = liveCitationData[publication.doi];
+          const citationDisplayData = getCitationDisplayData(
+            publication,
+            citationData
+          );
           const publicationKey = publication.doi || publication.title;
 
           return (
@@ -215,20 +239,20 @@ const Publications = () => {
               </p>
 
               <div className="publication-meta">
-                {typeof citationData?.count === 'number' &&
-                  (citationData.citationsUrl ? (
+                {citationDisplayData &&
+                  (citationDisplayData.citationsUrl ? (
                     <a
-                      href={citationData.citationsUrl}
+                      href={citationDisplayData.citationsUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`Open citations for ${publication.title}`}
                       className="publication-cited-by publication-cited-by-link"
                     >
-                      Cited by {citationData.count}
+                      Cited by {citationDisplayData.count}
                     </a>
                   ) : (
                     <span className="publication-cited-by">
-                      Cited by {citationData.count}
+                      Cited by {citationDisplayData.count}
                     </span>
                   ))}
                 {publication.url && (
