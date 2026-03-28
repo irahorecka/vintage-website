@@ -72,7 +72,6 @@ const publications = [
     venue: 'Science, 354(6312), aag0839',
     doi: '10.1126/science.aag0839',
     url: 'https://doi.org/10.1126/science.aag0839',
-    note: 'Additional Scholar record listed as "Science 354: aag0839" (cited by 12).',
   },
 ];
 
