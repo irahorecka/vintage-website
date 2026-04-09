@@ -235,6 +235,14 @@ const Publications = () => {
                   {publication.title}
                 </span>. <br />
                 <span className="publication-venue">{publication.venue}</span>.
+                {publication.summary && (
+                  <>
+                    <br />
+                    <span className="publication-summary">
+                      {publication.summary}
+                    </span>
+                  </>
+                )}
               </p>
 
               <div className="publication-meta">
