@@ -10,7 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 
-from app.routers import abstract_syntax_tree, comic_finder, protein_explorer
+from app.routers import abstract_syntax_tree, protein_explorer
 
 # Directory to fetch static text files
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Current file's directory
@@ -29,7 +29,6 @@ app.add_middleware(
 
 # Include routers
 app.include_router(protein_explorer.router, prefix="/api", tags=["Protein Explorer"])
-app.include_router(comic_finder.router, prefix="/api", tags=["Comic Finder"])
 app.include_router(abstract_syntax_tree.router, prefix="/api", tags=["AST Generator"])
 
 # Mount static files
