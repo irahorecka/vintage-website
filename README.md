@@ -2,10 +2,19 @@
 
 Welcome to the GitHub repository for [my website](https://irahorecka.com), a vintage-themed personal site showcasing my professional journey, projects, and interactive features. Built with modern technologies, this site combines functionality and nostalgia.
 
+## Comics Portal
+
+- Explore classic comic strips via date-based search or random browsing.
+- Features include:
+  - Fuzzy search with interactive suggestions.
+  - Dynamic "Loading..." states for feedback.
+  - Powered by a custom-built API.
+
 ## Technologies Used
 
 - **Frontend**: React, Vite, Sass
 - **Backend**: FastAPI
+- **APIs**: Custom APIs for comics and other data retrieval.
 - **Styling**: Retro-inspired design with dynamic interactivity.
 
 ## Environment Variables
