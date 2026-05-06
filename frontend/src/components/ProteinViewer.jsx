@@ -203,7 +203,7 @@ const ProteinViewer = () => {
     <div className="protein-explorer-container">
       <div className="description-container">
         <h3>
-          Explore <i>Millions</i> of Proteins
+          Explore the <i>3D Protein World</i>
         </h3>
         <p>
           Genes act as blueprints for molecular machines called proteins.
