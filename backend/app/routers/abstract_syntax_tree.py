@@ -8,17 +8,23 @@ import inspect
 import json
 import os
 import re
-import tracemalloc
+import time
 import uuid
+from collections import defaultdict
 from _ast import AST
 
 import pydot
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Request
 
 router = APIRouter()
 
-# Memory limit for AST visualization generation
-MEMORY_LIMIT_MB = int(os.getenv("MEMORY_LIMIT_MB", 10))  # Default to 10MB
+MAX_AST_DEPTH = 50
+MAX_AST_NODES = 500
+RATE_LIMIT_REQUESTS = 20
+RATE_LIMIT_WINDOW = 60  # seconds
+PNG_MAX_AGE_HOURS = 1
+
+_rate_limit_store: dict[str, list[float]] = defaultdict(list)
 
 # Directory to save downloaded AST images
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Current file's directory
@@ -41,6 +47,7 @@ def ast_parse(method):
             else:
                 obj = inspect.getsource(args[0])  # Get source code of a method
                 ast_obj = ast.parse(obj)  # Parse the source code into an AST object
+            validate_ast(ast_obj)
             json_parsed = method(ast_obj, **kwargs)  # Convert AST object to JSON
             return json.loads(json_parsed)  # Parse JSON string into Python dict
         except Exception as e:
@@ -76,6 +83,47 @@ def iter_fields(node):
     if hasattr(node, "_fields"):
         for field in node._fields:
             yield field, getattr(node, field)  # Yield field name and its value
+
+
+# ~~~~~~~~~~~~~~~~~~~~ SECURITY HELPERS ~~~~~~~~~~~~~~~~~~~~~~
+
+
+def validate_ast(tree):
+    """Reject pathological AST structures before recursive processing."""
+    node_count = 0
+
+    def walk(node, depth):
+        nonlocal node_count
+        if depth > MAX_AST_DEPTH:
+            raise ValueError(f"Expression nesting exceeds limit ({MAX_AST_DEPTH})")
+        node_count += 1
+        if node_count > MAX_AST_NODES:
+            raise ValueError(f"Expression complexity exceeds limit ({MAX_AST_NODES} nodes)")
+        for child in ast.iter_child_nodes(node):
+            walk(child, depth + 1)
+
+    walk(tree, 0)
+
+
+def check_rate_limit(client_ip: str):
+    """Sliding-window rate limiter; raises 429 when the client exceeds the limit."""
+    now = time.time()
+    window_start = now - RATE_LIMIT_WINDOW
+    timestamps = _rate_limit_store[client_ip]
+    _rate_limit_store[client_ip] = [t for t in timestamps if t > window_start]
+    if len(_rate_limit_store[client_ip]) >= RATE_LIMIT_REQUESTS:
+        raise HTTPException(status_code=429, detail="Rate limit exceeded. Try again later.")
+    _rate_limit_store[client_ip].append(now)
+
+
+def cleanup_old_pngs():
+    """Delete generated PNG files older than PNG_MAX_AGE_HOURS."""
+    cutoff = time.time() - PNG_MAX_AGE_HOURS * 3600
+    with os.scandir(FULL_AST_DIR) as entries:
+        for entry in entries:
+            if entry.name.startswith("ast_") and entry.name.endswith(".png"):
+                if entry.stat().st_mtime < cutoff:
+                    os.unlink(entry.path)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~ DRAWING AST ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -146,39 +194,13 @@ def draw(parent_name, child_name, graph, parent_hash):
     return child_hash  # Return the unique hash for the child node
 
 
-def check_function_memory(func, *args, limit_mb=100, **kwargs):
-    """Run a function and check its memory usage."""
-    tracemalloc.start()
-
-    # Measure memory before running the function
-    snapshot_before = tracemalloc.take_snapshot()
+@router.get("/ast/visualize")
+async def visualize_ast(request: Request, input_code: str = Query(..., max_length=1000)):
+    """Generate an AST visualization for the provided Python code."""
+    check_rate_limit(request.client.host)
+    cleanup_old_pngs()
 
     try:
-        result = func(*args, **kwargs)  # Run the function
-    finally:
-        # Measure memory after running the function
-        snapshot_after = tracemalloc.take_snapshot()
-        tracemalloc.stop()
-
-    # Calculate the memory usage difference
-    stats = snapshot_after.compare_to(snapshot_before, "lineno")
-    total_memory_used = sum(stat.size for stat in stats) / (1024 * 1024)  # Convert to MB
-
-    if total_memory_used > limit_mb:
-        raise MemoryError(
-            f"Function memory usage exceeded limit of {limit_mb}MB "
-            f"(current: {total_memory_used:.2f}MB)"
-        )
-
-    return result
-
-
-@router.get("/ast/visualize")
-async def visualize_ast(input_code: str = Query(..., max_length=1000)):
-    """Generate an AST visualization for the provided Python code."""
-
-    def generate_ast_visualization():
-        # Parse and generate AST visualization
         graph = pydot.Dot(graph_type="digraph", strict=True, concentrate=True, splines="polyline")
         parsed_ast = json_ast(input_code)
         grapher(graph, parsed_ast)
@@ -190,22 +212,13 @@ async def visualize_ast(input_code: str = Query(..., max_length=1000)):
         if not os.path.exists(output_file_path):
             raise HTTPException(status_code=500, detail="Failed to generate AST image.")
 
-        return output_filename
-
-    try:
-        # Check current function memory usage - prevent DoS attacks by limiting memory usage to 10MB
-        output_filename = check_function_memory(
-            generate_ast_visualization, limit_mb=MEMORY_LIMIT_MB
-        )
-
-        # Return the AST visualization file path
         return {
             "input_code": input_code,
             "file_path": f"static/images/ast_storage/{output_filename}",
             "message": "AST image successfully generated.",
         }
 
-    except MemoryError as e:
-        raise HTTPException(status_code=413, detail=str(e))
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error generating AST: {str(e)}")
