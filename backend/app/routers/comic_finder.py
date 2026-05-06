@@ -79,7 +79,6 @@ async def fetch_comic(comic: str, date: str = None):
         dict: Details of the saved comic, including the file path.
     """
     # Validate comic
-    print([key for key, title in AVAILABLE_COMICS.items()])
     comic_key = next((key for key, title in AVAILABLE_COMICS.items() if title == comic), None)
     if not comic_key:
         raise HTTPException(status_code=400, detail=f"Comic '{comic}' not found.")
