@@ -1,21 +1,16 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import Typewriter from 'typewriter-effect';
 
+import crystalGif from '../assets/crash-bandicoot-crystal.gif';
 import profilePic from '../assets/profile-landscape.png';
 
 const ProfileImageWithFortune = () => {
-  const [showFortune, setShowFortune] = useState(false);
+  const [phase, setPhase] = useState('idle'); // 'idle' | 'fortune' | 'crystal'
   const [fortune, setFortune] = useState('');
   const [allFortunes, setAllFortunes] = useState([]);
   const [unusedFortunes, setUnusedFortunes] = useState([]);
-  const [autoReset, setAutoReset] = useState(false);
-  const [animationInProgress, setAnimationInProgress] = useState(false);
 
-  // Fetch fortunes from external text file and filter those with 60 or less characters.
-  // Also process each line:
-  //   - Fix punctuation spacing (remove space before punctuation)
-  //   - Capitalize the first letter.
   useEffect(() => {
     fetch(
       'https://raw.githubusercontent.com/larryprice/fortune-cookie-api/refs/heads/master/data/proverbs.txt'
@@ -26,105 +21,69 @@ const ProfileImageWithFortune = () => {
           .split('\n')
           .map((line) => line.trim())
           .filter((line) => line.length > 0 && line.length <= 60);
-        const processedLines = lines.map((line) => {
-          // Remove extra spaces before punctuation
+        const processed = lines.map((line) => {
           line = line.replace(/\s+([,.!?:;])/g, '$1');
-          // Capitalize first character if not already
-          if (line.length > 0) {
-            line = line.charAt(0).toUpperCase() + line.slice(1);
-          }
-          return line;
+          return line.charAt(0).toUpperCase() + line.slice(1);
         });
-        setAllFortunes(processedLines);
-        setUnusedFortunes(processedLines);
+        setAllFortunes(processed);
+        setUnusedFortunes(processed);
       })
-      .catch((error) => {
-        console.error('Error fetching fortunes:', error);
-      });
+      .catch((error) => console.error('Error fetching fortunes:', error));
   }, []);
 
   const handleClick = () => {
-    if (!showFortune) {
-      setAnimationInProgress(true);
-      if (unusedFortunes.length === 0) {
-        setUnusedFortunes([...allFortunes]);
-      }
-      const randomIndex = Math.floor(Math.random() * unusedFortunes.length);
-      const newFortune = unusedFortunes[randomIndex];
-      const updatedUnusedFortunes = unusedFortunes.filter(
-        (_, i) => i !== randomIndex
-      );
-      setFortune(newFortune);
-      setUnusedFortunes(updatedUnusedFortunes);
-      setShowFortune(true);
-      setAutoReset(false);
-    } else {
-      setShowFortune(false);
-      setFortune('');
-      setAnimationInProgress(false);
-    }
+    if (phase !== 'idle' || allFortunes.length === 0) return;
+    const pool = unusedFortunes.length > 0 ? unusedFortunes : allFortunes;
+    const idx = Math.floor(Math.random() * pool.length);
+    setFortune(pool[idx]);
+    setUnusedFortunes(pool.filter((_, i) => i !== idx));
+    setPhase('fortune');
   };
-
-  useEffect(() => {
-    if (autoReset) {
-      const timer = setTimeout(() => {
-        handleClick(); // simulate click to revert to profile image
-        setTimeout(() => {
-          setAnimationInProgress(false);
-        }, 500); // match fade-back timing
-      }, 300); // short delay to let delete animation finish
-      return () => clearTimeout(timer);
-    }
-  }, [autoReset]);
 
   return (
     <div
       className="profile-image-container"
-      onClick={!animationInProgress ? handleClick : undefined}
-      style={{ cursor: animationInProgress ? 'default' : 'pointer' }}
+      onClick={handleClick}
+      style={{ cursor: phase === 'idle' ? 'pointer' : 'default' }}
     >
-      {/* Profile image */}
-      <motion.img
-        src={profilePic}
-        alt="Profile"
-        className="profile-image"
-        initial={false}
-        animate={{ opacity: showFortune ? 0 : 1 }}
-        transition={{ duration: 0.5 }}
-      />
+      <img src={profilePic} alt="Profile" className="profile-image" draggable={false} />
 
-      {/* Fortune text overlay */}
-      <motion.div
-        className="fortune-text"
-        initial={false}
-        animate={{
-          opacity: showFortune ? 1 : 0,
-          transition: { duration: 0.5, delay: 0 },
-        }}
-      >
-        {fortune && (
-          <div className="typewriter-wrapper">
-            <Typewriter
-              options={{
-                autoStart: true,
-                delay: 45,
-                cursor: '█',
-              }}
-              onInit={(typewriter) => {
-                typewriter
-                  .pauseFor(600) // Wait an additional 100ms after fade in
-                  .typeString(fortune)
-                  .pauseFor(1800)
-                  .deleteAll(30)
-                  .callFunction(() => {
-                    setAutoReset(true);
-                  })
-                  .start();
-              }}
-            />
-          </div>
+      <AnimatePresence>
+        {phase === 'fortune' && (
+          <motion.div
+            key="fortune"
+            className="fortune-text"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <div className="typewriter-wrapper">
+              <Typewriter
+                options={{ autoStart: true, delay: 45, cursor: '█' }}
+                onInit={(typewriter) => {
+                  typewriter
+                    .pauseFor(600)
+                    .typeString(fortune)
+                    .pauseFor(1800)
+                    .deleteAll(30)
+                    .callFunction(() => setTimeout(() => setPhase('crystal'), 400))
+                    .start();
+                }}
+              />
+            </div>
+          </motion.div>
         )}
-      </motion.div>
+      </AnimatePresence>
+
+      <motion.img
+        src={crystalGif}
+        alt="Crystal"
+        className="crystal-overlay"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: phase === 'crystal' ? 1 : 0 }}
+        transition={{ duration: 0.5, delay: phase === 'crystal' ? 0.4 : 0 }}
+      />
     </div>
   );
 };

@@ -15,6 +15,10 @@
   margin: 15px auto 20px;
   object-fit: cover;
   display: block;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
 }
 
 .fortune-text {
@@ -45,9 +49,22 @@
   display: inline-block;
 }
 
+.crystal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 160px;
+  height: 160px;
+  margin: 15px auto 20px;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+}
+
 @media (max-width: 768px) {
   .profile-image,
-  .fortune-text {
+  .fortune-text,
+  .crystal-overlay {
     width: 180px;
     height: 180px;
   }
