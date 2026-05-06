@@ -55,7 +55,7 @@
       &:focus {
         outline: none;
         border-color: #8b0000; /* Add a red border on focus */
-        box-shadow: none; /* Keep consistent with comic inputs */
+        box-shadow: none;
       }
 
       &::placeholder {
