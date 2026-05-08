@@ -6,7 +6,7 @@ const TARGET_AUTHOR = 'Horecka, I.';
 const publications = [
   {
     authors:
-      'Horecka, I.*, Ušaj, M.*, Masinas, M. P. D., Ward, H. N., Zhang, X., Hassan, A. Z., Billmann, M., Röst, H. L., Myers, C. L., Costanzo, M., Andrews, B., & Boone, C.',
+      'Horecka, I.*, Ušaj, M.*, Masinas, M. P. D.*, Ward, H. N., Zhang, X., Hassan, A. Z., Billmann, M., Röst, H. L., Myers, C. L., Costanzo, M., Andrews, B., & Boone, C.',
     year: '2026',
     title:
       'Expanding TheCellMap.org to visualize a genome-scale genetic interaction network for a human cell line',
