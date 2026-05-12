@@ -74,6 +74,8 @@ const ProteinViewer = () => {
         );
         const data = await response.json();
 
+        if (!response.ok) throw new Error(data?.detail || 'Failed to fetch metadata from the backend.');
+
         if (!data || !data.metadata) {
           throw new Error('Failed to fetch metadata from the backend.');
         }
@@ -92,7 +94,7 @@ const ProteinViewer = () => {
         setErrorMessage('');
       } catch (error) {
         console.error('Error fetching or displaying protein data:', error);
-        setErrorMessage('Failed to load PDB structure or metadata.');
+        setErrorMessage(error.message);
       } finally {
         setViewerLoading(false); // Stop viewer loading
       }
@@ -110,6 +112,8 @@ const ProteinViewer = () => {
       );
       const data = await response.json();
 
+      if (!response.ok) throw new Error(data?.detail || 'Failed to fetch PDB ID or metadata from the backend.');
+
       if (!data || !data.pdb_id) {
         throw new Error('No PDB ID found for the given keyword.');
       }
@@ -119,7 +123,7 @@ const ProteinViewer = () => {
       setErrorMessage('');
     } catch (error) {
       console.error('Error fetching PDB ID from backend:', error);
-      setErrorMessage('Failed to fetch PDB ID or metadata from the backend.');
+      setErrorMessage(error.message);
     } finally {
       setIsLoading(false);
     }
