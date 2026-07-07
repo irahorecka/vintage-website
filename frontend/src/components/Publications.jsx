@@ -6,6 +6,16 @@ const TARGET_AUTHOR = 'Horecka, I.';
 const publications = [
   {
     authors:
+      'Billmann, M., Costanzo, M., Zhang, X., Hassan, A. Z., Rahman, M., Brown, K. R., Chan, K. S., Tong, A. H. Y., Pons, C., Ward, H. N., Ross, C., van Leeuwen, J., Aregger, M., Lawson, K. A., Mair, B., Roth, A. F., Sen, N. E., Forster, D., Tan, G., Mero, P., Masud, S. N., Lee, Y., Aguilera-Uribe, M., Usaj, M., Almeida, S. M. T., Aulakh, K., Bhojoo, U., Birkadze, S., Budijono, N., Cai, X., Caumanns, J. J., Chandrashekhar, M., Chang, D., Climie, R., Dasgupta, K., Drazic, A., Rojas Echenique, J. I., Gacesa, R., Granda Farias, A., Habsid, A., Horecka, I., Kantautas, K., Ji, F., Kim, D-K., Lee, S. Y., Liang, W., Lim, J., Lin, K., Lu, X., Nami, B., Nixon, A., Mikolajewicz, N., Nedyalkova, L., Rohde, T., Sartori Rodrigues, M., Soste, M., Schultz, E., Wang, W., Seetharaman, A., Shuteriqi, E., Sizova, O., Thomson Taylor, D., Tereshchenko, M., Tieu, D., Turowec, J., Ubhi, T., Varland, S., Wang, K. E., Yang Wang, Z., Wei, J., Xiao, Y-X., Brown, G. W., Cravatt, B. F., Dixon, S. J., Wyatt, H. D. M., Röst, H. L., Roth, F. P., Xia, T., Bader, G. D., Loewith, R., Davis, N. G., Andrews, B., Myers, C. L., Moffat, J., Boone, C.',
+    year: '2026',
+    title:
+      'Global genetic interaction network of a human cell maps conserved principles and informs functional interpretation of gene co-essentiality profiles',
+    venue: 'Cell, 189(12), 3736-3759.e58',
+    doi: '10.1016/j.cell.2026.03.044',
+    url: 'https://doi.org/10.1016/j.cell.2026.03.044',
+  },
+  {
+    authors:
       'Horecka, I.*, Ušaj, M.*, Masinas, M. P. D.*, Ward, H. N., Zhang, X., Hassan, A. Z., Billmann, M., Röst, H. L., Myers, C. L., Costanzo, M., Andrews, B., & Boone, C.',
     year: '2026',
     title:
@@ -33,16 +43,6 @@ const publications = [
     venue: 'Bioinformatics, 42(1), btaf669',
     doi: '10.1093/bioinformatics/btaf669',
     url: 'https://doi.org/10.1093/bioinformatics/btaf669',
-  },
-  {
-    authors:
-      'Billmann, M., Costanzo, M., Zhang, X., Hassan, A. Z., Rahman, M., Brown, K. R., Chan, K. S., Tong, A. H. Y., Pons, C., Ward, H. N., Ross, C., van Leeuwen, J., Aregger, M., Lawson, K. A., Mair, B., Roth, A. F., Sen, N. E., Forster, D., Tan, G., Mero, P., Masud, S. N., Lee, Y., Aguilera-Uribe, M., Usaj, M., Almeida, S. M. T., Aulakh, K., Bhojoo, U., Birkadze, S., Budijono, N., Cai, X., Caumanns, J. J., Chandrashekhar, M., Chang, D., Climie, R., Dasgupta, K., Drazic, A., Rojas Echenique, J. I., Gacesa, R., Granda Farias, A., Habsid, A., Horecka, I., Kantautas, K., Ji, F., Kim, D-K., Lee, S. Y., Liang, W., Lim, J., Lin, K., Lu, X., Nami, B., Nixon, A., Mikolajewicz, N., Nedyalkova, L., Rohde, T., Sartori Rodrigues, M., Soste, M., Schultz, E., Wang, W., Seetharaman, A., Shuteriqi, E., Sizova, O., Thomson Taylor, D., Tereshchenko, M., Tieu, D., Turowec, J., Ubhi, T., Varland, S., Wang, K. E., Yang Wang, Z., Wei, J., Xiao, Y-X., Brown, G. W., Cravatt, B. F., Dixon, S. J., Wyatt, H. D. M., Röst, H. L., Roth, F. P., Xia, T., Bader, G. D., Loewith, R., Davis, N. G., Andrews, B., Myers, C. L., Moffat, J., Boone, C.',
-    year: '2026',
-    title:
-      'Global genetic interaction network of a human cell maps conserved principles and informs functional interpretation of gene co-essentiality profiles',
-    venue: 'Cell, 189(12), 3736-3759.e58',
-    doi: '10.1016/j.cell.2026.03.044',
-    url: 'https://doi.org/10.1016/j.cell.2026.03.044',
   },
   {
     authors:
