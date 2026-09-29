@@ -6,7 +6,7 @@ import crystalGif from '../assets/crash-bandicoot-crystal.gif';
 import profilePic from '../assets/profile-landscape.png';
 
 const ProfileImageWithFortune = () => {
-  const [phase, setPhase] = useState('idle'); // 'idle' | 'fortune' | 'crystal'
+  const [phase, setPhase] = useState('idle'); // 'idle' | 'fortune' | 'crystal' | 'clearing'
   const [fortune, setFortune] = useState('');
   const [allFortunes, setAllFortunes] = useState([]);
   const [unusedFortunes, setUnusedFortunes] = useState([]);
@@ -32,21 +32,35 @@ const ProfileImageWithFortune = () => {
   }, []);
 
   const handleClick = () => {
-    if (phase !== 'idle' || allFortunes.length === 0) return;
+    if (phase === 'fortune' || phase === 'clearing' || allFortunes.length === 0)
+      return;
     const pool = unusedFortunes.length > 0 ? unusedFortunes : allFortunes;
     const idx = Math.floor(Math.random() * pool.length);
     setFortune(pool[idx]);
     setUnusedFortunes(pool.filter((_, i) => i !== idx));
-    setPhase('fortune');
+    if (phase === 'crystal') {
+      // Let the crystal fade out over the photo, hold a beat, then reveal the paper
+      setPhase('clearing');
+      setTimeout(() => setPhase('fortune'), 500);
+    } else {
+      setPhase('fortune');
+    }
   };
 
   return (
     <div
       className="profile-image-container"
       onClick={handleClick}
-      style={{ cursor: phase === 'idle' ? 'pointer' : 'default' }}
+      style={{
+        cursor: phase === 'idle' || phase === 'crystal' ? 'pointer' : 'default',
+      }}
     >
-      <img src={profilePic} alt="Profile" className="profile-image" draggable={false} />
+      <img
+        src={profilePic}
+        alt="Profile"
+        className="profile-image"
+        draggable={false}
+      />
 
       <AnimatePresence>
         {phase === 'fortune' && (
@@ -67,7 +81,9 @@ const ProfileImageWithFortune = () => {
                     .typeString(fortune)
                     .pauseFor(1800)
                     .deleteAll(30)
-                    .callFunction(() => setTimeout(() => setPhase('crystal'), 400))
+                    .callFunction(() =>
+                      setTimeout(() => setPhase('crystal'), 400)
+                    )
                     .start();
                 }}
               />
