@@ -29,7 +29,7 @@ const publications = [
     authors: 'Horecka, I., & Röst, H.',
     year: '2026',
     title:
-      'HiMaLAYAS: enrichment-based annotation of hierarchically clustered matrices',
+      'HiMaLAYAS: enrichment-based annotation and visualization of hierarchically clustered matrices',
     venue: 'bioRxiv',
     doi: '10.64898/2026.02.11.705303',
     url: 'https://doi.org/10.64898/2026.02.11.705303',
