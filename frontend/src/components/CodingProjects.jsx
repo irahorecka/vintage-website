@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import starIcon from '../assets/star.svg';
+import forkIcon from '../assets/repo-forked.svg';
 
 // Shared constants for GitHub API calls and pinned-card count.
 const GITHUB_API_BASE = 'https://api.github.com';
@@ -328,7 +330,7 @@ const CodingProjects = () => {
             <div className="project-stats">
               <span className="stat">
                 <img
-                  src="https://api.iconify.design/octicon:star-16.svg?height=16"
+                  src={starIcon}
                   alt="Stars"
                   className="stat-icon"
                 />{' '}
@@ -336,7 +338,7 @@ const CodingProjects = () => {
               </span>
               <span className="stat">
                 <img
-                  src="https://api.iconify.design/octicon:repo-forked-16.svg?height=16"
+                  src={forkIcon}
                   alt="Forks"
                   className="stat-icon"
                 />{' '}
