@@ -7,12 +7,18 @@ import { jsonLd, robotsTxt, sitemapXml, snapshotHtml } from './render.js';
 const EMPTY_ROOT = '<div id="root"></div>';
 const JSON_LD_SLOT = '<!-- seo:json-ld -->';
 
+const isoDate = (date) => date.toISOString().slice(0, 10);
+
 /** Date of the last commit, so the sitemap's lastmod changes only when the site does. */
 function lastCommitDate() {
   try {
-    return execSync('git log -1 --format=%cs', { encoding: 'utf8' }).trim();
+    // %ct (unix seconds) works on every git version; newer date formats do not
+    const seconds = Number(
+      execSync('git log -1 --format=%ct', { encoding: 'utf8' })
+    );
+    return isoDate(new Date(seconds * 1000));
   } catch {
-    return new Date().toISOString().slice(0, 10);
+    return isoDate(new Date());
   }
 }
 

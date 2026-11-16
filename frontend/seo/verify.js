@@ -16,7 +16,10 @@ const checks = [
   ['JSON-LD that parses', jsonLdParses(html)],
   ['og-image.png', exists('og-image.png')],
   ['robots.txt naming the sitemap', read('robots.txt').includes('Sitemap:')],
-  ['sitemap.xml with a lastmod', read('sitemap.xml').includes('<lastmod>')],
+  [
+    'sitemap.xml with a valid lastmod date',
+    /<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/.test(read('sitemap.xml')),
+  ],
 ];
 
 function jsonLdParses(source) {
