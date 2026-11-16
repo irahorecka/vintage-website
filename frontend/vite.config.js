@@ -2,13 +2,15 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import dotenv from 'dotenv';
 
+import { seo } from './seo/plugin.js';
+
 dotenv.config();
 
 export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production';
 
   return {
-    plugins: [react()],
+    plugins: [react(), seo()],
     resolve: {
       alias: {
         '@': '/src', // Keep the alias for cleaner imports
