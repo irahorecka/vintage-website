@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "vite build",
+    "build": "vite build && node seo/verify.js",
     "dev": "vite",
     "preview": "vite preview",
     "format": "npx prettier --write .",
