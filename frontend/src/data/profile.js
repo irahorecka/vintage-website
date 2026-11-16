@@ -30,5 +30,6 @@ export const profile = {
   sameAs: [
     'https://github.com/irahorecka',
     'https://scholar.google.com/citations?user=RYufrIkAAAAJ',
+    'https://www.linkedin.com/in/ira-horecka-3a8877128/',
   ],
 };
