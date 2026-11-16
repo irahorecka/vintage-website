@@ -31,5 +31,6 @@ export const profile = {
     'https://github.com/irahorecka',
     'https://scholar.google.com/citations?user=RYufrIkAAAAJ',
     'https://www.linkedin.com/in/ira-horecka-3a8877128/',
+    'https://orcid.org/0009-0001-3087-7087',
   ],
 };
