@@ -1,5 +1,12 @@
 export const webProjects = [
   {
+    title: 'HiMaLAYAS Web (2026)',
+    description: 'Explore functional patterns in clustered matrices',
+    url: 'https://himalayas.funcscape.org/',
+    stack: ['React', 'TypeScript', 'Vite', 'Cloudflare Pages'],
+    favicon: 'https://himalayas.funcscape.org/favicon.png',
+  },
+  {
     title: 'HiMaLAYAS Documentation (2026)',
     description:
       'Official site for the HiMaLAYAS bioinformatics tool, developed by Horecka and Röst (2026)',
